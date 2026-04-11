@@ -23,8 +23,8 @@ const PillToggle = ({ label, selected, onClick }: { label: string; selected: boo
     onClick={onClick}
     className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${
       selected
-        ? "bg-primary text-primary-foreground border-primary"
-        : "bg-transparent text-muted-foreground border-border hover:border-primary/40"
+        ? "bg-primary text-primary-foreground border-primary shadow-warm"
+        : "bg-card text-muted-foreground border-border hover:border-primary/40"
     }`}
   >
     {selected && <Check size={14} className="inline mr-1 -mt-0.5" />}
@@ -98,46 +98,50 @@ const JoinAsPractitioner = () => {
 
   const fade = { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } };
   const inputClass =
-    "w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm";
+    "w-full px-5 py-3.5 rounded-2xl bg-card border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 text-sm font-body transition-all";
 
   return (
-    <div className="min-h-screen bg-background font-body" dir="rtl">
+    <div className="min-h-screen bg-background font-body grain-overlay" dir="rtl">
       <Navbar />
 
       <main className="pt-28 pb-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
 
-          {/* Hero */}
-          <motion.section {...fade} className="text-center mb-16">
-            <h1 className="font-hebrew text-4xl md:text-6xl font-bold text-foreground mb-4 tracking-wide">
-              הצטרפו למשפחת MapSoul
-            </h1>
-            <div className="gold-line mb-6" />
-            <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-              חברו עם אנשים שמחפשים בדיוק את מה שאתם מציעים
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {["קהל יעד מדויק", "פרופיל מקצועי", "ללא עמלות בהתחלה"].map((b) => (
-                <span key={b} className="px-5 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium border border-primary/20">
-                  {b}
-                </span>
-              ))}
+          {/* Hero with sunset gradient */}
+          <motion.section {...fade} className="text-center mb-16 relative">
+            <div className="absolute inset-0 -mx-4 sm:-mx-6 -mt-28 pt-28 hero-sunset rounded-b-[3rem] opacity-30" />
+            <div className="relative z-10">
+              <h1 className="font-hebrew text-4xl md:text-6xl font-bold text-foreground mb-4 tracking-wide">
+                הצטרפו למשפחת MapSoul
+              </h1>
+              <div className="gold-line mb-6" />
+              <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+                חברו עם אנשים שמחפשים בדיוק את מה שאתם מציעים
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {["קהל יעד מדויק", "פרופיל מקצועי", "ללא עמלות בהתחלה"].map((b) => (
+                  <span key={b} className="px-5 py-2.5 rounded-full bg-card text-primary text-sm font-medium border border-primary/20 shadow-warm">
+                    {b}
+                  </span>
+                ))}
+              </div>
             </div>
           </motion.section>
 
           {submitted ? (
-            <motion.div {...fade} className="bg-card rounded-3xl p-12 text-center shadow-warm">
+            <motion.div {...fade} className="bg-card rounded-3xl p-12 text-center shadow-warm-lg border border-border/60">
               <p className="text-5xl mb-6">🌿</p>
               <h2 className="font-hebrew text-3xl font-bold text-foreground mb-4">תודה שהצטרפתם!</h2>
               <p className="text-muted-foreground text-lg">קיבלנו את הפרטים שלכם.</p>
               <p className="text-muted-foreground text-lg">ניצור איתכם קשר תוך 48 שעות.</p>
             </motion.div>
           ) : (
-            <motion.form {...fade} transition={{ delay: 0.15 }} onSubmit={handleSubmit} className="space-y-0">
+            <motion.form {...fade} transition={{ delay: 0.15 }} onSubmit={handleSubmit} className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-border/60 shadow-warm">
+              <h2 className="font-hebrew text-3xl font-bold text-foreground mb-10 text-center tracking-wide">צרו פרופיל מקצועי</h2>
 
               {/* Section A */}
               <div className="space-y-5">
-                <h2 className="font-hebrew text-2xl font-bold text-foreground tracking-wide">פרטים אישיים</h2>
+                <h3 className="font-hebrew text-xl font-bold text-foreground tracking-wide">פרטים אישיים</h3>
                 <input required value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} placeholder="שם מלא" className={inputClass} />
                 <input required value={form.professional_title} onChange={(e) => setForm({ ...form, professional_title: e.target.value })} placeholder="לדוגמה: פסיכולוגית קלינית" className={inputClass} />
                 <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="אימייל" className={inputClass} />
@@ -148,7 +152,7 @@ const JoinAsPractitioner = () => {
 
               {/* Section B */}
               <div className="space-y-6">
-                <h2 className="font-hebrew text-2xl font-bold text-foreground tracking-wide">מומחיות</h2>
+                <h3 className="font-hebrew text-xl font-bold text-foreground tracking-wide">מומחיות</h3>
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-3">נושאי התמחות</label>
@@ -182,7 +186,7 @@ const JoinAsPractitioner = () => {
 
               {/* Section C */}
               <div className="space-y-6">
-                <h2 className="font-hebrew text-2xl font-bold text-foreground tracking-wide">פרטים מעשיים</h2>
+                <h3 className="font-hebrew text-xl font-bold text-foreground tracking-wide">פרטים מעשיים</h3>
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-3">פורמט</label>
@@ -192,10 +196,10 @@ const JoinAsPractitioner = () => {
                         key={o.v}
                         type="button"
                         onClick={() => setForm({ ...form, format: o.v })}
-                        className={`px-5 py-2 rounded-full text-sm font-medium transition-all border ${
+                        className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all border ${
                           form.format === o.v
-                            ? "bg-primary text-primary-foreground border-primary"
-                            : "bg-transparent text-muted-foreground border-border hover:border-primary/40"
+                            ? "bg-primary text-primary-foreground border-primary shadow-warm"
+                            : "bg-card text-muted-foreground border-border hover:border-primary/40"
                         }`}
                       >
                         {o.l}
@@ -234,7 +238,7 @@ const JoinAsPractitioner = () => {
 
                 <input value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} placeholder="תל אביב, מרכז" className={inputClass} />
 
-                <div className="flex items-center justify-between bg-card rounded-xl px-4 py-3 border border-border">
+                <div className="flex items-center justify-between bg-background rounded-2xl px-5 py-3.5 border border-border">
                   <span className="text-sm text-foreground">פתוח למטופלים חדשים</span>
                   <button
                     type="button"
@@ -256,7 +260,7 @@ const JoinAsPractitioner = () => {
 
               {/* Section D */}
               <div className="space-y-5">
-                <h2 className="font-hebrew text-2xl font-bold text-foreground tracking-wide">קצת עליך</h2>
+                <h3 className="font-hebrew text-xl font-bold text-foreground tracking-wide">קצת עליך</h3>
                 <div className="relative">
                   <textarea
                     value={form.bio}
@@ -275,7 +279,7 @@ const JoinAsPractitioner = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-4 rounded-full bg-primary text-primary-foreground font-medium text-lg hover:bg-primary-hover transition-colors duration-300 shadow-warm disabled:opacity-50 btn-glow"
+                  className="w-full py-4 rounded-full bg-primary text-primary-foreground font-medium text-lg hover:bg-primary-hover transition-colors duration-300 shadow-warm-lg disabled:opacity-50 btn-glow"
                 >
                   {loading ? "שולח..." : "שלחו את הפרופיל שלכם ←"}
                 </button>
