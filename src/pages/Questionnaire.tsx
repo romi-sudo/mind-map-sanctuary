@@ -155,29 +155,27 @@ const NatureAnswerCard = ({
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
       className={`nature-card relative w-full text-right overflow-hidden border-2 transition-all duration-300 cursor-pointer
-        ${selected ? "border-primary ring-2 ring-primary/30" : "border-border/50 hover:border-primary/40"}`}
+        ${selected ? "border-terracotta ring-2 ring-terracotta/30" : "border-sand-medium/50 hover:border-terracotta/40"}`}
     >
-      {/* Background nature image */}
       <div className="absolute inset-0">
-        <img src={img} alt="" className="w-full h-full object-cover opacity-25" />
-        <div className="absolute inset-0 bg-card/75" />
+        <img src={img} alt="" className="w-full h-full object-cover opacity-20" />
+        <div className="absolute inset-0 bg-sand-light/80" />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 p-6">
         {selected && (
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            className="absolute top-4 left-4 w-6 h-6 rounded-full bg-primary flex items-center justify-center"
+            className="absolute top-4 left-4 w-6 h-6 rounded-full bg-terracotta flex items-center justify-center"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 7l3 3 5-5" stroke="hsl(var(--primary-foreground))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M3 7l3 3 5-5" stroke="#FAF6EE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </motion.div>
         )}
-        <h3 className="font-hebrew text-xl font-bold text-foreground mb-1">{card.title}</h3>
-        {card.subtitle && <p className="font-body text-sm text-muted-foreground">{card.subtitle}</p>}
+        <h3 className="font-display text-xl font-bold text-foreground mb-1">{card.title}</h3>
+        {card.subtitle && <p className="font-body text-sm text-driftwood">{card.subtitle}</p>}
       </div>
     </motion.button>
   );
@@ -288,11 +286,11 @@ const Questionnaire = () => {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-background grain-overlay flex flex-col overflow-x-hidden">
+    <div dir="rtl" className="min-h-screen bg-shell-white grain-overlay flex flex-col overflow-x-hidden">
       {track && (
-        <div className="fixed top-0 left-0 right-0 z-50 h-1.5 bg-muted">
+        <div className="fixed top-0 left-0 right-0 z-50 h-1.5 bg-sand-medium">
           <motion.div
-            className="h-full bg-primary rounded-l-full"
+            className="h-full bg-terracotta rounded-l-full"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.4, ease: "easeOut" }}
@@ -304,7 +302,7 @@ const Questionnaire = () => {
         {stepIndex > 0 && (
           <button
             onClick={goBack}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-body text-sm"
+            className="flex items-center gap-2 text-driftwood hover:text-foreground transition-colors font-body text-sm"
           >
             <ArrowRight className="w-4 h-4" />
             חזרה
@@ -312,7 +310,7 @@ const Questionnaire = () => {
         )}
         <button
           onClick={() => navigate("/")}
-          className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors font-body text-sm"
+          className="flex items-center gap-1 text-driftwood hover:text-foreground transition-colors font-body text-sm"
         >
           ← דף הבית
         </button>
@@ -331,10 +329,10 @@ const Questionnaire = () => {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="w-full max-w-2xl"
             >
-              <h1 className="font-hebrew text-4xl md:text-5xl font-bold text-foreground text-center mb-3">
+              <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground text-center mb-3">
                 {STEP1.headline}
               </h1>
-              <p className="font-body text-muted-foreground text-center mb-12">{STEP1.subtext}</p>
+              <p className="font-body text-driftwood text-center mb-12">{STEP1.subtext}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {STEP1.cards.map((card, i) => (
                   <NatureAnswerCard key={card.id} card={card} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} imageIndex={i} />
@@ -354,7 +352,7 @@ const Questionnaire = () => {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="w-full max-w-2xl"
             >
-              <h1 className="font-hebrew text-3xl md:text-4xl font-bold text-foreground text-center mb-10">
+              <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground text-center mb-10">
                 {currentStep.headline}
               </h1>
               <div className={`grid grid-cols-1 ${currentStep.cards.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4`}>
@@ -376,23 +374,23 @@ const Questionnaire = () => {
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="w-full max-w-2xl"
             >
-              <h1 className="font-hebrew text-3xl md:text-4xl font-bold text-foreground text-center mb-3">
+              <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground text-center mb-3">
                 במשפט אחד — מה את/ה מחפש/ת?
               </h1>
-              <p className="font-body text-muted-foreground text-center mb-10">
+              <p className="font-body text-driftwood text-center mb-10">
                 זה עוזר לנו לדייק את ההמלצה שלך
               </p>
               <textarea
                 value={freeText}
                 onChange={(e) => setFreeText(e.target.value)}
                 placeholder="לדוגמה: אני רוצה להרגיש שאני יודע/ת לאן אני הולך/ת..."
-                className="w-full min-h-[160px] rounded-2xl border-2 border-border bg-card p-6 font-body text-foreground text-lg placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors resize-none"
+                className="w-full min-h-[160px] rounded-[20px] border-2 border-sand-medium bg-shell-white p-6 font-body text-foreground text-lg placeholder:text-sand-dark/50 focus:outline-none focus:border-terracotta transition-colors resize-none"
               />
               <div className="mt-8 text-center">
                 <button
                   onClick={handleSubmit}
                   disabled={isLoading}
-                  className="btn-glow inline-flex items-center gap-3 bg-primary text-primary-foreground font-body font-medium text-lg px-12 py-4 rounded-full hover:bg-primary-hover transition-colors disabled:opacity-70"
+                  className="btn-glow inline-flex items-center gap-3 bg-terracotta text-shell-white font-body font-medium text-lg px-12 py-4 rounded-full hover:bg-primary-hover transition-colors disabled:opacity-70"
                 >
                   {isLoading ? (
                     <>
