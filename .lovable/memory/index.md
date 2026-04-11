@@ -1,9 +1,12 @@
+# Memory: index.md
+Updated: now
+
 # Project Memory
 
 ## Core
-Hebrew RTL app. Warm dark brown palette: bg #3D2410, accent #E8854A orange, gold #C9A96E, cream #FAF6EE. NO icons/emojis.
-Playfair Display headlines, Inter body. Glass morphism cards. Unsplash nature photo backgrounds.
-Dark tropical brown aesthetic. Two button types only: btn-primary (orange) and btn-secondary (gold outline).
+Hebrew RTL app. Warm spa-luxe aesthetic: bg beige #F5EFE6, cards white with shadow, primary terracotta #B5784A, gold #C9A96E, text #2C1F0F.
+Playfair Display headlines, Inter body. No icons/emojis. Nature photos only in hero + key sections.
+Elevated white cards (.spa-card) with soft shadow. Pill buttons. 16px radius.
 
 ## Memories
-- [Design system](mem://design/palette) — Full tropical brown color tokens and typography rules
+- [Design system](mem://design/palette) — Full spa-luxe color tokens and typography rules
