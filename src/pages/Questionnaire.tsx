@@ -1,46 +1,18 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ApproachTooltipButton } from "@/components/ApproachTooltip";
 import { findApproach } from "@/data/approaches";
-import cardFlowers from "@/assets/card-flowers.jpg";
-import cardSeashells from "@/assets/card-seashells.jpg";
-import cardBridge from "@/assets/card-bridge.jpg";
-import cardSunset from "@/assets/card-sunset.jpg";
 
 /* ── Types ── */
 type Track = "personal" | "career" | "both";
 
-interface CardOption {
-  id: string;
-  title: string;
-  subtitle: string;
-}
-
-interface StepDef {
-  headline: string;
-  subtext?: string;
-  cards: CardOption[];
-}
-
-interface Practitioner {
-  name: string;
-  initials: string;
-  title: string;
-  tags: string[];
-  price: string;
-}
-
-interface Recommendation {
-  primary: { title: string; description: string };
-  practitioners: Practitioner[];
-}
-
-/* ── Gate card images (cycle through) ── */
-const CARD_IMAGES = [cardFlowers, cardSeashells, cardBridge, cardSunset];
+interface CardOption { id: string; title: string; subtitle: string; }
+interface StepDef { headline: string; subtext?: string; cards: CardOption[]; }
+interface Practitioner { name: string; initials: string; title: string; tags: string[]; price: string; }
+interface Recommendation { primary: { title: string; description: string }; practitioners: Practitioner[]; }
 
 /* ── Step data ── */
 const STEP1: StepDef = {
@@ -135,51 +107,23 @@ const slideVariants = {
   exit: (dir: number) => ({ x: dir > 0 ? -300 : 300, opacity: 0 }),
 };
 
-/* ── Nature Answer card with background image ── */
-const NatureAnswerCard = ({
-  card,
-  selected,
-  onSelect,
-  imageIndex,
-}: {
-  card: CardOption;
-  selected: boolean;
-  onSelect: () => void;
-  imageIndex: number;
-}) => {
-  const img = CARD_IMAGES[imageIndex % CARD_IMAGES.length];
-
-  return (
-    <motion.button
-      onClick={onSelect}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={`nature-card relative w-full text-right overflow-hidden border-2 transition-all duration-300 cursor-pointer
-        ${selected ? "border-terracotta ring-2 ring-terracotta/30" : "border-sand-medium/50 hover:border-terracotta/40"}`}
-    >
-      <div className="absolute inset-0">
-        <img src={img} alt="" className="w-full h-full object-cover opacity-20" />
-        <div className="absolute inset-0 bg-sand-light/80" />
-      </div>
-
-      <div className="relative z-10 p-6">
-        {selected && (
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            className="absolute top-4 left-4 w-6 h-6 rounded-full bg-terracotta flex items-center justify-center"
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 7l3 3 5-5" stroke="#FAF6EE" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </motion.div>
-        )}
-        <h3 className="font-display text-xl font-bold text-foreground mb-1">{card.title}</h3>
-        {card.subtitle && <p className="font-body text-sm text-driftwood">{card.subtitle}</p>}
-      </div>
-    </motion.button>
-  );
-};
+/* ── Answer card ── */
+const AnswerCard = ({
+  card, selected, onSelect,
+}: { card: CardOption; selected: boolean; onSelect: () => void; }) => (
+  <motion.button
+    onClick={onSelect}
+    whileHover={{ scale: 1.02 }}
+    whileTap={{ scale: 0.98 }}
+    className="w-full text-right overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 glass-card-light !p-6"
+    style={{
+      border: selected ? "1px solid #FAF6EE" : "1px solid rgba(200,184,154,0.15)",
+    }}
+  >
+    <h3 className="font-display text-xl font-bold text-cream mb-1">{card.title}</h3>
+    {card.subtitle && <p className="font-body text-sm text-sand">{card.subtitle}</p>}
+  </motion.button>
+);
 
 /* ── Main component ── */
 const Questionnaire = () => {
@@ -226,32 +170,23 @@ const Questionnaire = () => {
 
   const goBack = () => {
     setDirection(-1);
-    if (stepIndex === 1) {
-      setTrack(null);
-      setStepIndex(0);
-    } else {
-      setStepIndex((s) => s - 1);
-    }
+    if (stepIndex === 1) { setTrack(null); setStepIndex(0); }
+    else { setStepIndex((s) => s - 1); }
   };
 
   const handleSubmit = async () => {
     if (!track) return;
     setIsLoading(true);
-
     try {
       const { data: inserted, error: insertError } = await supabase
         .from("questionnaire_responses")
         .insert({ track, answers, free_text: freeText })
-        .select("id")
-        .single();
-
+        .select("id").single();
       if (insertError) throw insertError;
-
       const { data: fnData, error: fnError } = await supabase.functions.invoke(
         "generate-recommendation",
         { body: { responseId: inserted.id, track, answers, freeText } }
       );
-
       if (fnError) throw fnError;
       if (fnData?.recommendation) setRecommendation(fnData.recommendation);
     } catch (error) {
@@ -274,23 +209,27 @@ const Questionnaire = () => {
         track={track!}
         recommendation={recommendation}
         onRestart={() => {
-          setShowResults(false);
-          setStepIndex(0);
-          setTrack(null);
-          setAnswers({});
-          setFreeText("");
-          setRecommendation(null);
+          setShowResults(false); setStepIndex(0); setTrack(null);
+          setAnswers({}); setFreeText(""); setRecommendation(null);
         }}
       />
     );
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-shell-white grain-overlay flex flex-col overflow-x-hidden">
+    <div dir="rtl" className="min-h-screen flex flex-col overflow-x-hidden photo-section">
+      {/* Background */}
+      <div className="photo-bg">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt="" />
+        <div className="photo-overlay" />
+      </div>
+
+      {/* Progress bar */}
       {track && (
-        <div className="fixed top-0 left-0 right-0 z-50 h-1.5 bg-sand-medium">
+        <div className="fixed top-0 left-0 right-0 z-50 h-1" style={{ background: "rgba(200,184,154,0.2)" }}>
           <motion.div
-            className="h-full bg-terracotta rounded-l-full"
+            className="h-full rounded-l-full"
+            style={{ background: "#C9A96E" }}
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.4, ease: "easeOut" }}
@@ -298,108 +237,60 @@ const Questionnaire = () => {
         </div>
       )}
 
-      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+      {/* Nav */}
+      <div className="fixed top-6 right-6 z-50 flex items-center gap-3 relative">
         {stepIndex > 0 && (
-          <button
-            onClick={goBack}
-            className="flex items-center gap-2 text-driftwood hover:text-foreground transition-colors font-body text-sm"
-          >
-            <ArrowRight className="w-4 h-4" />
+          <button onClick={goBack} className="text-sand hover:text-cream transition-colors font-body text-sm">
             חזרה
           </button>
         )}
-        <button
-          onClick={() => navigate("/")}
-          className="flex items-center gap-1 text-driftwood hover:text-foreground transition-colors font-body text-sm"
-        >
-          ← דף הבית
+        <button onClick={() => navigate("/")} className="text-sand hover:text-cream transition-colors font-body text-sm">
+          דף הבית
         </button>
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-6 py-20">
+      {/* Content */}
+      <div className="flex-1 flex items-center justify-center px-6 py-20 relative z-10">
         <AnimatePresence mode="wait" custom={direction}>
           {stepIndex === 0 && (
-            <motion.div
-              key="gate"
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-2xl"
-            >
-              <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground text-center mb-3">
-                {STEP1.headline}
-              </h1>
-              <p className="font-body text-driftwood text-center mb-12">{STEP1.subtext}</p>
+            <motion.div key="gate" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-2xl">
+              <h1 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-cream text-center mb-3">{STEP1.headline}</h1>
+              <p className="font-body text-sand text-center mb-12">{STEP1.subtext}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {STEP1.cards.map((card, i) => (
-                  <NatureAnswerCard key={card.id} card={card} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} imageIndex={i} />
+                {STEP1.cards.map((card) => (
+                  <AnswerCard key={card.id} card={card} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} />
                 ))}
               </div>
             </motion.div>
           )}
 
           {currentStep && !isFreeTextStep && (
-            <motion.div
-              key={`step-${stepIndex}`}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-2xl"
-            >
-              <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground text-center mb-10">
-                {currentStep.headline}
-              </h1>
+            <motion.div key={`step-${stepIndex}`} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-2xl">
+              <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-cream text-center mb-10">{currentStep.headline}</h1>
               <div className={`grid grid-cols-1 ${currentStep.cards.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4`}>
-                {currentStep.cards.map((card, i) => (
-                  <NatureAnswerCard key={card.id} card={card} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} imageIndex={i + stepIndex} />
+                {currentStep.cards.map((card) => (
+                  <AnswerCard key={card.id} card={card} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} />
                 ))}
               </div>
             </motion.div>
           )}
 
           {isFreeTextStep && (
-            <motion.div
-              key="freetext"
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-2xl"
-            >
-              <h1 className="font-display text-3xl md:text-4xl font-bold text-foreground text-center mb-3">
+            <motion.div key="freetext" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-2xl">
+              <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-cream text-center mb-3">
                 במשפט אחד — מה את/ה מחפש/ת?
               </h1>
-              <p className="font-body text-driftwood text-center mb-10">
-                זה עוזר לנו לדייק את ההמלצה שלך
-              </p>
+              <p className="font-body text-sand text-center mb-10">זה עוזר לנו לדייק את ההמלצה שלך</p>
               <textarea
                 value={freeText}
                 onChange={(e) => setFreeText(e.target.value)}
                 placeholder="לדוגמה: אני רוצה להרגיש שאני יודע/ת לאן אני הולך/ת..."
-                className="w-full min-h-[160px] rounded-[20px] border-2 border-sand-medium bg-shell-white p-6 font-body text-foreground text-lg placeholder:text-sand-dark/50 focus:outline-none focus:border-terracotta transition-colors resize-none"
+                className="w-full min-h-[160px] rounded-2xl p-6 font-body text-cream text-lg placeholder:text-sand/50 focus:outline-none resize-none"
+                style={{ background: "rgba(15,30,15,0.6)", backdropFilter: "blur(10px)", border: "1px solid rgba(200,184,154,0.15)" }}
               />
               <div className="mt-8 text-center">
-                <button
-                  onClick={handleSubmit}
-                  disabled={isLoading}
-                  className="btn-glow inline-flex items-center gap-3 bg-terracotta text-shell-white font-body font-medium text-lg px-12 py-4 rounded-full hover:bg-primary-hover transition-colors disabled:opacity-70"
-                >
-                  {isLoading ? (
-                    <>
-                      <Loader2 className="w-5 h-5 animate-spin" />
-                      מייצר המלצה מותאמת אישית...
-                    </>
-                  ) : (
-                    "הראה לי את המסלול שלי ←"
-                  )}
+                <button onClick={handleSubmit} disabled={isLoading} className="btn-primary text-lg inline-flex items-center gap-3">
+                  {isLoading ? "מייצר המלצה מותאמת אישית..." : "הראה לי את המסלול שלי"}
                 </button>
               </div>
             </motion.div>
@@ -419,14 +310,8 @@ const FALLBACK_PRACTITIONERS: Practitioner[] = [
 
 /* ── Results page ── */
 const ResultsPage = ({
-  track,
-  recommendation,
-  onRestart,
-}: {
-  track: Track;
-  recommendation: Recommendation | null;
-  onRestart: () => void;
-}) => {
+  track, recommendation, onRestart,
+}: { track: Track; recommendation: Recommendation | null; onRestart: () => void; }) => {
   const headline = track === "career"
     ? "את/ה בצומת מקצועית — הנה הכיוון שלך:"
     : "לפי מה שסיפרת — המסלול שמתאים לך:";
@@ -441,83 +326,59 @@ const ResultsPage = ({
   const practitioners = recommendation?.practitioners ?? FALLBACK_PRACTITIONERS;
 
   return (
-    <div dir="rtl" className="min-h-screen bg-shell-white grain-overlay">
-      <div className="max-w-3xl mx-auto px-6 py-20">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="font-display text-3xl md:text-4xl font-bold text-foreground text-center mb-12"
-        >
+    <div dir="rtl" className="min-h-screen photo-section">
+      <div className="photo-bg">
+        <img src="https://images.unsplash.com/photo-1504567961542-e24d9439a724?w=1920&q=80" alt="" />
+        <div className="photo-overlay" />
+      </div>
+
+      <div className="max-w-3xl mx-auto px-6 py-20 relative z-10">
+        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-cream text-center mb-12">
           {headline}
         </motion.h1>
 
-        {/* Recommendation card — terracotta */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="rounded-[20px] bg-terracotta p-8 mb-12 shadow-warm"
-        >
-          <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-full bg-shell-white/20 flex items-center justify-center text-shell-white text-xl">🐚</div>
-            <div>
-              <h2 className="font-display text-2xl font-bold text-shell-white mb-2 inline-flex items-center gap-2">
-                {primary.title}
-                {findApproach(primary.title) && <ApproachTooltipButton tag={primary.title} className="text-shell-white/60 hover:text-shell-white" />}
-              </h2>
-              <p className="font-body text-shell-white/85 leading-relaxed">{primary.description}</p>
-            </div>
-          </div>
+        {/* Recommendation card */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="glass-card mb-12" style={{ background: "rgba(232,133,74,0.15)", border: "1px solid rgba(232,133,74,0.3)" }}>
+          <h2 className="font-display text-2xl font-bold text-cream mb-2 inline-flex items-center gap-2">
+            {primary.title}
+            {findApproach(primary.title) && <ApproachTooltipButton tag={primary.title} className="text-cream/60 hover:text-cream" />}
+          </h2>
+          <p className="font-body text-sand leading-relaxed">{primary.description}</p>
         </motion.div>
 
-        <h3 className="font-display text-xl font-bold text-foreground mb-6">מומחים שמתאימים לך</h3>
+        <h3 className="font-display text-xl font-bold text-cream mb-6">מומחים שמתאימים לך</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
           {practitioners.map((p, i) => (
-            <motion.div
-              key={p.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.1 }}
-              className="rounded-[20px] border border-sand-medium/50 bg-sand-light p-6 card-coastal shadow-sandy"
-            >
-              <div className="w-16 h-16 rounded-full bg-terracotta flex items-center justify-center font-display text-xl font-bold text-shell-white mb-4">
+            <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="glass-card">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center font-display text-xl font-bold mb-4" style={{ background: "#1A3A1A", color: "#C9A96E" }}>
                 {p.initials}
               </div>
-              <h4 className="font-display text-lg font-bold text-foreground">{p.name}</h4>
-              <p className="font-body text-sm text-driftwood mb-3">{p.title}</p>
+              <h4 className="font-display text-lg font-bold text-cream">{p.name}</h4>
+              <p className="font-body text-sm text-sand mb-3">{p.title}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {p.tags.map((tag) => (
-                  <span key={tag} className="inline-flex items-center gap-1 text-xs font-body bg-dried-botanical/15 text-dried-botanical px-3 py-1 rounded-full">
+                  <span key={tag} className="inline-flex items-center gap-1 text-xs font-body px-3 py-1 rounded-full" style={{ border: "1px solid rgba(200,184,154,0.2)", color: "#C9A96E" }}>
                     {tag}
                     {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
                   </span>
                 ))}
               </div>
-              <p className="font-body text-sm text-driftwood mb-4">{p.price}</p>
-              <button className="w-full border border-terracotta text-terracotta font-body text-sm py-2.5 rounded-full hover:bg-terracotta/5 transition-colors">
-                לפנייה
-              </button>
+              <p className="font-body text-sm text-sand mb-4">{p.price}</p>
+              <button className="btn-secondary w-full !py-2 text-sm">לפנייה</button>
             </motion.div>
           ))}
         </div>
 
-        {/* Approach info card */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="rounded-[20px] border border-sand-dark/20 bg-sand-light p-6 mb-8 text-center"
-        >
-          <p className="font-body text-foreground text-sm leading-relaxed">
-            רוצים להבין יותר על הגישות השונות?{" "}
-            <br className="sm:hidden" />
-            לחצו על סימן ה-<span className="inline-flex items-center mx-1 text-terracotta">?</span> ליד כל גישה בקטלוג המומחים
+        {/* Info card */}
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="glass-card mb-8 text-center">
+          <p className="font-body text-sand text-sm leading-relaxed">
+            רוצים להבין יותר על הגישות השונות? לחצו על סימן ה-? ליד כל גישה בקטלוג המומחים
           </p>
         </motion.div>
 
         <div className="text-center">
-          <button onClick={onRestart} className="font-body text-driftwood hover:text-terracotta transition-colors text-sm">
-            רוצה לנסות מסלול אחר? ← חזור לשאלון
+          <button onClick={onRestart} className="font-body text-sand hover:text-cream transition-colors text-sm">
+            רוצה לנסות מסלול אחר? חזור לשאלון
           </button>
         </div>
       </div>

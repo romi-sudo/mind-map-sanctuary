@@ -22,7 +22,6 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
-          hover: "hsl(var(--primary-hover))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -48,19 +47,18 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        shell: {
-          white: "hsl(var(--shell-white))",
+        forest: {
+          deep: "hsl(var(--forest-deep))",
+          surface: "hsl(var(--forest-surface))",
         },
-        sand: {
-          light: "hsl(var(--sand-light))",
-          medium: "hsl(var(--sand-medium))",
-          dark: "hsl(var(--sand-dark))",
+        tropical: {
+          orange: "hsl(var(--tropical-orange))",
+          "orange-hover": "hsl(var(--tropical-orange-hover))",
+          pink: "hsl(var(--tropical-pink))",
         },
-        ocean: "hsl(var(--ocean-hint))",
-        driftwood: "hsl(var(--driftwood))",
-        terracotta: "hsl(var(--terracotta))",
-        "deep-earth": "hsl(var(--deep-earth))",
-        "dried-botanical": "hsl(var(--dried-botanical))",
+        gold: "hsl(var(--warm-gold))",
+        cream: "hsl(var(--text-cream))",
+        sand: "hsl(var(--text-sand))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -87,15 +85,10 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "float": {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "float": "float 6s ease-in-out infinite",
       },
     },
   },

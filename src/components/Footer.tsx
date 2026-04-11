@@ -2,19 +2,19 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-deep-earth">
+    <footer style={{ background: "#0D1F0D" }}>
+      <div className="section-divider" />
       <div className="container mx-auto px-6 py-12 text-center">
-        <p className="text-lg mb-2 opacity-40">🐚</p>
-        <Link to="/" className="font-display text-xl font-bold text-shell-white/80 block mb-4">
+        <Link to="/" className="font-display text-xl font-bold block mb-4" style={{ color: "#C9A96E" }}>
           MapSoul
         </Link>
         <Link
           to="/join-as-practitioner"
-          className="inline-block text-shell-white/40 hover:text-shell-white/70 transition-colors text-sm font-body mb-4"
+          className="inline-block text-sand/40 hover:text-sand/70 transition-colors text-sm font-body mb-4"
         >
           הצטרפו כמומחים
         </Link>
-        <p className="font-body text-shell-white/25 text-xs">
+        <p className="font-body text-sand/25 text-xs">
           MapSoul © 2025 — כל הזכויות שמורות
         </p>
       </div>

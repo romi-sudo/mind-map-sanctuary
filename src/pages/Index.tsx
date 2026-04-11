@@ -5,21 +5,19 @@ import HowItWorks from "@/components/HowItWorks";
 import TrustBar from "@/components/TrustBar";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
-import ShellDivider from "@/components/ShellDivider";
-import WaveSeparator from "@/components/WaveSeparator";
 
 const Index = () => {
   return (
-    <div dir="rtl" className="min-h-screen grain-overlay">
+    <div dir="rtl" className="min-h-screen">
       <Navbar />
       <HeroSection />
-      <ShellDivider />
+      <div className="section-divider" />
       <ProblemSection />
-      <WaveSeparator />
+      <div className="section-divider" />
       <HowItWorks />
-      <ShellDivider />
+      <div className="section-divider" />
       <TrustBar />
-      <WaveSeparator />
+      <div className="section-divider" />
       <FinalCTA />
       <Footer />
     </div>
