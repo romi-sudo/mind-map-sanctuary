@@ -1,68 +1,10 @@
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-interface Practitioner {
-  name: string;
-  initials: string;
-  title: string;
-  tags: string[];
-  price: string;
-  format: string;
-}
-
-const practitioners: Practitioner[] = [
-  {
-    name: 'ד"ר מיכל לוי',
-    initials: "מל",
-    title: "פסיכולוגית קלינית",
-    tags: ["חרדה", "טראומה", "מעברי חיים"],
-    price: "400-600 ש\"ח",
-    format: "אונליין ופרונטלי",
-  },
-  {
-    name: "אורן כהן",
-    initials: "אכ",
-    title: "מאמן קריירה וחיים",
-    tags: ["קריירה", "AI וקריירה", "זהות"],
-    price: "300-500 ש\"ח",
-    format: "אונליין",
-  },
-  {
-    name: "נועה שמיר",
-    initials: "נש",
-    title: "מטפלת זוגית ומשפחתית",
-    tags: ["זוגיות", "מערכות יחסים", "גבולות"],
-    price: "500-700 ש\"ח",
-    format: "פרונטלי",
-  },
-  {
-    name: "יואב ברק",
-    initials: "יב",
-    title: "מנחה ריטריטים",
-    tags: ["זהות", "מיינדפולנס", "גוף ונפש"],
-    price: "ריטריטים",
-    format: "פרונטלי",
-  },
-  {
-    name: "שירה אדלר",
-    initials: "שא",
-    title: "מאמנת צמיחה אישית",
-    tags: ["ביטחון עצמי", "זהות", "קריירה"],
-    price: "250-400 ש\"ח",
-    format: "אונליין",
-  },
-  {
-    name: 'ד"ר רן מזרחי',
-    initials: "רמ",
-    title: "פסיכותרפיסט",
-    tags: ["טראומה", "EMDR", "חרדה"],
-    price: "500-800 ש\"ח",
-    format: "פרונטלי",
-  },
-];
+import { practitioners, type Practitioner } from "@/data/practitioners";
 
 const filterGroups = {
   נושא: ["קריירה", "מערכות יחסים", "חרדה", "זהות", "טראומה", "זוגיות", "AI וקריירה"],
@@ -80,41 +22,28 @@ const PractitionerCard = ({ p, index }: { p: Practitioner; index: number }) => (
     className="group bg-card rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden"
   >
     <div className="p-6 flex flex-col items-center text-center flex-1">
-      {/* Avatar */}
       <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center mb-4">
         <span className="font-display text-2xl font-bold text-primary-foreground">{p.initials}</span>
       </div>
-
-      {/* Name & title */}
       <h3 className="font-display text-xl font-bold text-foreground mb-1">{p.name}</h3>
       <p className="text-muted-foreground text-sm mb-4">{p.title}</p>
-
-      {/* Tags */}
       <div className="flex flex-wrap justify-center gap-2 mb-4">
         {p.tags.map((tag) => (
-          <span
-            key={tag}
-            className="text-xs font-medium px-3 py-1 rounded-full border border-primary text-primary"
-          >
-            {tag}
-          </span>
+          <span key={tag} className="text-xs font-medium px-3 py-1 rounded-full border border-primary text-primary">{tag}</span>
         ))}
       </div>
-
-      {/* Divider */}
       <div className="w-full h-px bg-border my-2" />
-
-      {/* Price & format */}
       <div className="mt-3 text-sm text-muted-foreground space-y-1">
         <p>{p.price}</p>
         <p>{p.format}</p>
       </div>
     </div>
-
-    {/* CTA */}
-    <button className="w-full py-3 border-t border-primary/30 text-primary font-medium text-sm hover:bg-primary hover:text-primary-foreground transition-colors duration-300">
+    <Link
+      to={`/practitioners/${p.id}`}
+      className="w-full py-3 border-t border-primary/30 text-primary font-medium text-sm hover:bg-primary hover:text-primary-foreground transition-colors duration-300 text-center block"
+    >
       לפרופיל המלא
-    </button>
+    </Link>
   </motion.div>
 );
 
@@ -145,10 +74,8 @@ const Practitioners = () => {
   return (
     <div className="min-h-screen bg-background font-body" dir="rtl">
       <Navbar />
-
       <main className="pt-28 pb-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
-          {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -157,7 +84,6 @@ const Practitioners = () => {
             מצאו את המומחה המתאים לכם
           </motion.h1>
 
-          {/* Search */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -173,7 +99,6 @@ const Practitioners = () => {
             />
           </motion.div>
 
-          {/* Filters */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -203,7 +128,6 @@ const Practitioners = () => {
             ))}
           </motion.div>
 
-          {/* Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((p, i) => (
               <PractitionerCard key={p.name} p={p} index={i} />
@@ -217,7 +141,6 @@ const Practitioners = () => {
           )}
         </div>
       </main>
-
       <Footer />
     </div>
   );
