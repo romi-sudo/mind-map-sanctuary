@@ -298,15 +298,23 @@ const Questionnaire = () => {
         </div>
       )}
 
-      {stepIndex > 0 && (
+      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+        {stepIndex > 0 && (
+          <button
+            onClick={goBack}
+            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-body text-sm"
+          >
+            <ArrowRight className="w-4 h-4" />
+            חזרה
+          </button>
+        )}
         <button
-          onClick={goBack}
-          className="fixed top-6 right-6 z-50 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors font-body text-sm"
+          onClick={() => navigate("/")}
+          className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors font-body text-sm"
         >
-          <ArrowRight className="w-4 h-4" />
-          חזרה
+          ← דף הבית
         </button>
-      )}
+      </div>
 
       <div className="flex-1 flex items-center justify-center px-6 py-20">
         <AnimatePresence mode="wait" custom={direction}>
