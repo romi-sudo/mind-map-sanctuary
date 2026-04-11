@@ -15,7 +15,6 @@ const ApproachCard = ({ approach, index }: { approach: ApproachInfo; index: numb
       transition={{ duration: 0.5, delay: index * 0.07 }}
       className="glass-card overflow-hidden"
     >
-      {/* Header */}
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1">
           <h2 className="font-display text-xl font-bold text-cream leading-tight">{approach.name}</h2>
@@ -28,7 +27,6 @@ const ApproachCard = ({ approach, index }: { approach: ApproachInfo; index: numb
 
       <p className="font-body text-sm text-sand leading-relaxed mb-4">{approach.what}</p>
 
-      {/* Good for pills */}
       <div className="flex flex-wrap gap-1.5 mb-3">
         {approach.goodFor.map((t) => (
           <span key={t} className="text-xs font-body px-3 py-1 rounded-full" style={{ border: "1px solid rgba(201,169,110,0.3)", color: "#C9A96E" }}>{t}</span>
@@ -74,7 +72,7 @@ const Approaches = () => {
   const allApproaches = Object.values(approaches);
 
   return (
-    <div className="min-h-screen font-body" dir="rtl" style={{ background: "#0D1F0D" }}>
+    <div className="min-h-screen font-body" dir="rtl" style={{ background: "#3D2410" }}>
       <Navbar />
       <main className="pt-28 pb-20 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">

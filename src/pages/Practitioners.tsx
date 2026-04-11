@@ -23,7 +23,7 @@ const PractitionerCard = ({ p, index }: { p: Practitioner; index: number }) => (
     className="glass-card flex flex-col overflow-hidden !p-0"
   >
     <div className="p-6 flex flex-col items-center text-center flex-1">
-      <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{ background: "#1A3A1A" }}>
+      <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4" style={{ background: "#4D3520" }}>
         <span className="font-display text-2xl font-bold" style={{ color: "#C9A96E" }}>{p.initials}</span>
       </div>
       <h3 className="font-display text-xl font-bold text-cream mb-1">{p.name}</h3>
@@ -79,7 +79,7 @@ const Practitioners = () => {
   }, [search, activeFilters]);
 
   return (
-    <div className="min-h-screen font-body" dir="rtl" style={{ background: "#0D1F0D" }}>
+    <div className="min-h-screen font-body" dir="rtl" style={{ background: "#3D2410" }}>
       <Navbar />
       <main className="pt-28 pb-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
@@ -102,7 +102,7 @@ const Practitioners = () => {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="חפשו לפי נושא, שם או גישה..."
               className="w-full px-6 py-3 rounded-full text-cream placeholder:text-sand/50 focus:outline-none focus:ring-1 text-sm font-body"
-              style={{ background: "rgba(15,30,15,0.75)", border: "1px solid rgba(200,184,154,0.2)", outlineColor: "#E8854A" }}
+              style={{ background: "rgba(61,36,16,0.75)", border: "1px solid rgba(200,184,154,0.2)", outlineColor: "#E8854A" }}
             />
           </motion.div>
 

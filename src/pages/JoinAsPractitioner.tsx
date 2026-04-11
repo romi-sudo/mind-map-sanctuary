@@ -71,7 +71,7 @@ const JoinAsPractitioner = () => {
   const inputClass = "w-full py-3 bg-transparent text-cream placeholder:text-sand/50 focus:outline-none font-body text-sm transition-all";
 
   return (
-    <div className="min-h-screen font-body" dir="rtl" style={{ background: "#0D1F0D" }}>
+    <div className="min-h-screen font-body" dir="rtl" style={{ background: "#3D2410" }}>
       <Navbar />
 
       <main className="pt-24 pb-20 px-4 sm:px-6">

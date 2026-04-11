@@ -15,7 +15,7 @@ const Navbar = () => {
   const links = Object.keys(linkMap);
 
   return (
-    <nav className="fixed top-0 right-0 left-0 z-50 backdrop-blur-xl border-b" style={{ background: "rgba(13,31,13,0.95)", borderColor: "rgba(200,184,154,0.15)" }}>
+    <nav className="fixed top-0 right-0 left-0 z-50 backdrop-blur-xl border-b" style={{ background: "rgba(61,36,16,0.95)", borderColor: "rgba(200,184,154,0.15)" }}>
       <div className="container mx-auto px-6 py-4 flex flex-row-reverse items-center justify-between">
         <Link to="/" className="font-display text-xl font-bold tracking-wide" style={{ color: "#C9A96E" }}>
           MapSoul
@@ -34,12 +34,7 @@ const Navbar = () => {
 
           <div className="flex items-center gap-2 mr-2">
             {user ? (
-              <button
-                onClick={signOut}
-                className="btn-secondary text-sm !py-2 !px-5"
-              >
-                יציאה
-              </button>
+              <button onClick={signOut} className="btn-secondary text-sm !py-2 !px-5">יציאה</button>
             ) : (
               <>
                 <Link to="/login" className="btn-secondary text-sm !py-2 !px-5">כניסה</Link>
@@ -55,7 +50,7 @@ const Navbar = () => {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden px-6 pb-5 border-t" style={{ background: "rgba(13,31,13,0.98)", borderColor: "rgba(200,184,154,0.1)" }}>
+        <div className="md:hidden px-6 pb-5 border-t" style={{ background: "rgba(61,36,16,0.98)", borderColor: "rgba(200,184,154,0.1)" }}>
           <ul className="flex flex-col gap-3 mb-4 pt-4">
             {links.map((link) => (
               <li key={link}>

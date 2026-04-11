@@ -6,19 +6,19 @@
 
 @layer base {
   :root {
-    --background: 120 30% 9%;           /* #0D1F0D deep forest */
-    --foreground: 40 38% 96%;           /* #FAF6EE warm cream */
-    --card: 120 33% 9%;                 /* rgba(15,30,15) */
+    --background: 24 58% 15%;             /* #3D2410 warm dark brown */
+    --foreground: 40 38% 96%;             /* #FAF6EE warm cream */
+    --card: 24 58% 15%;
     --card-foreground: 40 38% 96%;
-    --popover: 120 33% 9%;
+    --popover: 24 58% 15%;
     --popover-foreground: 40 38% 96%;
-    --primary: 24 70% 60%;              /* #E8854A tropical orange */
+    --primary: 24 70% 60%;                /* #E8854A tropical orange */
     --primary-foreground: 40 38% 96%;
-    --secondary: 38 40% 61%;            /* #C9A96E warm gold */
+    --secondary: 38 40% 61%;              /* #C9A96E warm gold */
     --secondary-foreground: 40 38% 96%;
-    --muted: 120 30% 12%;
-    --muted-foreground: 35 22% 69%;     /* #C8B89A warm sand */
-    --accent: 340 45% 65%;              /* #D4789A tropical pink */
+    --muted: 24 45% 18%;
+    --muted-foreground: 35 22% 69%;       /* #C8B89A warm sand */
+    --accent: 340 45% 65%;                /* #D4789A tropical pink */
     --accent-foreground: 40 38% 96%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 40 38% 96%;
@@ -28,20 +28,20 @@
     --radius: 1rem;
 
     /* Extended tokens */
-    --forest-deep: 120 30% 9%;          /* #0D1F0D */
-    --forest-surface: 120 33% 16%;      /* #1A3A1A */
-    --tropical-orange: 24 70% 60%;      /* #E8854A */
-    --tropical-orange-hover: 24 60% 50%; /* #C4693A */
-    --warm-gold: 38 40% 61%;            /* #C9A96E */
-    --tropical-pink: 340 45% 65%;       /* #D4789A */
-    --text-cream: 40 38% 96%;           /* #FAF6EE */
-    --text-sand: 35 22% 69%;            /* #C8B89A */
+    --forest-deep: 24 58% 15%;            /* #3D2410 */
+    --forest-surface: 24 40% 21%;         /* #4D3520 */
+    --tropical-orange: 24 70% 60%;        /* #E8854A */
+    --tropical-orange-hover: 24 60% 50%;  /* #C4693A */
+    --warm-gold: 38 40% 61%;              /* #C9A96E */
+    --tropical-pink: 340 45% 65%;         /* #D4789A */
+    --text-cream: 40 38% 96%;             /* #FAF6EE */
+    --text-sand: 35 22% 69%;              /* #C8B89A */
 
-    --sidebar-background: 120 30% 9%;
+    --sidebar-background: 24 58% 15%;
     --sidebar-foreground: 40 38% 96%;
     --sidebar-primary: 24 70% 60%;
     --sidebar-primary-foreground: 40 38% 96%;
-    --sidebar-accent: 120 33% 16%;
+    --sidebar-accent: 24 40% 21%;
     --sidebar-accent-foreground: 40 38% 96%;
     --sidebar-border: 35 22% 69% / 0.2;
     --sidebar-ring: 24 70% 60%;
@@ -82,7 +82,7 @@
 
   /* ── Glass card ── */
   .glass-card {
-    background: rgba(15, 30, 15, 0.75);
+    background: rgba(61, 36, 16, 0.75);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(200, 184, 154, 0.15);
@@ -91,7 +91,7 @@
   }
 
   .glass-card-light {
-    background: rgba(15, 30, 15, 0.6);
+    background: rgba(61, 36, 16, 0.6);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(200, 184, 154, 0.15);
@@ -115,7 +115,7 @@
   .photo-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(13, 31, 13, 0.4);
+    background: rgba(61, 36, 16, 0.4);
   }
 
   /* ── Section divider ── */

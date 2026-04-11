@@ -6,17 +6,15 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background photo */}
       <div className="absolute inset-0">
         <img
           src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=1920&q=80"
           alt=""
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0" style={{ background: "rgba(13,31,13,0.4)" }} />
+        <div className="absolute inset-0" style={{ background: "rgba(61,36,16,0.4)" }} />
       </div>
 
-      {/* Content */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
