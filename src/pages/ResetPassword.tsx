@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import AuthBackHome from "@/components/auth/AuthBackHome";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -50,6 +51,8 @@ const ResetPassword = () => {
         transition={{ duration: 0.6 }}
         className="w-full max-w-md bg-card rounded-3xl p-8 md:p-10 shadow-warm-lg border border-border/60"
       >
+        <AuthBackHome />
+
         <div className="flex items-center justify-center gap-2 mb-6">
           <span className="text-xl">🐚</span>
           <Link to="/" className="font-display text-2xl font-bold text-foreground tracking-wide">MapSoul</Link>
@@ -97,9 +100,6 @@ const ResetPassword = () => {
 
         <div className="mt-6 text-center space-y-2">
           <Link to="/login" className="font-body text-sm text-primary hover:underline block">חזרה לכניסה</Link>
-          <Link to="/" className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors block">
-            ← חזרה לדף הבית
-          </Link>
         </div>
       </motion.div>
     </div>
@@ -107,3 +107,4 @@ const ResetPassword = () => {
 };
 
 export default ResetPassword;
+

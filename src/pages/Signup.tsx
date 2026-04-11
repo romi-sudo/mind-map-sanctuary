@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
+import AuthBackHome from "@/components/auth/AuthBackHome";
 
 type Tab = "user" | "practitioner";
 
@@ -76,7 +77,8 @@ const Signup = () => {
         transition={{ duration: 0.6 }}
         className="w-full max-w-md bg-card rounded-3xl p-8 md:p-10 shadow-warm-lg border border-border/60"
       >
-        {/* Logo */}
+        <AuthBackHome />
+
         <div className="flex items-center justify-center gap-2 mb-6">
           <span className="text-xl">🐚</span>
           <Link to="/" className="font-display text-2xl font-bold text-foreground tracking-wide">MapSoul</Link>
@@ -85,7 +87,6 @@ const Signup = () => {
         <h1 className="font-hebrew text-3xl font-bold text-foreground text-center mb-2">צרו חשבון</h1>
         <p className="font-body text-muted-foreground text-center mb-6">התחילו את המסע שלכם עם MapSoul</p>
 
-        {/* Tabs */}
         <div className="flex border-b border-border mb-8">
           <button
             onClick={() => setTab("user")}
@@ -182,14 +183,12 @@ const Signup = () => {
           </button>
         </form>
 
-        {/* Divider */}
         <div className="flex items-center gap-4 my-6">
           <div className="flex-1 h-px bg-border" />
           <span className="font-body text-sm text-muted-foreground">או</span>
           <div className="flex-1 h-px bg-border" />
         </div>
 
-        {/* Google */}
         <button
           onClick={handleGoogle}
           className="w-full py-3.5 rounded-full bg-background border border-border text-foreground font-body font-medium text-sm hover:bg-muted/50 transition-colors flex items-center justify-center gap-3"
@@ -203,17 +202,11 @@ const Signup = () => {
           הרשמה עם Google
         </button>
 
-        {/* Links */}
         <div className="mt-8 text-center space-y-2">
           <p className="font-body text-sm text-muted-foreground">
             כבר יש לכם חשבון?{" "}
             <Link to="/login" className="text-primary hover:underline font-medium">התחברו כאן</Link>
           </p>
-          <div className="pt-2">
-            <Link to="/" className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors">
-              ← חזרה לדף הבית
-            </Link>
-          </div>
         </div>
       </motion.div>
     </div>
@@ -221,3 +214,4 @@ const Signup = () => {
 };
 
 export default Signup;
+
