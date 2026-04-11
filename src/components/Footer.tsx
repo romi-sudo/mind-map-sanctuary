@@ -8,6 +8,12 @@ const Footer = () => {
         <Link to="/" className="font-display text-2xl font-bold text-primary-foreground/90 mb-6 block tracking-wider">
           MapSoul
         </Link>
+        <Link
+          to="/join-as-practitioner"
+          className="inline-block text-primary/80 hover:text-primary transition-colors text-sm font-medium mb-6"
+        >
+          הצטרפו כמומחים
+        </Link>
         <p className="font-body text-primary-foreground/40 text-sm">
           MapSoul © 2025 — כל הזכויות שמורות
         </p>

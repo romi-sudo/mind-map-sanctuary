@@ -14,6 +14,69 @@ export type Database = {
   }
   public: {
     Tables: {
+      practitioner_applications: {
+        Row: {
+          accepting_new_clients: boolean
+          approaches: string[]
+          area: string | null
+          bio: string | null
+          created_at: string
+          email: string
+          format: string
+          full_name: string
+          id: string
+          languages: string[]
+          phone: string
+          price_per_session: number
+          professional_title: string
+          profile_image_url: string | null
+          service_types: string[]
+          specialties: string[]
+          website: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          accepting_new_clients?: boolean
+          approaches?: string[]
+          area?: string | null
+          bio?: string | null
+          created_at?: string
+          email: string
+          format?: string
+          full_name: string
+          id?: string
+          languages?: string[]
+          phone: string
+          price_per_session?: number
+          professional_title: string
+          profile_image_url?: string | null
+          service_types?: string[]
+          specialties?: string[]
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          accepting_new_clients?: boolean
+          approaches?: string[]
+          area?: string | null
+          bio?: string | null
+          created_at?: string
+          email?: string
+          format?: string
+          full_name?: string
+          id?: string
+          languages?: string[]
+          phone?: string
+          price_per_session?: number
+          professional_title?: string
+          profile_image_url?: string | null
+          service_types?: string[]
+          specialties?: string[]
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       questionnaire_responses: {
         Row: {
           answers: Json
