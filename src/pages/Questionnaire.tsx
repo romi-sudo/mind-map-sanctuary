@@ -1,7 +1,9 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 /* ── Types ── */
 type Track = "personal" | "career" | "both";
@@ -16,6 +18,19 @@ interface StepDef {
   headline: string;
   subtext?: string;
   cards: CardOption[];
+}
+
+interface Practitioner {
+  name: string;
+  initials: string;
+  title: string;
+  tags: string[];
+  price: string;
+}
+
+interface Recommendation {
+  primary: { title: string; description: string };
+  practitioners: Practitioner[];
 }
 
 /* ── Step data ── */
@@ -148,11 +163,13 @@ const AnswerCard = ({
 const Questionnaire = () => {
   const navigate = useNavigate();
   const [track, setTrack] = useState<Track | null>(null);
-  const [stepIndex, setStepIndex] = useState(0); // 0 = entry gate
+  const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [freeText, setFreeText] = useState("");
   const [direction, setDirection] = useState(1);
   const [showResults, setShowResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
 
   const getTrackSteps = useCallback((): StepDef[] => {
     if (!track) return [];
@@ -160,7 +177,6 @@ const Questionnaire = () => {
     return track === "personal" ? PERSONAL_STEPS : CAREER_STEPS;
   }, [track]);
 
-  // Total steps: 1 (gate) + track steps + 1 (free text)
   const totalSteps = 1 + (track ? getTrackSteps().length : 0) + (track ? 1 : 0);
   const progress = track ? ((stepIndex + 1) / totalSteps) * 100 : 0;
 
@@ -175,14 +191,12 @@ const Questionnaire = () => {
 
   const handleCardSelect = (id: string) => {
     setAnswers((prev) => ({ ...prev, [stepIndex]: id }));
-    // Auto-advance after short delay
     setTimeout(() => {
       setDirection(1);
       const trackSteps = getTrackSteps();
       if (stepIndex - 1 < trackSteps.length - 1) {
         setStepIndex((s) => s + 1);
       } else {
-        // Go to free text step
         setStepIndex(1 + trackSteps.length);
       }
     }, 350);
@@ -198,8 +212,51 @@ const Questionnaire = () => {
     }
   };
 
-  const handleSubmit = () => {
-    setShowResults(true);
+  const handleSubmit = async () => {
+    if (!track) return;
+    setIsLoading(true);
+
+    try {
+      // Save to database
+      const { data: inserted, error: insertError } = await supabase
+        .from("questionnaire_responses")
+        .insert({
+          track,
+          answers,
+          free_text: freeText,
+        })
+        .select("id")
+        .single();
+
+      if (insertError) throw insertError;
+
+      // Generate AI recommendation
+      const { data: fnData, error: fnError } = await supabase.functions.invoke(
+        "generate-recommendation",
+        {
+          body: {
+            responseId: inserted.id,
+            track,
+            answers,
+            freeText,
+          },
+        }
+      );
+
+      if (fnError) throw fnError;
+
+      if (fnData?.recommendation) {
+        setRecommendation(fnData.recommendation);
+      }
+    } catch (error) {
+      console.error("Error submitting questionnaire:", error);
+      toast.error("אירעה שגיאה, מציג המלצות ברירת מחדל");
+      // Use fallback
+      setRecommendation(null);
+    } finally {
+      setIsLoading(false);
+      setShowResults(true);
+    }
   };
 
   const currentTrackSteps = getTrackSteps();
@@ -207,12 +264,24 @@ const Questionnaire = () => {
   const currentStep = stepIndex > 0 && stepIndex <= currentTrackSteps.length ? currentTrackSteps[stepIndex - 1] : null;
 
   if (showResults) {
-    return <ResultsPage track={track!} onRestart={() => { setShowResults(false); setStepIndex(0); setTrack(null); setAnswers({}); setFreeText(""); }} />;
+    return (
+      <ResultsPage
+        track={track!}
+        recommendation={recommendation}
+        onRestart={() => {
+          setShowResults(false);
+          setStepIndex(0);
+          setTrack(null);
+          setAnswers({});
+          setFreeText("");
+          setRecommendation(null);
+        }}
+      />
+    );
   }
 
   return (
     <div dir="rtl" className="min-h-screen bg-background grain-overlay flex flex-col">
-      {/* Progress bar */}
       {track && (
         <div className="fixed top-0 left-0 right-0 z-50 h-1.5 bg-muted">
           <motion.div
@@ -224,7 +293,6 @@ const Questionnaire = () => {
         </div>
       )}
 
-      {/* Back button */}
       {stepIndex > 0 && (
         <button
           onClick={goBack}
@@ -235,7 +303,6 @@ const Questionnaire = () => {
         </button>
       )}
 
-      {/* Content */}
       <div className="flex-1 flex items-center justify-center px-6 py-20">
         <AnimatePresence mode="wait" custom={direction}>
           {stepIndex === 0 && (
@@ -309,9 +376,17 @@ const Questionnaire = () => {
               <div className="mt-8 text-center">
                 <button
                   onClick={handleSubmit}
-                  className="btn-glow inline-block bg-primary text-primary-foreground font-body font-medium text-lg px-12 py-4 rounded-full hover:bg-primary/90 transition-colors"
+                  disabled={isLoading}
+                  className="btn-glow inline-flex items-center gap-3 bg-primary text-primary-foreground font-body font-medium text-lg px-12 py-4 rounded-full hover:bg-primary/90 transition-colors disabled:opacity-70"
                 >
-                  הראה לי את המסלול שלי ←
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      מייצר המלצה מותאמת אישית...
+                    </>
+                  ) : (
+                    "הראה לי את המסלול שלי ←"
+                  )}
                 </button>
               </div>
             </motion.div>
@@ -322,17 +397,35 @@ const Questionnaire = () => {
   );
 };
 
-/* ── Results page ── */
-const DUMMY_PRACTITIONERS = [
+/* ── Fallback data ── */
+const FALLBACK_PRACTITIONERS: Practitioner[] = [
   { name: "ד״ר נועה לוי", initials: "נל", title: "פסיכולוגית קלינית", tags: ["CBT", "חרדה", "מעברי חיים"], price: "350–500 ש״ח" },
   { name: "עמית כהן", initials: "עכ", title: "מאמן אישי ומקצועי", tags: ["NLP", "קריירה", "מנהיגות"], price: "300–450 ש״ח" },
   { name: "מיכל אברהם", initials: "מא", title: "מטפלת בתנועה", tags: ["סומטי", "טראומה", "גוף-נפש"], price: "280–400 ש״ח" },
 ];
 
-const ResultsPage = ({ track, onRestart }: { track: Track; onRestart: () => void }) => {
+/* ── Results page ── */
+const ResultsPage = ({
+  track,
+  recommendation,
+  onRestart,
+}: {
+  track: Track;
+  recommendation: Recommendation | null;
+  onRestart: () => void;
+}) => {
   const headline = track === "career"
     ? "את/ה בצומת מקצועית — הנה הכיוון שלך:"
     : "לפי מה שסיפרת — המסלול שמתאים לך:";
+
+  const primary = recommendation?.primary ?? {
+    title: track === "career" ? "אימון קריירה + עבודה פנימית" : "טיפול פסיכולוגי אינטגרטיבי",
+    description: track === "career"
+      ? "שילוב של מיפוי מקצועי עם עבודה על זהות — כדי שהצעד הבא יהיה גם חכם וגם נכון."
+      : "גישה שמשלבת הקשבה עמוקה עם כלים מעשיים — כדי שתרגיש/י שינוי אמיתי כבר מהפגישה הראשונה.",
+  };
+
+  const practitioners = recommendation?.practitioners ?? FALLBACK_PRACTITIONERS;
 
   return (
     <div dir="rtl" className="min-h-screen bg-background grain-overlay">
@@ -345,7 +438,6 @@ const ResultsPage = ({ track, onRestart }: { track: Track; onRestart: () => void
           {headline}
         </motion.h1>
 
-        {/* Primary recommendation */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -355,22 +447,15 @@ const ResultsPage = ({ track, onRestart }: { track: Track; onRestart: () => void
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center text-primary text-xl">✦</div>
             <div>
-              <h2 className="font-hebrew text-2xl font-bold text-foreground mb-2">
-                {track === "career" ? "אימון קריירה + עבודה פנימית" : "טיפול פסיכולוגי אינטגרטיבי"}
-              </h2>
-              <p className="font-body text-muted-foreground leading-relaxed">
-                {track === "career"
-                  ? "שילוב של מיפוי מקצועי עם עבודה על זהות — כדי שהצעד הבא יהיה גם חכם וגם נכון."
-                  : "גישה שמשלבת הקשבה עמוקה עם כלים מעשיים — כדי שתרגיש/י שינוי אמיתי כבר מהפגישה הראשונה."}
-              </p>
+              <h2 className="font-hebrew text-2xl font-bold text-foreground mb-2">{primary.title}</h2>
+              <p className="font-body text-muted-foreground leading-relaxed">{primary.description}</p>
             </div>
           </div>
         </motion.div>
 
-        {/* Practitioner cards */}
         <h3 className="font-hebrew text-xl font-bold text-foreground mb-6">מומחים שמתאימים לך</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
-          {DUMMY_PRACTITIONERS.map((p, i) => (
+          {practitioners.map((p, i) => (
             <motion.div
               key={p.name}
               initial={{ opacity: 0, y: 20 }}
@@ -396,7 +481,6 @@ const ResultsPage = ({ track, onRestart }: { track: Track; onRestart: () => void
           ))}
         </div>
 
-        {/* Restart link */}
         <div className="text-center">
           <button onClick={onRestart} className="font-body text-muted-foreground hover:text-primary transition-colors text-sm">
             רוצה לנסות מסלול אחר? ← חזור לשאלון
