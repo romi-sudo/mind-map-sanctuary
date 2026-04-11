@@ -286,7 +286,7 @@ const Questionnaire = () => {
                 onChange={(e) => setFreeText(e.target.value)}
                 placeholder="לדוגמה: אני רוצה להרגיש שאני יודע/ת לאן אני הולך/ת..."
                 className="w-full min-h-[160px] rounded-2xl p-6 font-body text-cream text-lg placeholder:text-sand/50 focus:outline-none resize-none"
-                style={{ background: "rgba(15,30,15,0.6)", backdropFilter: "blur(10px)", border: "1px solid rgba(200,184,154,0.15)" }}
+                style={{ background: "rgba(61,36,16,0.6)", backdropFilter: "blur(10px)", border: "1px solid rgba(200,184,154,0.15)" }}
               />
               <div className="mt-8 text-center">
                 <button onClick={handleSubmit} disabled={isLoading} className="btn-primary text-lg inline-flex items-center gap-3">
@@ -350,7 +350,7 @@ const ResultsPage = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
           {practitioners.map((p, i) => (
             <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="glass-card">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center font-display text-xl font-bold mb-4" style={{ background: "#1A3A1A", color: "#C9A96E" }}>
+              <div className="w-16 h-16 rounded-full flex items-center justify-center font-display text-xl font-bold mb-4" style={{ background: "#4D3520", color: "#C9A96E" }}>
                 {p.initials}
               </div>
               <h4 className="font-display text-lg font-bold text-cream">{p.name}</h4>
