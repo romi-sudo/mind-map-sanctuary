@@ -22,38 +22,33 @@ const ForgotPassword = () => {
     finally { setLoading(false); }
   };
 
-  const inputClass = "w-full py-3 bg-transparent text-cream placeholder:text-sand/50 focus:outline-none font-body text-sm";
+  const inputClass = "w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm";
 
   return (
-    <div dir="rtl" className="min-h-screen flex items-center justify-center px-4 py-12 photo-section">
-      <div className="photo-bg">
-        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt="" />
-        <div className="photo-overlay" />
-      </div>
-
+    <div dir="rtl" className="min-h-screen flex items-center justify-center px-4 py-12 bg-background">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="glass-card w-full max-w-md relative z-10"
+        className="spa-card w-full max-w-md"
       >
         <div className="mb-5">
-          <Link to="/" className="font-body text-sm text-sand hover:text-cream transition-colors">← חזרה לדף הבית</Link>
+          <Link to="/" className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors">← חזרה לדף הבית</Link>
         </div>
-        <Link to="/" className="font-display text-2xl font-bold block text-center mb-6" style={{ color: "#C9A96E" }}>MapSoul</Link>
+        <Link to="/" className="font-display text-2xl font-bold block text-center mb-6 text-foreground">MapSoul</Link>
 
         {sent ? (
           <div className="text-center">
-            <h1 className="font-display text-2xl font-bold text-cream mb-3">שלחנו!</h1>
-            <p className="font-body text-sand mb-6">בדקו את תיבת הדואר שלכם</p>
-            <Link to="/login" className="font-body text-sm hover:underline" style={{ color: "#E8854A" }}>חזרה לכניסה</Link>
+            <h1 className="font-display text-2xl font-bold text-foreground mb-3">שלחנו!</h1>
+            <p className="font-body text-muted-foreground mb-6">בדקו את תיבת הדואר שלכם</p>
+            <Link to="/login" className="font-body text-sm hover:underline text-primary">חזרה לכניסה</Link>
           </div>
         ) : (
           <>
-            <h1 className="font-display text-3xl font-bold text-cream text-center mb-2">איפוס סיסמה</h1>
-            <p className="font-body text-sand text-center mb-8">נשלח לכם קישור לאיפוס למייל</p>
+            <h1 className="font-display text-3xl font-bold text-foreground text-center mb-2">איפוס סיסמה</h1>
+            <p className="font-body text-muted-foreground text-center mb-8">נשלח לכם קישור לאיפוס למייל</p>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <div style={{ borderBottom: "1px solid rgba(201,169,110,0.3)" }}>
+              <div className="border-b border-border">
                 <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="אימייל" className={inputClass} />
               </div>
               <button type="submit" disabled={loading} className="btn-primary w-full">
@@ -61,7 +56,7 @@ const ForgotPassword = () => {
               </button>
             </form>
             <div className="mt-6 text-center">
-              <Link to="/login" className="font-body text-sm hover:underline" style={{ color: "#E8854A" }}>חזרה לכניסה</Link>
+              <Link to="/login" className="font-body text-sm hover:underline text-primary">חזרה לכניסה</Link>
             </div>
           </>
         )}
