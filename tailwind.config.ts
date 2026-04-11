@@ -53,6 +53,7 @@ export default {
           clay: "hsl(var(--text-clay))",
           espresso: "hsl(var(--espresso))",
         },
+        blush: "hsl(var(--blush))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
