@@ -13,11 +13,11 @@ const FinalCTA = () => {
       </div>
 
       <div ref={ref} className={`container mx-auto px-6 text-center relative z-10 py-28 reveal ${isVisible ? "visible" : ""}`}>
-        <p className="font-body text-sm tracking-[0.25em] uppercase mb-6" style={{ color: "#C9A96E" }}>הצעד הבא שלכם</p>
-        <h2 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-cream mb-6 leading-tight">
+        <p className="font-body text-sm tracking-[0.25em] uppercase mb-6 text-white/80">הצעד הבא שלכם</p>
+        <h2 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-white mb-6 leading-tight">
           מוכנים למצוא את המסלול שלכם?
         </h2>
-        <div className="w-14 h-px mx-auto mb-10" style={{ background: "rgba(200,184,154,0.4)" }} />
+        <div className="w-14 h-px mx-auto mb-10 bg-white/40" />
         <button
           onClick={() => navigate("/questionnaire")}
           className="btn-primary text-lg"

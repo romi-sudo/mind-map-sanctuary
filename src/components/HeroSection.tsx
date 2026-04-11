@@ -12,7 +12,7 @@ const HeroSection = () => {
           alt=""
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0" style={{ background: "rgba(61,36,16,0.4)" }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/50" />
       </div>
 
       <motion.div
@@ -25,8 +25,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="font-body text-sm tracking-[0.3em] uppercase mb-6"
-          style={{ color: "#C9A96E" }}
+          className="font-body text-sm tracking-[0.3em] uppercase mb-6 text-white/80"
         >
           מסע פנימי מתחיל כאן
         </motion.p>
@@ -35,7 +34,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-cream leading-[1.1] mb-8"
+          className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-white leading-[1.1] mb-8"
         >
           מפת הנפש שלך
         </motion.h1>
@@ -44,15 +43,14 @@ const HeroSection = () => {
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 1, scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="w-16 h-px mx-auto mb-8"
-          style={{ background: "rgba(200,184,154,0.4)" }}
+          className="w-16 h-px mx-auto mb-8 bg-white/40"
         />
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="font-body text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-12 text-sand"
+          className="font-body text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-12 text-white/85"
         >
           MapSoul מנווטת אותך למסלול שמתאים לך בדיוק — טיפול, אימון, ריטריט או קורס
         </motion.p>

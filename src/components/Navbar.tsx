@@ -15,9 +15,9 @@ const Navbar = () => {
   const links = Object.keys(linkMap);
 
   return (
-    <nav className="fixed top-0 right-0 left-0 z-50 backdrop-blur-xl border-b" style={{ background: "rgba(61,36,16,0.95)", borderColor: "rgba(200,184,154,0.15)" }}>
+    <nav className="fixed top-0 right-0 left-0 z-50 backdrop-blur-xl bg-white/90 border-b border-border shadow-sm">
       <div className="container mx-auto px-6 py-4 flex flex-row-reverse items-center justify-between">
-        <Link to="/" className="font-display text-xl font-bold tracking-wide" style={{ color: "#C9A96E" }}>
+        <Link to="/" className="font-display text-xl font-bold tracking-wide text-foreground">
           MapSoul
         </Link>
 
@@ -25,7 +25,7 @@ const Navbar = () => {
           <ul className="flex items-center gap-8">
             {links.map((link) => (
               <li key={link}>
-                <Link to={linkMap[link]} className="font-body text-cream/80 hover:text-cream transition-colors text-sm">
+                <Link to={linkMap[link]} className="font-body text-muted-foreground hover:text-foreground transition-colors text-sm">
                   {link}
                 </Link>
               </li>
@@ -44,17 +44,17 @@ const Navbar = () => {
           </div>
         </div>
 
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-cream" aria-label="תפריט">
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden text-foreground" aria-label="תפריט">
           <span className="font-body text-sm">{mobileOpen ? "סגור" : "תפריט"}</span>
         </button>
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden px-6 pb-5 border-t" style={{ background: "rgba(61,36,16,0.98)", borderColor: "rgba(200,184,154,0.1)" }}>
+        <div className="md:hidden px-6 pb-5 border-t border-border bg-white/95 backdrop-blur-xl">
           <ul className="flex flex-col gap-3 mb-4 pt-4">
             {links.map((link) => (
               <li key={link}>
-                <Link to={linkMap[link]} onClick={() => setMobileOpen(false)} className="font-body text-cream/80 hover:text-cream transition-colors text-base">
+                <Link to={linkMap[link]} onClick={() => setMobileOpen(false)} className="font-body text-muted-foreground hover:text-foreground transition-colors text-base">
                   {link}
                 </Link>
               </li>

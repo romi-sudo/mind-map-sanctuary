@@ -6,45 +6,44 @@
 
 @layer base {
   :root {
-    --background: 24 58% 15%;             /* #3D2410 warm dark brown */
-    --foreground: 40 38% 96%;             /* #FAF6EE warm cream */
-    --card: 24 58% 15%;
-    --card-foreground: 40 38% 96%;
-    --popover: 24 58% 15%;
-    --popover-foreground: 40 38% 96%;
-    --primary: 24 70% 60%;                /* #E8854A tropical orange */
-    --primary-foreground: 40 38% 96%;
-    --secondary: 38 40% 61%;              /* #C9A96E warm gold */
-    --secondary-foreground: 40 38% 96%;
-    --muted: 24 45% 18%;
-    --muted-foreground: 35 22% 69%;       /* #C8B89A warm sand */
-    --accent: 340 45% 65%;                /* #D4789A tropical pink */
-    --accent-foreground: 40 38% 96%;
+    --background: 34 33% 93%;              /* #F5EFE6 warm beige */
+    --foreground: 20 30% 14%;              /* #2C1F0F dark brown */
+    --card: 0 0% 100%;                     /* white */
+    --card-foreground: 20 30% 14%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 30% 14%;
+    --primary: 24 44% 50%;                 /* #B5784A terracotta */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 38 40% 61%;               /* #C9A96E warm gold */
+    --secondary-foreground: 20 30% 14%;
+    --muted: 34 20% 88%;                   /* #E8E0D4 */
+    --muted-foreground: 20 12% 42%;        /* #6B5B4E */
+    --accent: 34 33% 93%;
+    --accent-foreground: 20 30% 14%;
     --destructive: 0 72% 51%;
-    --destructive-foreground: 40 38% 96%;
-    --border: 35 22% 69% / 0.2;
-    --input: 35 22% 69% / 0.3;
-    --ring: 24 70% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 15% 80%;
+    --input: 30 15% 80%;
+    --ring: 24 44% 50%;
     --radius: 1rem;
 
     /* Extended tokens */
-    --forest-deep: 24 58% 15%;            /* #3D2410 */
-    --forest-surface: 24 40% 21%;         /* #4D3520 */
-    --tropical-orange: 24 70% 60%;        /* #E8854A */
-    --tropical-orange-hover: 24 60% 50%;  /* #C4693A */
-    --warm-gold: 38 40% 61%;              /* #C9A96E */
-    --tropical-pink: 340 45% 65%;         /* #D4789A */
-    --text-cream: 40 38% 96%;             /* #FAF6EE */
-    --text-sand: 35 22% 69%;              /* #C8B89A */
+    --terracotta: 24 44% 50%;              /* #B5784A */
+    --terracotta-hover: 24 44% 42%;        /* darker */
+    --warm-gold: 38 40% 61%;               /* #C9A96E */
+    --text-dark: 20 30% 14%;               /* #2C1F0F */
+    --text-mid: 20 12% 42%;                /* #6B5B4E */
+    --surface-warm: 34 33% 93%;            /* #F5EFE6 */
+    --surface-card: 0 0% 100%;             /* white */
 
-    --sidebar-background: 24 58% 15%;
-    --sidebar-foreground: 40 38% 96%;
-    --sidebar-primary: 24 70% 60%;
-    --sidebar-primary-foreground: 40 38% 96%;
-    --sidebar-accent: 24 40% 21%;
-    --sidebar-accent-foreground: 40 38% 96%;
-    --sidebar-border: 35 22% 69% / 0.2;
-    --sidebar-ring: 24 70% 60%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 20 30% 14%;
+    --sidebar-primary: 24 44% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 34 33% 93%;
+    --sidebar-accent-foreground: 20 30% 14%;
+    --sidebar-border: 30 15% 80%;
+    --sidebar-ring: 24 44% 50%;
   }
 }
 
@@ -60,13 +59,13 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
-    color: hsl(35 22% 69%);
+    color: hsl(20 12% 42%);
     line-height: 1.8;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
-    color: hsl(40 38% 96%);
+    color: hsl(20 30% 14%);
     letter-spacing: 0.02em;
   }
 }
@@ -80,22 +79,38 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* ── Glass card ── */
-  .glass-card {
-    background: rgba(61, 36, 16, 0.75);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(200, 184, 154, 0.15);
+  /* ── Elevated card ── */
+  .spa-card {
+    background: white;
     border-radius: 16px;
     padding: 2rem;
+    box-shadow: 0 4px 24px rgba(44, 31, 15, 0.08);
+    border: 1px solid rgba(201, 169, 110, 0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .spa-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(44, 31, 15, 0.12);
+  }
+
+  /* Glass card for dark overlays */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(201, 169, 110, 0.15);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 24px rgba(44, 31, 15, 0.08);
   }
 
   .glass-card-light {
-    background: rgba(61, 36, 16, 0.6);
+    background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(200, 184, 154, 0.15);
+    border: 1px solid rgba(201, 169, 110, 0.12);
     border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(44, 31, 15, 0.06);
   }
 
   /* ── Photo section with overlay ── */
@@ -115,13 +130,13 @@
   .photo-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(61, 36, 16, 0.4);
+    background: linear-gradient(180deg, rgba(44, 31, 15, 0.35) 0%, rgba(44, 31, 15, 0.55) 100%);
   }
 
   /* ── Section divider ── */
   .section-divider {
     height: 1px;
-    background: rgba(200, 184, 154, 0.2);
+    background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.3), transparent);
   }
 
   /* ── Scroll reveal ── */
@@ -151,8 +166,8 @@
 
   /* ── Buttons ── */
   .btn-primary {
-    background: hsl(var(--tropical-orange));
-    color: hsl(var(--text-cream));
+    background: hsl(var(--terracotta));
+    color: white;
     border-radius: 50px;
     padding: 14px 32px;
     font-family: 'Inter', sans-serif;
@@ -160,7 +175,7 @@
     transition: background 0.3s ease;
   }
   .btn-primary:hover {
-    background: hsl(var(--tropical-orange-hover));
+    background: hsl(var(--terracotta-hover));
   }
   .btn-primary:disabled {
     opacity: 0.5;
@@ -178,7 +193,7 @@
   }
   .btn-secondary:hover {
     background: hsl(var(--warm-gold));
-    color: hsl(var(--forest-deep));
+    color: white;
   }
 
   /* ── Gold line ── */
@@ -186,7 +201,7 @@
     display: block;
     width: 60px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--warm-gold) / 0.5), transparent);
+    background: linear-gradient(90deg, transparent, hsl(var(--warm-gold) / 0.6), transparent);
     margin: 0 auto;
   }
 }
