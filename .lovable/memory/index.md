@@ -1,10 +1,10 @@
 # Project Memory
 
 ## Core
-Hebrew RTL app. Coastal sunset palette: bg #FDF8F3, primary terracotta #C47A5A, text #3D2314.
-Sunset gradient hero (lavender→blush→golden). Floating SVG botanicals, grain overlay.
-Frank Ruhl Libre for Hebrew headlines, Playfair Display for English, Inter for body.
-Warm feminine luxury wellness aesthetic. Pill buttons, frosted glass, watercolor washes.
+Hebrew RTL app. Photo-driven NATURE design with real imagery throughout.
+Warm earth palette: bg #F6F1EA, primary burnt sienna #A66830, secondary forest green #5E9968, text #372315.
+Cormorant Garamond for English headlines, David Libre for Hebrew, Nunito for body.
+Real nature photos (seashells, flowers, bridges, sunsets) — NOT abstract SVG elements.
 
 ## Memories
-- [Design system](mem://design/palette) — Coastal sunset palette, hero gradient, SVG botanical elements
+- [Design system](mem://design/palette) — Nature photo palette, typography, photo assets list
