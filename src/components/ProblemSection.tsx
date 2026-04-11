@@ -27,8 +27,7 @@ const ProblemSection = () => {
     <>
       <OrganicDivider />
       <section className="py-32 md:py-40 bg-background relative overflow-hidden">
-        {/* Subtle watercolor wash */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.03] via-transparent to-secondary/[0.03]" />
+        <div className="absolute inset-0 bg-gradient-to-br from-secondary/[0.03] via-transparent to-primary/[0.03]" />
 
         <div className="container mx-auto px-6 relative z-10">
           <div
@@ -38,15 +37,15 @@ const ProblemSection = () => {
             {cards.map((card) => (
               <div
                 key={card.title}
-                className="card-luxury bg-card rounded-2xl p-10 border border-border/60 shadow-inner-warm text-center"
+                className="card-luxury bg-card rounded-2xl p-10 border border-secondary/20 shadow-warm text-center"
               >
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-7">
-                  <card.icon className="text-primary" size={30} strokeWidth={1.5} />
+                <div className="w-16 h-16 rounded-full bg-secondary/15 flex items-center justify-center mx-auto mb-7">
+                  <card.icon className="text-primary" size={28} strokeWidth={1.5} />
                 </div>
-                <h3 className="font-hebrew text-xl font-bold text-foreground mb-4">
+                <h3 className="font-hebrew text-xl font-bold text-foreground mb-4 tracking-wide">
                   {card.title}
                 </h3>
-                <p className="font-body text-warm-walnut text-sm leading-relaxed">
+                <p className="font-body text-muted-foreground text-sm leading-relaxed">
                   {card.body}
                 </p>
               </div>

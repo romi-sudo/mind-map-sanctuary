@@ -16,21 +16,22 @@ const HowItWorks = () => {
       <section className="py-32 md:py-40 bg-card/40">
         <div className="container mx-auto px-6">
           <div ref={ref} className={`reveal ${isVisible ? "visible" : ""}`}>
-            <h2 className="font-hebrew text-4xl md:text-5xl font-bold text-foreground text-center mb-20">
+            <h2 className="font-hebrew text-4xl md:text-6xl font-bold text-foreground text-center mb-6 tracking-wide">
               איך זה עובד?
             </h2>
+            <div className="gold-line mb-20" />
           </div>
 
           <div className={`grid grid-cols-1 md:grid-cols-3 gap-16 max-w-5xl mx-auto reveal-stagger ${isVisible ? "visible" : ""}`}>
             {steps.map((step) => (
               <div key={step.num} className="text-center group">
-                <span className="font-display text-7xl font-bold text-primary/20 block mb-6 group-hover:text-primary/40 transition-colors duration-500">
+                <span className="font-display text-7xl font-bold text-secondary/30 block mb-6 group-hover:text-secondary/50 transition-colors duration-500">
                   {step.num}
                 </span>
-                <h3 className="font-hebrew text-xl font-bold text-foreground mb-4">
+                <h3 className="font-hebrew text-xl font-bold text-foreground mb-4 tracking-wide">
                   {step.title}
                 </h3>
-                <p className="font-body text-warm-walnut text-sm leading-relaxed">
+                <p className="font-body text-muted-foreground text-sm leading-relaxed">
                   {step.desc}
                 </p>
               </div>
