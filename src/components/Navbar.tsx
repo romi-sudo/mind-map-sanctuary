@@ -26,7 +26,7 @@ const Navbar = () => {
             <li key={link}>
               <Link
                 to={linkMap[link]}
-                className="font-body text-foreground/70 hover:text-primary transition-colors duration-300 text-sm font-medium relative after:content-[''] after:absolute after:bottom-[-4px] after:right-0 after:w-0 after:h-[1.5px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+                className="font-body text-muted-foreground hover:text-primary transition-colors duration-300 text-sm font-medium relative after:content-[''] after:absolute after:bottom-[-4px] after:right-0 after:w-0 after:h-[1.5px] after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
               >
                 {link}
               </Link>
@@ -48,7 +48,7 @@ const Navbar = () => {
           <ul className="flex flex-col gap-4">
             {links.map((link) => (
               <li key={link}>
-                <Link to={linkMap[link]} onClick={() => setMobileOpen(false)} className="font-body text-foreground/70 hover:text-primary transition-colors text-base">
+                <Link to={linkMap[link]} onClick={() => setMobileOpen(false)} className="font-body text-muted-foreground hover:text-primary transition-colors text-base">
                   {link}
                 </Link>
               </li>

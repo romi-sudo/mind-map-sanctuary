@@ -1,17 +1,21 @@
 ---
-name: Coastal luxury color palette
-description: Full coastal luxury palette — caramel gold, dusty rose, warm cream with botanical elements
+name: Coastal sunset color palette
+description: Full coastal sunset palette — terracotta rose, dusty blush, golden amber with botanical elements
 type: design
 ---
-## Color Palette — Coastal Luxury
-- Background: #FAF7F4 (soft warm white) — `--background: 28 33% 97%`
-- Surface/Card: #F2EBE0 (warm cream) — `--card: 30 30% 91%`
-- Primary: #C4956A (warm caramel gold) — `--primary: 28 40% 59%`
-- Secondary: #D4A5A5 (dusty rose blush) — `--secondary: 0 30% 74%`
-- Dark text: #3D2B1F (deep warm brown) — `--foreground: 20 33% 18%`
-- Medium text: #8B6F5E (warm taupe) — `--muted-foreground: 20 22% 46%`
-- Light text: #B5998A (muted rose-taupe) — `--text-clay: 18 18% 63%`
-- Borders: #E8DDD4 (soft warm border) — `--border: 25 22% 87%`
+## Color Palette — Coastal Sunset
+- Background: #FDF8F3 (warm soft white) — `--background: 30 50% 97%`
+- Surface/Card: #FEF4EC (warm peach cream) — `--card: 25 80% 96%`
+- Primary: #C47A5A (warm terracotta rose) — `--primary: 16 42% 56%`
+- Secondary: #D4A0A0 (dusty blush) — `--secondary: 0 28% 73%`
+- Dark text: #3D2314 (deep warm espresso) — `--foreground: 15 40% 17%`
+- Medium text: #8B5E52 (warm rosewood) — `--muted-foreground: 12 28% 43%`
+- Borders: #EDD9CC (soft peachy border) — `--border: 22 45% 87%`
+
+## Hero Gradient
+- Top: #C8B4D4 (soft lavender)
+- Middle: #F2A8A8 (blush rose)
+- Bottom: #F4C98A (golden amber)
 
 ## Typography
 - Headlines: Playfair Display (serif), large and dramatic, tracking-wide
@@ -19,13 +23,14 @@ type: design
 - Body: Inter (sans-serif)
 
 ## Design Elements
-- Botanical SVG petals and leaves throughout (blush and gold, animated)
-- Gold line decorations under headlines
-- Soft sunset gradients (amber → blush pink → soft lavender)
-- Cards: soft shadows, blush tint borders (border-secondary/20)
-- Buttons: warm caramel gold, pill shape, glow effect on hover
-- Dividers: botanical SVG with gold lines and petals
+- Floating SVG petals (blush pink), butterflies (warm gold), leaves (sage green)
+- Frosted glass card in hero (backdrop-blur, white/25)
+- Botanical dividers between sections (flower + leaf SVG)
+- Watercolor section washes (peach, blush, cream gradients)
+- Cards: peach cream bg, blush borders, warm shadows
+- Buttons: terracotta rose, pill shape, glow on hover
+- Grain texture overlay at 3% opacity
 
 ## Mood
-Coastal luxury, soft feminine, warm sunset, natural beauty.
-Mediterranean wellness brand aesthetic.
+Coastal sunset, soft feminine, warm dreamy, natural beauty.
+Pinterest-style warm golden sunset meets soft florals.

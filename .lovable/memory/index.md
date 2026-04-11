@@ -1,9 +1,10 @@
 # Project Memory
 
 ## Core
-Hebrew RTL app. Coastal luxury palette: bg #FAF7F4, primary caramel #C4956A, secondary dusty rose #D4A5A5, text #3D2B1F.
-Playfair Display for headlines, Frank Ruhl Libre for Hebrew, Inter for body.
-Warm feminine sunset aesthetic. Botanical SVG elements. Pill buttons, soft shadows, gold line decorations.
+Hebrew RTL app. Coastal sunset palette: bg #FDF8F3, primary terracotta #C47A5A, text #3D2314.
+Hero: sunset gradient lavender→blush→golden with floating petals/butterflies/leaves, frosted card.
+Playfair Display headlines, Frank Ruhl Libre Hebrew, Inter body.
+Warm dreamy feminine luxury aesthetic. Pill buttons, botanical dividers, watercolor washes.
 
 ## Memories
-- [Design system](mem://design/palette) — Full coastal luxury color tokens, typography, and botanical design elements
+- [Design system](mem://design/palette) — Full coastal sunset color tokens, hero gradient, and botanical elements
