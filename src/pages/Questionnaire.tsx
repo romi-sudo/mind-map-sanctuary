@@ -441,35 +441,36 @@ const ResultsPage = ({
   const practitioners = recommendation?.practitioners ?? FALLBACK_PRACTITIONERS;
 
   return (
-    <div dir="rtl" className="min-h-screen bg-background grain-overlay">
+    <div dir="rtl" className="min-h-screen bg-shell-white grain-overlay">
       <div className="max-w-3xl mx-auto px-6 py-20">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="font-hebrew text-3xl md:text-4xl font-bold text-foreground text-center mb-12"
+          className="font-display text-3xl md:text-4xl font-bold text-foreground text-center mb-12"
         >
           {headline}
         </motion.h1>
 
+        {/* Recommendation card — terracotta */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="rounded-2xl border-2 border-primary bg-card p-8 mb-12 shadow-warm"
+          className="rounded-[20px] bg-terracotta p-8 mb-12 shadow-warm"
         >
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary text-xl">🌿</div>
+            <div className="w-12 h-12 rounded-full bg-shell-white/20 flex items-center justify-center text-shell-white text-xl">🐚</div>
             <div>
-              <h2 className="font-hebrew text-2xl font-bold text-foreground mb-2 inline-flex items-center gap-2">
+              <h2 className="font-display text-2xl font-bold text-shell-white mb-2 inline-flex items-center gap-2">
                 {primary.title}
-                {findApproach(primary.title) && <ApproachTooltipButton tag={primary.title} />}
+                {findApproach(primary.title) && <ApproachTooltipButton tag={primary.title} className="text-shell-white/60 hover:text-shell-white" />}
               </h2>
-              <p className="font-body text-muted-foreground leading-relaxed">{primary.description}</p>
+              <p className="font-body text-shell-white/85 leading-relaxed">{primary.description}</p>
             </div>
           </div>
         </motion.div>
 
-        <h3 className="font-hebrew text-xl font-bold text-foreground mb-6">מומחים שמתאימים לך</h3>
+        <h3 className="font-display text-xl font-bold text-foreground mb-6">מומחים שמתאימים לך</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
           {practitioners.map((p, i) => (
             <motion.div
@@ -477,23 +478,23 @@ const ResultsPage = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 + i * 0.1 }}
-              className="rounded-2xl border border-border bg-card p-6 card-luxury"
+              className="rounded-[20px] border border-sand-medium/50 bg-sand-light p-6 card-coastal shadow-sandy"
             >
-              <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center font-hebrew text-xl font-bold text-primary mb-4">
+              <div className="w-16 h-16 rounded-full bg-terracotta flex items-center justify-center font-display text-xl font-bold text-shell-white mb-4">
                 {p.initials}
               </div>
-              <h4 className="font-hebrew text-lg font-bold text-foreground">{p.name}</h4>
-              <p className="font-body text-sm text-muted-foreground mb-3">{p.title}</p>
+              <h4 className="font-display text-lg font-bold text-foreground">{p.name}</h4>
+              <p className="font-body text-sm text-driftwood mb-3">{p.title}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {p.tags.map((tag) => (
-                  <span key={tag} className="inline-flex items-center gap-1 text-xs font-body bg-secondary/10 text-secondary px-3 py-1 rounded-full">
+                  <span key={tag} className="inline-flex items-center gap-1 text-xs font-body bg-dried-botanical/15 text-dried-botanical px-3 py-1 rounded-full">
                     {tag}
                     {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
                   </span>
                 ))}
               </div>
-              <p className="font-body text-sm text-muted-foreground mb-4">{p.price}</p>
-              <button className="w-full border border-primary text-primary font-body text-sm py-2.5 rounded-full hover:bg-primary/5 transition-colors">
+              <p className="font-body text-sm text-driftwood mb-4">{p.price}</p>
+              <button className="w-full border border-terracotta text-terracotta font-body text-sm py-2.5 rounded-full hover:bg-terracotta/5 transition-colors">
                 לפנייה
               </button>
             </motion.div>
@@ -505,18 +506,17 @@ const ResultsPage = ({
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="rounded-2xl border border-primary/20 p-6 mb-8 text-center"
-          style={{ backgroundColor: "#FEF4EC" }}
+          className="rounded-[20px] border border-sand-dark/20 bg-sand-light p-6 mb-8 text-center"
         >
           <p className="font-body text-foreground text-sm leading-relaxed">
             רוצים להבין יותר על הגישות השונות?{" "}
             <br className="sm:hidden" />
-            לחצו על סימן ה-<span className="inline-flex items-center mx-1 text-primary">?</span> ליד כל גישה בקטלוג המומחים
+            לחצו על סימן ה-<span className="inline-flex items-center mx-1 text-terracotta">?</span> ליד כל גישה בקטלוג המומחים
           </p>
         </motion.div>
 
         <div className="text-center">
-          <button onClick={onRestart} className="font-body text-muted-foreground hover:text-primary transition-colors text-sm">
+          <button onClick={onRestart} className="font-body text-driftwood hover:text-terracotta transition-colors text-sm">
             רוצה לנסות מסלול אחר? ← חזור לשאלון
           </button>
         </div>
