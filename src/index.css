@@ -6,44 +6,31 @@
 
 @layer base {
   :root {
-    /* Desert Earth Palette */
-    --background: 33 33% 93%;        /* #F5EFE6 warm sandy cream */
-    --foreground: 27 38% 12%;        /* #2C1F0F deep espresso */
-
-    --card: 30 27% 88%;             /* #EDE3D5 soft sand */
+    --background: 33 33% 93%;
+    --foreground: 27 38% 12%;
+    --card: 30 27% 88%;
     --card-foreground: 27 38% 12%;
-
     --popover: 33 33% 93%;
     --popover-foreground: 27 38% 12%;
-
-    --primary: 24 43% 50%;          /* #B5784A warm terracotta */
+    --primary: 24 43% 50%;
     --primary-foreground: 33 33% 93%;
-
-    --secondary: 42 74% 31%;        /* #8B6914 deep golden amber */
+    --secondary: 42 74% 31%;
     --secondary-foreground: 33 33% 93%;
-
     --muted: 30 27% 88%;
-    --muted-foreground: 27 29% 50%; /* #9C7E65 muted clay */
-
+    --muted-foreground: 27 29% 50%;
     --accent: 30 27% 88%;
     --accent-foreground: 27 38% 12%;
-
     --destructive: 0 84% 60%;
     --destructive-foreground: 33 33% 93%;
-
-    --border: 28 23% 76%;           /* #D4C4B0 warm beige */
+    --border: 28 23% 76%;
     --input: 28 23% 76%;
     --ring: 24 43% 50%;
-
     --radius: 1rem;
-
-    /* Custom tokens */
-    --text-warm: 27 30% 35%;        /* #6B4F35 warm walnut */
-    --text-clay: 27 22% 50%;        /* #9C7E65 muted clay */
-    --primary-hover: 24 48% 41%;    /* #9B5E35 darker terracotta */
-    --espresso: 27 38% 12%;         /* #2C1F0F */
+    --text-warm: 27 30% 35%;
+    --text-clay: 27 22% 50%;
+    --primary-hover: 24 48% 41%;
+    --espresso: 27 38% 12%;
     --shadow-warm: 28 30% 70%;
-
     --sidebar-background: 33 33% 93%;
     --sidebar-foreground: 27 38% 12%;
     --sidebar-primary: 24 43% 50%;
@@ -93,5 +80,83 @@
 
   .shadow-warm-lg {
     box-shadow: 0 8px 32px -8px hsl(var(--shadow-warm) / 0.4);
+  }
+
+  .shadow-warm-hover {
+    box-shadow: 0 12px 40px -8px hsl(var(--shadow-warm) / 0.5);
+  }
+
+  .shadow-inner-warm {
+    box-shadow: inset 0 2px 8px 0 hsl(var(--shadow-warm) / 0.15), 0 4px 20px -4px hsl(var(--shadow-warm) / 0.3);
+  }
+
+  /* Grain texture overlay */
+  .grain-overlay::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 100;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Staggered children */
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.1s; }
+  .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.25s; }
+  .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.4s; }
+  .reveal-stagger.visible > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Button glow */
+  .btn-glow {
+    position: relative;
+    overflow: visible;
+  }
+  .btn-glow::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 9999px;
+    background: hsl(var(--primary) / 0.25);
+    opacity: 0;
+    filter: blur(12px);
+    transition: opacity 0.4s ease;
+    z-index: -1;
+  }
+  .btn-glow:hover::after {
+    opacity: 1;
+  }
+
+  /* Card luxury hover */
+  .card-luxury {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  }
+  .card-luxury:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 48px -12px hsl(var(--shadow-warm) / 0.5);
   }
 }
