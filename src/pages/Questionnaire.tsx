@@ -502,6 +502,21 @@ const ResultsPage = ({
           ))}
         </div>
 
+        {/* Approach info card */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="rounded-2xl border border-primary/20 p-6 mb-8 text-center"
+          style={{ backgroundColor: "#FEF4EC" }}
+        >
+          <p className="font-body text-foreground text-sm leading-relaxed">
+            רוצים להבין יותר על הגישות השונות?{" "}
+            <br className="sm:hidden" />
+            לחצו על סימן ה-<span className="inline-flex items-center mx-1 text-primary">?</span> ליד כל גישה בקטלוג המומחים
+          </p>
+        </motion.div>
+
         <div className="text-center">
           <button onClick={onRestart} className="font-body text-muted-foreground hover:text-primary transition-colors text-sm">
             רוצה לנסות מסלול אחר? ← חזור לשאלון
