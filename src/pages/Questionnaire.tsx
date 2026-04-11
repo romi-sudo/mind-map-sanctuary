@@ -4,6 +4,8 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { ApproachTooltipButton } from "@/components/ApproachTooltip";
+import { findApproach } from "@/data/approaches";
 import cardFlowers from "@/assets/card-flowers.jpg";
 import cardSeashells from "@/assets/card-seashells.jpg";
 import cardBridge from "@/assets/card-bridge.jpg";
@@ -483,7 +485,10 @@ const ResultsPage = ({
               <p className="font-body text-sm text-muted-foreground mb-3">{p.title}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {p.tags.map((tag) => (
-                  <span key={tag} className="text-xs font-body bg-secondary/10 text-secondary px-3 py-1 rounded-full">{tag}</span>
+                  <span key={tag} className="inline-flex items-center gap-1 text-xs font-body bg-secondary/10 text-secondary px-3 py-1 rounded-full">
+                    {tag}
+                    {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
+                  </span>
                 ))}
               </div>
               <p className="font-body text-sm text-muted-foreground mb-4">{p.price}</p>
