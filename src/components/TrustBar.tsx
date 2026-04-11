@@ -9,7 +9,7 @@ const TrustBar = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28" style={{ background: "#0D1F0D" }}>
+    <section className="py-20 md:py-28" style={{ background: "#3D2410" }}>
       <div className="container mx-auto px-6">
         <div ref={ref} className={`flex flex-col md:flex-row items-center justify-center reveal ${isVisible ? "visible" : ""}`}>
           {stats.map((stat, i) => (

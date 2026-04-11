@@ -34,7 +34,7 @@ export const ApproachTooltipButton = ({ tag, className = "" }: ApproachTooltipBu
               exit={{ opacity: 0 }}
               onClick={() => setOpen(false)}
               className="fixed inset-0 z-50"
-              style={{ background: "rgba(13,31,13,0.6)", backdropFilter: "blur(4px)" }}
+              style={{ background: "rgba(61,36,16,0.6)", backdropFilter: "blur(4px)" }}
             />
 
             <motion.div
@@ -49,7 +49,6 @@ export const ApproachTooltipButton = ({ tag, className = "" }: ApproachTooltipBu
                 className="pointer-events-auto w-full max-w-[380px] max-h-[80vh] overflow-y-auto rounded-2xl glass-card"
                 onClick={(e) => e.stopPropagation()}
               >
-                {/* Header */}
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <h2 className="font-display text-xl font-bold text-cream leading-tight">{approach.name}</h2>

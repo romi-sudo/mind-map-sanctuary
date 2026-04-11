@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer style={{ background: "#0D1F0D" }}>
+    <footer style={{ background: "#3D2410" }}>
       <div className="section-divider" />
       <div className="container mx-auto px-6 py-12 text-center">
         <Link to="/" className="font-display text-xl font-bold block mb-4" style={{ color: "#C9A96E" }}>

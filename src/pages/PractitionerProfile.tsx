@@ -15,7 +15,7 @@ const PractitionerProfile = () => {
 
   if (!p) {
     return (
-      <div className="min-h-screen font-body flex items-center justify-center" dir="rtl" style={{ background: "#0D1F0D" }}>
+      <div className="min-h-screen font-body flex items-center justify-center" dir="rtl" style={{ background: "#3D2410" }}>
         <Navbar />
         <div className="text-center pt-28">
           <h1 className="font-display text-3xl text-cream mb-4">המומחה לא נמצא</h1>
@@ -34,10 +34,9 @@ const PractitionerProfile = () => {
   const inputClass = "w-full py-3 bg-transparent text-cream placeholder:text-sand/50 focus:outline-none font-body text-sm transition-all";
 
   return (
-    <div className="min-h-screen font-body" dir="rtl" style={{ background: "#0D1F0D" }}>
+    <div className="min-h-screen font-body" dir="rtl" style={{ background: "#3D2410" }}>
       <Navbar />
 
-      {/* Hero with photo */}
       <section className="photo-section pt-20">
         <div className="photo-bg">
           <img src="https://images.unsplash.com/photo-1504567961542-e24d9439a724?w=1920&q=80" alt="" />
@@ -49,7 +48,7 @@ const PractitionerProfile = () => {
           </Link>
 
           <motion.div {...fade} className="text-center">
-            <div className="w-[120px] h-[120px] rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "#1A3A1A" }}>
+            <div className="w-[120px] h-[120px] rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: "#4D3520" }}>
               <span className="font-display text-4xl font-bold" style={{ color: "#C9A96E" }}>{p.initials}</span>
             </div>
             <h1 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-cream mb-2">{p.name}</h1>
@@ -80,7 +79,6 @@ const PractitionerProfile = () => {
         <div className="max-w-4xl mx-auto">
           <div className="section-divider my-12" />
 
-          {/* About */}
           <motion.section {...fade} transition={{ delay: 0.1 }} className="mb-16">
             <h2 className="font-display text-2xl font-bold text-cream mb-6">קצת עליי</h2>
             <div className="glass-card space-y-4">
@@ -90,7 +88,6 @@ const PractitionerProfile = () => {
             </div>
           </motion.section>
 
-          {/* Specialties */}
           <motion.section {...fade} transition={{ delay: 0.15 }} className="mb-16">
             <h2 className="font-display text-2xl font-bold text-cream mb-6">במה אני מתמחה</h2>
             <div className="flex flex-wrap gap-3">
@@ -100,7 +97,6 @@ const PractitionerProfile = () => {
             </div>
           </motion.section>
 
-          {/* Approach */}
           <motion.section {...fade} transition={{ delay: 0.2 }} className="mb-16">
             <h2 className="font-display text-2xl font-bold text-cream mb-6">הגישה שלי</h2>
             <div className="space-y-4">
@@ -115,7 +111,6 @@ const PractitionerProfile = () => {
             </div>
           </motion.section>
 
-          {/* Details */}
           <motion.section {...fade} transition={{ delay: 0.25 }} className="mb-16">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
@@ -132,7 +127,6 @@ const PractitionerProfile = () => {
             </div>
           </motion.section>
 
-          {/* Reviews */}
           <motion.section {...fade} transition={{ delay: 0.3 }} className="mb-16">
             <h2 className="font-display text-2xl font-bold text-cream mb-6">מה אומרים</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -150,7 +144,6 @@ const PractitionerProfile = () => {
             </div>
           </motion.section>
 
-          {/* Contact */}
           <motion.section {...fade} transition={{ delay: 0.35 }} id="contact">
             <div className="glass-card !p-8 md:!p-12">
               <h2 className="font-display text-3xl font-bold text-cream text-center mb-8">רוצים להתחיל?</h2>
