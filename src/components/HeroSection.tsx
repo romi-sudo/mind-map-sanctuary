@@ -7,18 +7,18 @@ const HeroSection = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   return (
     <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Full photo */}
+      {/* Full photo with parallax */}
       <motion.div style={{ scale }} className="absolute inset-0">
-        <img src={heroImg} alt="Seashells and sage on sand" className="w-full h-full object-cover" width={1920} height={1080} />
-        <div className="absolute inset-0 bg-gradient-to-t from-[hsl(33,30%,95%)]/80 via-[hsl(22,40%,16%)]/25 to-[hsl(22,40%,16%)]/10" />
+        <img src={heroImg} alt="Sandy beach with seashells and starfish" className="w-full h-full object-cover" width={1920} height={1080} />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#F5ECD7]/85 via-[#4A3728]/20 to-[#4A3728]/5" />
       </motion.div>
 
-      {/* Bottom blend into bg */}
+      {/* Bottom blend */}
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-background to-transparent z-10" />
 
       {/* Content */}
@@ -29,14 +29,14 @@ const HeroSection = () => {
           transition={{ duration: 0.8 }}
           className="font-body text-sm tracking-[0.3em] uppercase text-white/70 mb-6"
         >
-          🐚 &nbsp; מסע פנימי מתחיל כאן &nbsp; 🐚
+          🐚 &nbsp; מסע פנימי מתחיל כאן &nbsp; ⭐
         </motion.p>
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-          className="font-hebrew text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] mb-8 drop-shadow-lg"
+          className="font-display text-5xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.1] mb-8 drop-shadow-lg"
         >
           מפת הנפש שלך
         </motion.h1>
@@ -52,7 +52,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="font-body text-lg md:text-xl text-white/80 leading-relaxed max-w-xl mx-auto mb-12 drop-shadow"
+          className="font-body text-lg md:text-xl text-white/85 leading-relaxed max-w-xl mx-auto mb-12 drop-shadow"
         >
           MapSoul מנווטת אותך למסלול שמתאים לך בדיוק — טיפול, אימון, ריטריט או קורס
         </motion.p>
@@ -62,7 +62,7 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           onClick={() => navigate("/questionnaire")}
-          className="btn-glow bg-primary text-primary-foreground font-body font-semibold text-lg px-12 py-4 rounded-full hover:bg-primary-hover transition-colors shadow-warm-lg"
+          className="btn-glow bg-terracotta text-shell-white font-body font-semibold text-lg px-12 py-4 rounded-full hover:bg-primary-hover transition-colors shadow-warm-lg"
         >
           התחילו את המסע ←
         </motion.button>
