@@ -72,8 +72,11 @@ const ForgotPassword = () => {
               </button>
             </form>
 
-            <div className="mt-6 text-center">
-              <Link to="/login" className="font-body text-sm text-primary hover:underline">חזרה לכניסה</Link>
+            <div className="mt-6 text-center space-y-2">
+              <Link to="/login" className="font-body text-sm text-primary hover:underline block">חזרה לכניסה</Link>
+              <Link to="/" className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors block">
+                ← חזרה לדף הבית
+              </Link>
             </div>
           </>
         )}

@@ -125,6 +125,11 @@ const Login = () => {
           <Link to="/forgot-password" className="font-body text-sm text-primary hover:underline">
             שכחתם סיסמה?
           </Link>
+          <div className="pt-2">
+            <Link to="/" className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors">
+              ← חזרה לדף הבית
+            </Link>
+          </div>
         </div>
       </motion.div>
     </div>

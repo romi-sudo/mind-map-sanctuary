@@ -204,11 +204,16 @@ const Signup = () => {
         </button>
 
         {/* Links */}
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center space-y-2">
           <p className="font-body text-sm text-muted-foreground">
             כבר יש לכם חשבון?{" "}
             <Link to="/login" className="text-primary hover:underline font-medium">התחברו כאן</Link>
           </p>
+          <div className="pt-2">
+            <Link to="/" className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors">
+              ← חזרה לדף הבית
+            </Link>
+          </div>
         </div>
       </motion.div>
     </div>
