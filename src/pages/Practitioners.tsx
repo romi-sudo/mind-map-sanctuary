@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { practitioners, type Practitioner } from "@/data/practitioners";
+import { ApproachTooltipButton } from "@/components/ApproachTooltip";
+import { findApproach } from "@/data/approaches";
 
 const filterGroups = {
   נושא: ["קריירה", "מערכות יחסים", "חרדה", "זהות", "טראומה", "זוגיות", "AI וקריירה"],
@@ -29,7 +31,10 @@ const PractitionerCard = ({ p, index }: { p: Practitioner; index: number }) => (
       <p className="text-muted-foreground text-sm mb-4">{p.title}</p>
       <div className="flex flex-wrap justify-center gap-2 mb-4">
         {p.tags.map((tag) => (
-          <span key={tag} className="text-xs font-medium px-3 py-1 rounded-full border border-primary text-primary">{tag}</span>
+          <span key={tag} className="inline-flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full border border-primary text-primary">
+            {tag}
+            {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
+          </span>
         ))}
       </div>
       <div className="w-full h-px bg-border my-2" />
