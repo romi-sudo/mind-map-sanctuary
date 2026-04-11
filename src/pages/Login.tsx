@@ -33,23 +33,21 @@ const Login = () => {
     const result = await lovable.auth.signInWithOAuth("google", {
       redirect_uri: window.location.origin,
     });
-    if (result.error) {
-      toast.error("שגיאה בהתחברות עם Google");
-    }
+    if (result.error) toast.error("שגיאה בהתחברות עם Google");
     if (result.redirected) return;
     navigate("/");
   };
 
   const inputClass =
-    "w-full px-5 py-3.5 rounded-2xl bg-background border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 text-sm font-body transition-all";
+    "w-full px-5 py-3.5 rounded-[20px] bg-shell-white border-b border-sand-dark text-foreground placeholder:text-sand-dark focus:outline-none focus:border-b-2 focus:border-terracotta text-sm font-body transition-all";
 
   return (
-    <div dir="rtl" className="min-h-screen bg-background grain-overlay flex items-center justify-center px-4 py-12">
+    <div dir="rtl" className="min-h-screen bg-sand-light grain-overlay flex items-center justify-center px-4 py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md bg-card rounded-3xl p-8 md:p-10 shadow-warm-lg border border-border/60"
+        className="w-full max-w-md bg-shell-white rounded-[24px] p-8 md:p-10 shadow-sandy border border-sand-medium/50"
       >
         <AuthBackHome />
 
@@ -58,55 +56,29 @@ const Login = () => {
           <Link to="/" className="font-display text-2xl font-bold text-foreground tracking-wide">MapSoul</Link>
         </div>
 
-        <h1 className="font-hebrew text-3xl font-bold text-foreground text-center mb-2">ברוכים השבים</h1>
-        <p className="font-body text-muted-foreground text-center mb-8">המשיכו את המסע שלכם</p>
+        <h1 className="font-display text-3xl font-bold text-foreground text-center mb-2">ברוכים השבים</h1>
+        <p className="font-body text-driftwood text-center mb-8">המשיכו את המסע שלכם</p>
 
         <form onSubmit={handleLogin} className="space-y-4">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="אימייל"
-            className={inputClass}
-          />
+          <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="אימייל" className={inputClass} />
           <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="סיסמה"
-              className={inputClass}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-            >
+            <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" className={inputClass} />
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute left-4 top-1/2 -translate-y-1/2 text-driftwood hover:text-foreground transition-colors">
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-3.5 rounded-full bg-primary text-primary-foreground font-body font-semibold text-base hover:bg-primary-hover transition-colors duration-300 shadow-warm disabled:opacity-50 btn-glow"
-          >
+          <button type="submit" disabled={loading} className="w-full py-3.5 rounded-full bg-terracotta text-shell-white font-body font-semibold text-base hover:bg-primary-hover transition-colors duration-300 shadow-warm disabled:opacity-50 btn-glow">
             {loading ? "מתחבר..." : "כניסה"}
           </button>
         </form>
 
         <div className="flex items-center gap-4 my-6">
-          <div className="flex-1 h-px bg-border" />
-          <span className="font-body text-sm text-muted-foreground">או</span>
-          <div className="flex-1 h-px bg-border" />
+          <div className="flex-1 h-px bg-sand-dark/30" />
+          <span className="font-body text-sm text-driftwood">או</span>
+          <div className="flex-1 h-px bg-sand-dark/30" />
         </div>
 
-        <button
-          onClick={handleGoogle}
-          className="w-full py-3.5 rounded-full bg-background border border-border text-foreground font-body font-medium text-sm hover:bg-muted/50 transition-colors flex items-center justify-center gap-3"
-        >
+        <button onClick={handleGoogle} className="w-full py-3.5 rounded-full bg-shell-white border border-sand-dark/30 text-foreground font-body font-medium text-sm hover:bg-sand-light/50 transition-colors flex items-center justify-center gap-3">
           <svg width="20" height="20" viewBox="0 0 24 24">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
             <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -117,13 +89,11 @@ const Login = () => {
         </button>
 
         <div className="mt-8 text-center space-y-2">
-          <p className="font-body text-sm text-muted-foreground">
+          <p className="font-body text-sm text-driftwood">
             עוד אין לכם חשבון?{" "}
-            <Link to="/signup" className="text-primary hover:underline font-medium">הרשמו כאן</Link>
+            <Link to="/signup" className="text-terracotta hover:underline font-medium">הרשמו כאן</Link>
           </p>
-          <Link to="/forgot-password" className="font-body text-sm text-primary hover:underline">
-            שכחתם סיסמה?
-          </Link>
+          <Link to="/forgot-password" className="font-body text-sm text-terracotta hover:underline">שכחתם סיסמה?</Link>
         </div>
       </motion.div>
     </div>
@@ -131,4 +101,3 @@ const Login = () => {
 };
 
 export default Login;
-
