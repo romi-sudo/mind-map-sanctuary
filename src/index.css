@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=David+Libre:wght@400;500;700&family=Nunito:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Assistant:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,41 +6,37 @@
 
 @layer base {
   :root {
-    /* Warm nature palette — earthy, organic, alive */
-    --background: 35 35% 96%;         /* #F6F1EA warm linen */
-    --foreground: 20 45% 15%;         /* #372315 deep earth */
-    --card: 30 40% 93%;               /* #F0E8DA warm sand */
-    --card-foreground: 20 45% 15%;
-    --popover: 35 35% 96%;
-    --popover-foreground: 20 45% 15%;
-    --primary: 22 55% 42%;            /* #A66830 warm burnt sienna */
-    --primary-foreground: 40 40% 97%;
-    --secondary: 145 22% 48%;         /* #5E9968 forest green */
-    --secondary-foreground: 40 40% 97%;
-    --muted: 30 25% 91%;
-    --muted-foreground: 20 22% 40%;   /* #6B5544 warm brown */
-    --accent: 32 45% 85%;
-    --accent-foreground: 20 45% 15%;
+    /* Unified coastal earth — sand, driftwood, sage, cream */
+    --background: 33 30% 95%;         /* #F4EFE8 warm sand cream */
+    --foreground: 22 40% 16%;         /* #3A2817 deep driftwood */
+    --card: 33 28% 92%;               /* #EDE6DB warm sand card */
+    --card-foreground: 22 40% 16%;
+    --popover: 33 30% 95%;
+    --popover-foreground: 22 40% 16%;
+    --primary: 25 48% 40%;            /* #976A36 warm driftwood */
+    --primary-foreground: 38 35% 96%;
+    --secondary: 150 18% 50%;         /* #6A9A74 muted sage */
+    --secondary-foreground: 38 35% 96%;
+    --muted: 30 20% 90%;
+    --muted-foreground: 22 18% 42%;   /* #6B5A4A warm brown */
+    --accent: 33 30% 88%;
+    --accent-foreground: 22 40% 16%;
     --destructive: 0 84% 60%;
-    --destructive-foreground: 40 40% 97%;
-    --border: 28 30% 82%;             /* #D6C9B8 warm sand border */
-    --input: 28 30% 82%;
-    --ring: 22 55% 42%;
+    --destructive-foreground: 38 35% 96%;
+    --border: 30 22% 82%;             /* #D4CBBD sand border */
+    --input: 30 22% 82%;
+    --ring: 25 48% 40%;
     --radius: 1rem;
-    --text-warm: 20 22% 40%;
-    --primary-hover: 22 60% 35%;
-    --espresso: 20 45% 15%;
-    --shadow-warm: 25 30% 60%;
-    --blush: 0 28% 73%;
-    --gold-line: 30 60% 55%;
-    --sidebar-background: 35 35% 96%;
-    --sidebar-foreground: 20 45% 15%;
-    --sidebar-primary: 22 55% 42%;
-    --sidebar-primary-foreground: 40 40% 97%;
-    --sidebar-accent: 30 40% 93%;
-    --sidebar-accent-foreground: 20 45% 15%;
-    --sidebar-border: 28 30% 82%;
-    --sidebar-ring: 22 55% 42%;
+    --primary-hover: 25 52% 34%;
+    --shadow-warm: 28 25% 55%;
+    --sidebar-background: 33 30% 95%;
+    --sidebar-foreground: 22 40% 16%;
+    --sidebar-primary: 25 48% 40%;
+    --sidebar-primary-foreground: 38 35% 96%;
+    --sidebar-accent: 33 28% 92%;
+    --sidebar-accent-foreground: 22 40% 16%;
+    --sidebar-border: 30 22% 82%;
+    --sidebar-ring: 25 48% 40%;
   }
 }
 
@@ -55,48 +51,44 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Assistant', sans-serif;
+    letter-spacing: 0.01em;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Cormorant Garamond', 'David Libre', serif;
+    font-family: 'Frank Ruhl Libre', 'Lora', serif;
+    letter-spacing: -0.01em;
   }
 }
 
 @layer components {
   .font-display {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Lora', serif;
   }
 
   .font-hebrew {
-    font-family: 'David Libre', 'Cormorant Garamond', serif;
+    font-family: 'Frank Ruhl Libre', 'Lora', serif;
   }
 
   .font-body {
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Assistant', sans-serif;
   }
 
+  /* ── Shadows ── */
   .shadow-warm {
-    box-shadow: 0 4px 24px -4px hsl(var(--shadow-warm) / 0.18);
+    box-shadow: 0 4px 24px -4px hsl(var(--shadow-warm) / 0.15);
   }
-
   .shadow-warm-lg {
-    box-shadow: 0 8px 40px -8px hsl(var(--shadow-warm) / 0.22);
+    box-shadow: 0 8px 40px -8px hsl(var(--shadow-warm) / 0.2);
   }
 
-  .shadow-warm-hover {
-    box-shadow: 0 16px 48px -8px hsl(var(--shadow-warm) / 0.3);
-  }
-
-  /* Grain overlay */
+  /* ── Grain ── */
   .grain-overlay::before {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0.025;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    opacity: 0.02;
     pointer-events: none;
     z-index: 100;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
@@ -104,7 +96,7 @@
     background-size: 256px 256px;
   }
 
-  /* Scroll reveal */
+  /* ── Scroll reveal ── */
   .reveal {
     opacity: 0;
     transform: translateY(24px);
@@ -121,15 +113,15 @@
     transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0.1s; }
-  .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.25s; }
-  .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.4s; }
-  .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.55s; }
+  .reveal-stagger.visible > *:nth-child(2) { transition-delay: 0.22s; }
+  .reveal-stagger.visible > *:nth-child(3) { transition-delay: 0.34s; }
+  .reveal-stagger.visible > *:nth-child(4) { transition-delay: 0.46s; }
   .reveal-stagger.visible > * {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* Button glow */
+  /* ── Button glow ── */
   .btn-glow {
     position: relative;
     overflow: visible;
@@ -139,7 +131,7 @@
     position: absolute;
     inset: -4px;
     border-radius: 9999px;
-    background: hsl(var(--primary) / 0.2);
+    background: hsl(var(--primary) / 0.18);
     opacity: 0;
     filter: blur(16px);
     transition: opacity 0.5s ease;
@@ -149,50 +141,63 @@
     opacity: 1;
   }
 
-  /* Card hover */
+  /* ── Card hover ── */
   .card-luxury {
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
   }
   .card-luxury:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 50px -12px hsl(var(--shadow-warm) / 0.28);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px -12px hsl(var(--shadow-warm) / 0.25);
   }
 
-  /* Gold line */
+  /* ── Gold divider line ── */
   .gold-line {
     display: block;
-    width: 80px;
-    height: 1.5px;
-    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.7), transparent);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.6), transparent);
     margin: 0 auto;
   }
 
-  /* Watercolor washes */
-  .wash-peach {
-    background: linear-gradient(180deg, hsl(35 35% 96%) 0%, hsl(28 40% 92%) 50%, hsl(35 35% 96%) 100%);
-  }
-  .wash-blush {
-    background: linear-gradient(180deg, hsl(35 35% 96%) 0%, hsl(15 30% 92%) 50%, hsl(35 35% 96%) 100%);
-  }
-  .wash-cream {
-    background: linear-gradient(180deg, hsl(35 35% 96%) 0%, hsl(38 35% 94%) 50%, hsl(35 35% 96%) 100%);
+  /* ── Section shell divider ── */
+  .shell-divider {
+    text-align: center;
+    padding: 2rem 0;
+    font-size: 1.5rem;
+    opacity: 0.3;
+    letter-spacing: 1.5rem;
   }
 
-  /* Nature photo card */
+  /* ── Nature card ── */
   .nature-card {
     position: relative;
     overflow: hidden;
-    border-radius: 1.25rem;
+    border-radius: 1rem;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
   }
   .nature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px -12px hsl(var(--shadow-warm) / 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px -8px hsl(var(--shadow-warm) / 0.22);
   }
   .nature-card img {
     transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .nature-card:hover img {
-    transform: scale(1.05);
+    transform: scale(1.04);
+  }
+
+  /* ── Photo section ── */
+  .photo-section {
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-section > .photo-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .photo-section > .photo-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }

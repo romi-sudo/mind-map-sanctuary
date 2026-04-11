@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Eye, EyeOff, Leaf } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
@@ -52,8 +52,8 @@ const Login = () => {
       >
         {/* Logo */}
         <div className="flex items-center justify-center gap-2 mb-6">
-          <Leaf className="text-secondary" size={28} strokeWidth={1.5} />
-          <Link to="/" className="font-display text-3xl font-bold text-foreground">MapSoul</Link>
+          <span className="text-xl">🐚</span>
+          <Link to="/" className="font-display text-2xl font-bold text-foreground tracking-wide">MapSoul</Link>
         </div>
 
         <h1 className="font-hebrew text-3xl font-bold text-foreground text-center mb-2">ברוכים השבים</h1>

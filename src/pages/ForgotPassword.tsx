@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Leaf } from "lucide-react";
+
 import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -38,8 +38,8 @@ const ForgotPassword = () => {
         className="w-full max-w-md bg-card rounded-3xl p-8 md:p-10 shadow-warm-lg border border-border/60"
       >
         <div className="flex items-center justify-center gap-2 mb-6">
-          <Leaf className="text-secondary" size={28} strokeWidth={1.5} />
-          <Link to="/" className="font-display text-3xl font-bold text-foreground">MapSoul</Link>
+          <span className="text-xl">🐚</span>
+          <Link to="/" className="font-display text-2xl font-bold text-foreground tracking-wide">MapSoul</Link>
         </div>
 
         {sent ? (

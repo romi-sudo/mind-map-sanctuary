@@ -1,23 +1,20 @@
 import { Link } from "react-router-dom";
-import { Leaf } from "lucide-react";
 
 const Footer = () => {
   return (
     <footer className="bg-foreground">
-      <div className="container mx-auto px-6 py-14 text-center">
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <Leaf className="text-secondary" size={20} strokeWidth={1.5} />
-          <Link to="/" className="font-display text-2xl font-bold text-primary-foreground/90">
-            MapSoul
-          </Link>
-        </div>
+      <div className="container mx-auto px-6 py-12 text-center">
+        <p className="text-lg mb-2 opacity-30">🐚</p>
+        <Link to="/" className="font-display text-xl font-bold text-primary-foreground/80 block mb-4">
+          MapSoul
+        </Link>
         <Link
           to="/join-as-practitioner"
-          className="inline-block text-primary-foreground/50 hover:text-primary-foreground/80 transition-colors text-sm font-medium mb-6"
+          className="inline-block text-primary-foreground/40 hover:text-primary-foreground/70 transition-colors text-sm font-body mb-4"
         >
           הצטרפו כמומחים
         </Link>
-        <p className="font-body text-primary-foreground/35 text-sm">
+        <p className="font-body text-primary-foreground/25 text-xs">
           MapSoul © 2025 — כל הזכויות שמורות
         </p>
       </div>
