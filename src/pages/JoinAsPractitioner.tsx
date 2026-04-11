@@ -4,7 +4,6 @@ import { Check } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
-import wildflowersImg from "@/assets/wildflowers-meadow.jpg";
 
 const specialtyOptions = [
   "קריירה", "מערכות יחסים", "חרדה", "זהות", "טראומה", "זוגיות",
@@ -24,8 +23,8 @@ const PillToggle = ({ label, selected, onClick }: { label: string; selected: boo
     onClick={onClick}
     className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 border ${
       selected
-        ? "bg-primary text-primary-foreground border-primary shadow-warm"
-        : "bg-card text-muted-foreground border-border hover:border-primary/40"
+        ? "bg-terracotta text-shell-white border-terracotta shadow-warm"
+        : "bg-sand-medium text-driftwood border-sand-dark/20 hover:border-terracotta/40"
     }`}
   >
     {selected && <Check size={14} className="inline mr-1 -mt-0.5" />}
@@ -78,51 +77,45 @@ const JoinAsPractitioner = () => {
 
   const fade = { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } };
   const inputClass =
-    "w-full px-5 py-3.5 rounded-2xl bg-card border border-border text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/40 text-sm font-body transition-all";
+    "w-full px-5 py-3.5 rounded-[20px] bg-shell-white border-b border-sand-dark text-foreground placeholder:text-sand-dark/50 focus:outline-none focus:border-b-2 focus:border-terracotta text-sm font-body transition-all";
 
   return (
-    <div className="min-h-screen bg-background font-body grain-overlay" dir="rtl">
+    <div className="min-h-screen bg-shell-white font-body grain-overlay" dir="rtl">
       <Navbar />
 
       <main className="pt-24 pb-20 px-4 sm:px-6">
         <div className="max-w-3xl mx-auto">
 
-          {/* Hero with nature image */}
-          <motion.section {...fade} className="mb-14">
-            <div className="rounded-2xl overflow-hidden mb-10 shadow-warm-lg">
-              <img src={wildflowersImg} alt="Wildflowers meadow" className="w-full h-48 md:h-64 object-cover" loading="lazy" width={1920} height={1080} />
-            </div>
-            <div className="text-center">
-              <h1 className="font-hebrew text-4xl md:text-6xl font-bold text-foreground mb-4">
-                הצטרפו למשפחת MapSoul
-              </h1>
-              <div className="gold-line mb-6" />
-              <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-                חברו עם אנשים שמחפשים בדיוק את מה שאתם מציעים
-              </p>
-              <div className="flex flex-wrap justify-center gap-3">
-                {["קהל יעד מדויק", "פרופיל מקצועי", "ללא עמלות בהתחלה"].map((b) => (
-                  <span key={b} className="px-5 py-2.5 rounded-full bg-card text-primary text-sm font-medium border border-primary/20 shadow-warm">
-                    {b}
-                  </span>
-                ))}
-              </div>
+          <motion.section {...fade} className="mb-14 text-center">
+            <h1 className="font-display text-4xl md:text-6xl font-bold text-foreground mb-4">
+              הצטרפו למשפחת MapSoul
+            </h1>
+            <div className="gold-line mb-6" />
+            <p className="text-lg text-driftwood mb-8 max-w-xl mx-auto">
+              חברו עם אנשים שמחפשים בדיוק את מה שאתם מציעים
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              {["קהל יעד מדויק", "פרופיל מקצועי", "ללא עמלות בהתחלה"].map((b) => (
+                <span key={b} className="px-5 py-2.5 rounded-full bg-sand-light text-terracotta text-sm font-medium border border-sand-dark/20 shadow-warm">
+                  {b}
+                </span>
+              ))}
             </div>
           </motion.section>
 
           {submitted ? (
-            <motion.div {...fade} className="bg-card rounded-3xl p-12 text-center shadow-warm-lg border border-border/60">
-              <p className="text-5xl mb-6">🌿</p>
-              <h2 className="font-hebrew text-3xl font-bold text-foreground mb-4">תודה שהצטרפתם!</h2>
-              <p className="text-muted-foreground text-lg">קיבלנו את הפרטים שלכם.</p>
-              <p className="text-muted-foreground text-lg">ניצור איתכם קשר תוך 48 שעות.</p>
+            <motion.div {...fade} className="bg-sand-light rounded-[24px] p-12 text-center shadow-sandy border border-sand-medium/50">
+              <p className="text-5xl mb-6">🐚</p>
+              <h2 className="font-display text-3xl font-bold text-foreground mb-4">תודה שהצטרפתם!</h2>
+              <p className="text-driftwood text-lg">קיבלנו את הפרטים שלכם.</p>
+              <p className="text-driftwood text-lg">ניצור איתכם קשר תוך 48 שעות.</p>
             </motion.div>
           ) : (
-            <motion.form {...fade} transition={{ delay: 0.15 }} onSubmit={handleSubmit} className="bg-card/50 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-border/60 shadow-warm">
-              <h2 className="font-hebrew text-3xl font-bold text-foreground mb-10 text-center">צרו פרופיל מקצועי</h2>
+            <motion.form {...fade} transition={{ delay: 0.15 }} onSubmit={handleSubmit} className="bg-sand-light/50 backdrop-blur-sm rounded-[24px] p-8 md:p-12 border border-sand-medium/50 shadow-sandy">
+              <h2 className="font-display text-3xl font-bold text-foreground mb-10 text-center">צרו פרופיל מקצועי</h2>
 
               <div className="space-y-5">
-                <h3 className="font-hebrew text-xl font-bold text-foreground">פרטים אישיים</h3>
+                <h3 className="font-display text-xl font-bold text-foreground">פרטים אישיים</h3>
                 <input required value={form.full_name} onChange={(e) => setForm({ ...form, full_name: e.target.value })} placeholder="שם מלא" className={inputClass} />
                 <input required value={form.professional_title} onChange={(e) => setForm({ ...form, professional_title: e.target.value })} placeholder="לדוגמה: פסיכולוגית קלינית" className={inputClass} />
                 <input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} placeholder="אימייל" className={inputClass} />
@@ -132,7 +125,7 @@ const JoinAsPractitioner = () => {
               <SectionDivider />
 
               <div className="space-y-6">
-                <h3 className="font-hebrew text-xl font-bold text-foreground">מומחיות</h3>
+                <h3 className="font-display text-xl font-bold text-foreground">מומחיות</h3>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-3">נושאי התמחות</label>
                   <div className="flex flex-wrap gap-2">{specialtyOptions.map((s) => <PillToggle key={s} label={s} selected={form.specialties.includes(s)} onClick={() => toggle("specialties", s)} />)}</div>
@@ -150,13 +143,13 @@ const JoinAsPractitioner = () => {
               <SectionDivider />
 
               <div className="space-y-6">
-                <h3 className="font-hebrew text-xl font-bold text-foreground">פרטים מעשיים</h3>
+                <h3 className="font-display text-xl font-bold text-foreground">פרטים מעשיים</h3>
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-3">פורמט</label>
                   <div className="flex gap-3">
                     {[{ v: "online", l: "אונליין" }, { v: "in-person", l: "פרונטלי" }, { v: "both", l: "שניהם" }].map((o) => (
                       <button key={o.v} type="button" onClick={() => setForm({ ...form, format: o.v })}
-                        className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all border ${form.format === o.v ? "bg-primary text-primary-foreground border-primary shadow-warm" : "bg-card text-muted-foreground border-border hover:border-primary/40"}`}>{o.l}</button>
+                        className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all border ${form.format === o.v ? "bg-terracotta text-shell-white border-terracotta shadow-warm" : "bg-sand-medium text-driftwood border-sand-dark/20 hover:border-terracotta/40"}`}>{o.l}</button>
                     ))}
                   </div>
                 </div>
@@ -165,17 +158,17 @@ const JoinAsPractitioner = () => {
                   <div className="flex gap-3">{languageOptions.map((l) => <PillToggle key={l} label={l} selected={form.languages.includes(l)} onClick={() => toggle("languages", l)} />)}</div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-3">מחיר לפגישה: <span className="text-primary font-bold">{form.price_per_session} ש״ח</span></label>
+                  <label className="block text-sm font-medium text-foreground mb-3">מחיר לפגישה: <span className="text-terracotta font-bold">{form.price_per_session} ש״ח</span></label>
                   <input type="range" min={100} max={1500} step={50} value={form.price_per_session}
                     onChange={(e) => setForm({ ...form, price_per_session: Number(e.target.value) })}
-                    className="w-full h-2 rounded-full appearance-none cursor-pointer bg-border accent-primary [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:cursor-pointer" />
-                  <div className="flex justify-between text-xs text-muted-foreground mt-1"><span>100 ש״ח</span><span>1,500 ש״ח</span></div>
+                    className="w-full h-2 rounded-full appearance-none cursor-pointer bg-sand-dark/30 accent-terracotta [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-5 [&::-webkit-slider-thumb]:h-5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-terracotta [&::-webkit-slider-thumb]:cursor-pointer" />
+                  <div className="flex justify-between text-xs text-driftwood mt-1"><span>100 ש״ח</span><span>1,500 ש״ח</span></div>
                 </div>
                 <input value={form.area} onChange={(e) => setForm({ ...form, area: e.target.value })} placeholder="תל אביב, מרכז" className={inputClass} />
-                <div className="flex items-center justify-between bg-background rounded-2xl px-5 py-3.5 border border-border">
+                <div className="flex items-center justify-between bg-shell-white rounded-[20px] px-5 py-3.5 border border-sand-dark/20">
                   <span className="text-sm text-foreground">פתוח למטופלים חדשים</span>
                   <button type="button" onClick={() => setForm({ ...form, accepting_new_clients: !form.accepting_new_clients })}
-                    className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${form.accepting_new_clients ? "bg-primary" : "bg-border"}`}>
+                    className={`relative w-12 h-6 rounded-full transition-colors duration-200 ${form.accepting_new_clients ? "bg-terracotta" : "bg-sand-dark/30"}`}>
                     <span className={`absolute top-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform duration-200 ${form.accepting_new_clients ? "right-0.5" : "right-[calc(100%-22px)]"}`} />
                   </button>
                 </div>
@@ -184,11 +177,11 @@ const JoinAsPractitioner = () => {
               <SectionDivider />
 
               <div className="space-y-5">
-                <h3 className="font-hebrew text-xl font-bold text-foreground">קצת עליך</h3>
+                <h3 className="font-display text-xl font-bold text-foreground">קצת עליך</h3>
                 <div className="relative">
                   <textarea value={form.bio} onChange={(e) => setForm({ ...form, bio: e.target.value.slice(0, 300) })}
                     placeholder="ספרו למה בחרתם בתחום הזה ומה מייחד את העבודה שלכם..." rows={4} className={`${inputClass} resize-none`} />
-                  <span className="absolute bottom-3 left-3 text-xs text-muted-foreground">{form.bio.length}/300</span>
+                  <span className="absolute bottom-3 left-3 text-xs text-driftwood">{form.bio.length}/300</span>
                 </div>
                 <input type="tel" value={form.whatsapp} onChange={(e) => setForm({ ...form, whatsapp: e.target.value })} placeholder="וואטסאפ לפניות (אופציונלי)" className={inputClass} />
                 <input type="url" value={form.website} onChange={(e) => setForm({ ...form, website: e.target.value })} placeholder="אתר אישי (אופציונלי)" className={inputClass} />
@@ -196,7 +189,7 @@ const JoinAsPractitioner = () => {
 
               <div className="mt-12">
                 <button type="submit" disabled={loading}
-                  className="w-full py-4 rounded-full bg-primary text-primary-foreground font-medium text-lg hover:bg-primary-hover transition-colors duration-300 shadow-warm-lg disabled:opacity-50 btn-glow">
+                  className="w-full py-4 rounded-full bg-terracotta text-shell-white font-medium text-lg hover:bg-primary-hover transition-colors duration-300 shadow-warm-lg disabled:opacity-50 btn-glow">
                   {loading ? "שולח..." : "שלחו את הפרופיל שלכם ←"}
                 </button>
               </div>

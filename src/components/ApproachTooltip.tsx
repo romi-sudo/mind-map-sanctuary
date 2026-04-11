@@ -48,7 +48,7 @@ export const ApproachTooltipButton = ({ tag, className = "" }: ApproachTooltipBu
               <div
                 dir="rtl"
                 className="pointer-events-auto w-full max-w-[380px] max-h-[80vh] overflow-y-auto rounded-[20px] shadow-warm-lg border border-primary/20"
-                style={{ backgroundColor: "#FEF4EC" }}
+                style={{ backgroundColor: "#FAF6EE" }}
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Header */}

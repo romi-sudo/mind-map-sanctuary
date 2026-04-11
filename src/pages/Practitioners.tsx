@@ -21,31 +21,31 @@ const PractitionerCard = ({ p, index }: { p: Practitioner; index: number }) => (
     initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5, delay: index * 0.1 }}
-    className="group bg-card rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col overflow-hidden"
+    className="group card-coastal bg-sand-light rounded-[20px] border border-sand-medium/50 shadow-sandy flex flex-col overflow-hidden"
   >
     <div className="p-6 flex flex-col items-center text-center flex-1">
-      <div className="w-20 h-20 rounded-full bg-primary flex items-center justify-center mb-4">
-        <span className="font-display text-2xl font-bold text-primary-foreground">{p.initials}</span>
+      <div className="w-20 h-20 rounded-full bg-terracotta flex items-center justify-center mb-4">
+        <span className="font-display text-2xl font-bold text-shell-white">{p.initials}</span>
       </div>
       <h3 className="font-display text-xl font-bold text-foreground mb-1">{p.name}</h3>
-      <p className="text-muted-foreground text-sm mb-4">{p.title}</p>
+      <p className="text-driftwood text-sm mb-4">{p.title}</p>
       <div className="flex flex-wrap justify-center gap-2 mb-4">
         {p.tags.map((tag) => (
-          <span key={tag} className="inline-flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full border border-primary text-primary">
+          <span key={tag} className="inline-flex items-center gap-1 text-xs font-medium px-3 py-1 rounded-full bg-dried-botanical/15 text-dried-botanical border border-dried-botanical/20">
             {tag}
             {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
           </span>
         ))}
       </div>
-      <div className="w-full h-px bg-border my-2" />
-      <div className="mt-3 text-sm text-muted-foreground space-y-1">
+      <div className="w-full h-px bg-sand-dark/30 my-2" />
+      <div className="mt-3 text-sm text-driftwood space-y-1">
         <p>{p.price}</p>
         <p>{p.format}</p>
       </div>
     </div>
     <Link
       to={`/practitioners/${p.id}`}
-      className="w-full py-3 border-t border-primary/30 text-primary font-medium text-sm hover:bg-primary hover:text-primary-foreground transition-colors duration-300 text-center block"
+      className="w-full py-3 border-t border-sand-dark/20 text-terracotta font-medium text-sm hover:bg-terracotta hover:text-shell-white transition-colors duration-300 text-center block"
     >
       לפרופיל המלא
     </Link>
@@ -77,7 +77,7 @@ const Practitioners = () => {
   }, [search, activeFilters]);
 
   return (
-    <div className="min-h-screen bg-background font-body" dir="rtl">
+    <div className="min-h-screen bg-shell-white font-body grain-overlay" dir="rtl">
       <Navbar />
       <main className="pt-28 pb-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
@@ -95,12 +95,12 @@ const Practitioners = () => {
             transition={{ delay: 0.15 }}
             className="relative max-w-xl mx-auto mb-8"
           >
-            <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-primary" size={20} />
+            <Search className="absolute right-4 top-1/2 -translate-y-1/2 text-terracotta" size={20} />
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="חפשו לפי נושא, שם או גישה..."
-              className="w-full pr-12 pl-4 py-3 rounded-full bg-card border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 text-sm"
+              className="w-full pr-12 pl-4 py-3 rounded-full bg-shell-white border border-sand-dark/40 text-foreground placeholder:text-driftwood/50 focus:outline-none focus:ring-2 focus:ring-terracotta/30 focus:border-terracotta/40 text-sm"
             />
           </motion.div>
 
@@ -112,7 +112,7 @@ const Practitioners = () => {
           >
             {Object.entries(filterGroups).map(([group, items]) => (
               <div key={group} className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-semibold text-muted-foreground min-w-[50px]">{group}:</span>
+                <span className="text-xs font-semibold text-driftwood min-w-[50px]">{group}:</span>
                 {items.map((item) => {
                   const active = activeFilters.has(item);
                   return (
@@ -121,8 +121,8 @@ const Practitioners = () => {
                       onClick={() => toggleFilter(item)}
                       className={`text-xs px-3 py-1.5 rounded-full transition-colors duration-200 ${
                         active
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-card text-muted-foreground hover:bg-primary/10"
+                          ? "bg-terracotta text-shell-white"
+                          : "bg-sand-medium text-driftwood hover:bg-terracotta/10"
                       }`}
                     >
                       {item}
@@ -140,7 +140,7 @@ const Practitioners = () => {
           </div>
 
           {filtered.length === 0 && (
-            <p className="text-center text-muted-foreground mt-12 text-lg">
+            <p className="text-center text-driftwood mt-12 text-lg">
               לא נמצאו מומחים מתאימים. נסו לשנות את החיפוש או הסינון.
             </p>
           )}
