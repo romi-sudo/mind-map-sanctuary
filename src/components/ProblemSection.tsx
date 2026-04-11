@@ -1,59 +1,63 @@
-import { HelpCircle, Compass, ShieldQuestion } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import OrganicDivider from "./OrganicDivider";
+import flowerBeach from "@/assets/flower-beach.jpg";
 
 const cards = [
-  {
-    icon: HelpCircle,
-    title: "עולם הטיפול מבלבל ועמוס",
-    body: "מאות שיטות, גישות ומומחים — איך יודעים מאיפה להתחיל?",
-  },
-  {
-    icon: Compass,
-    title: "קשה לדעת מה בדיוק צריכים",
-    body: "טיפול? אימון? סדנה? בלי מפה ברורה, קל ללכת לאיבוד.",
-  },
-  {
-    icon: ShieldQuestion,
-    title: "איך יודעים למי לסמוך?",
-    body: "בלי המלצות אמיתיות ובדיקת רקע, הבחירה מרגישה כמו הימור.",
-  },
+  { icon: "🌪️", title: "עומס של אפשרויות", body: "מאות מומחים, שיטות וגישות — בלי לדעת מה באמת מתאים." },
+  { icon: "🧭", title: "חוסר כיוון", body: "מרגישים שמשהו צריך להשתנות, אבל לא יודעים מאיפה להתחיל." },
+  { icon: "💸", title: "ניסוי וטעייה", body: "בזבוז זמן וכסף על טיפולים וקורסים שלא מתאימים." },
+  { icon: "🤷", title: "חוסר אמון", body: 'קשה לדעת למי לסמוך ומי באמת "מומחה".' },
 ];
 
 const ProblemSection = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <>
-      <OrganicDivider />
-      <section className="py-32 md:py-40 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary/[0.03] via-transparent to-primary/[0.03]" />
+    <section className="py-24 md:py-32 relative overflow-hidden">
+      <div className="container mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* Image side */}
+          <div className="relative order-2 lg:order-1">
+            <div className="rounded-3xl overflow-hidden shadow-warm-lg">
+              <img
+                src={flowerBeach}
+                alt="פרח על חוף הים"
+                loading="lazy"
+                width={1024}
+                height={1024}
+                className="w-full h-[400px] lg:h-[500px] object-cover"
+              />
+            </div>
+            {/* Decorative frame */}
+            <div className="absolute -bottom-4 -right-4 w-full h-full rounded-3xl border-2 border-primary/20 -z-10" />
+          </div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div
-            ref={ref}
-            className={`grid grid-cols-1 md:grid-cols-3 gap-10 max-w-5xl mx-auto reveal-stagger ${isVisible ? "visible" : ""}`}
-          >
-            {cards.map((card) => (
-              <div
-                key={card.title}
-                className="card-luxury bg-card rounded-2xl p-10 border border-secondary/20 shadow-warm text-center"
-              >
-                <div className="w-16 h-16 rounded-full bg-secondary/15 flex items-center justify-center mx-auto mb-7">
-                  <card.icon className="text-primary" size={28} strokeWidth={1.5} />
+          {/* Content side */}
+          <div className="order-1 lg:order-2">
+            <div ref={ref} className={`reveal ${isVisible ? "visible" : ""}`}>
+              <h2 className="font-hebrew text-4xl md:text-5xl font-bold text-foreground mb-4 tracking-wide">
+                מכירים את ההרגשה?
+              </h2>
+              <div className="gold-line !mx-0 mb-12" />
+            </div>
+
+            <div className={`space-y-5 reveal-stagger ${isVisible ? "visible" : ""}`}>
+              {cards.map((card) => (
+                <div
+                  key={card.title}
+                  className="flex gap-4 items-start p-5 rounded-2xl bg-card/80 border border-border/50 hover:border-primary/30 hover:shadow-warm transition-all duration-500"
+                >
+                  <span className="text-2xl flex-shrink-0 mt-1">{card.icon}</span>
+                  <div>
+                    <h3 className="font-hebrew text-lg font-bold text-foreground mb-1">{card.title}</h3>
+                    <p className="font-body text-sm text-muted-foreground leading-relaxed">{card.body}</p>
+                  </div>
                 </div>
-                <h3 className="font-hebrew text-xl font-bold text-foreground mb-4 tracking-wide">
-                  {card.title}
-                </h3>
-                <p className="font-body text-muted-foreground text-sm leading-relaxed">
-                  {card.body}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 
