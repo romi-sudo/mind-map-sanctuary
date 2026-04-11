@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import AuthBackHome from "@/components/auth/AuthBackHome";
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -31,41 +29,46 @@ const ResetPassword = () => {
     finally { setLoading(false); }
   };
 
-  const inputClass =
-    "w-full px-5 py-3.5 rounded-[20px] bg-shell-white border-b border-sand-dark text-foreground placeholder:text-sand-dark focus:outline-none focus:border-b-2 focus:border-terracotta text-sm font-body transition-all";
+  const inputClass = "w-full py-3 bg-transparent text-cream placeholder:text-sand/50 focus:outline-none font-body text-sm";
 
   return (
-    <div dir="rtl" className="min-h-screen bg-sand-light grain-overlay flex items-center justify-center px-4 py-12">
+    <div dir="rtl" className="min-h-screen flex items-center justify-center px-4 py-12 photo-section">
+      <div className="photo-bg">
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt="" />
+        <div className="photo-overlay" />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md bg-shell-white rounded-[24px] p-8 md:p-10 shadow-sandy border border-sand-medium/50"
+        className="glass-card w-full max-w-md relative z-10"
       >
-        <AuthBackHome />
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <span className="text-xl">🐚</span>
-          <Link to="/" className="font-display text-2xl font-bold text-foreground tracking-wide">MapSoul</Link>
+        <div className="mb-5">
+          <Link to="/" className="font-body text-sm text-sand hover:text-cream transition-colors">← חזרה לדף הבית</Link>
         </div>
+        <Link to="/" className="font-display text-2xl font-bold block text-center mb-6" style={{ color: "#C9A96E" }}>MapSoul</Link>
 
-        <h1 className="font-display text-3xl font-bold text-foreground text-center mb-2">סיסמה חדשה</h1>
-        <p className="font-body text-driftwood text-center mb-8">הזינו סיסמה חדשה לחשבון שלכם</p>
+        <h1 className="font-display text-3xl font-bold text-cream text-center mb-2">סיסמה חדשה</h1>
+        <p className="font-body text-sand text-center mb-8">הזינו סיסמה חדשה לחשבון שלכם</p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
+          <div className="relative" style={{ borderBottom: "1px solid rgba(201,169,110,0.3)" }}>
             <input type={showPassword ? "text" : "password"} required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה חדשה" className={inputClass} />
-            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute left-4 top-1/2 -translate-y-1/2 text-driftwood hover:text-foreground transition-colors">
-              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute left-0 top-1/2 -translate-y-1/2 text-sand hover:text-cream transition-colors font-body text-xs">
+              {showPassword ? "הסתר" : "הצג"}
             </button>
           </div>
-          <input type={showPassword ? "text" : "password"} required minLength={6} value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="אימות סיסמה חדשה" className={inputClass} />
-          <button type="submit" disabled={loading} className="w-full py-3.5 rounded-full bg-terracotta text-shell-white font-body font-semibold text-base hover:bg-primary-hover transition-colors duration-300 shadow-warm disabled:opacity-50 btn-glow">
+          <div style={{ borderBottom: "1px solid rgba(201,169,110,0.3)" }}>
+            <input type={showPassword ? "text" : "password"} required minLength={6} value={confirm} onChange={(e) => setConfirm(e.target.value)} placeholder="אימות סיסמה חדשה" className={inputClass} />
+          </div>
+          <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? "מעדכן..." : "עדכון סיסמה"}
           </button>
         </form>
 
         <div className="mt-6 text-center">
-          <Link to="/login" className="font-body text-sm text-terracotta hover:underline">חזרה לכניסה</Link>
+          <Link to="/login" className="font-body text-sm hover:underline" style={{ color: "#E8854A" }}>חזרה לכניסה</Link>
         </div>
       </motion.div>
     </div>
