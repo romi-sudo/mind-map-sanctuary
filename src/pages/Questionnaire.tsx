@@ -4,6 +4,10 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import cardFlowers from "@/assets/card-flowers.jpg";
+import cardSeashells from "@/assets/card-seashells.jpg";
+import cardBridge from "@/assets/card-bridge.jpg";
+import cardSunset from "@/assets/card-sunset.jpg";
 
 /* ── Types ── */
 type Track = "personal" | "career" | "both";
@@ -32,6 +36,9 @@ interface Recommendation {
   primary: { title: string; description: string };
   practitioners: Practitioner[];
 }
+
+/* ── Gate card images (cycle through) ── */
+const CARD_IMAGES = [cardFlowers, cardSeashells, cardBridge, cardSunset];
 
 /* ── Step data ── */
 const STEP1: StepDef = {
@@ -126,38 +133,53 @@ const slideVariants = {
   exit: (dir: number) => ({ x: dir > 0 ? -300 : 300, opacity: 0 }),
 };
 
-/* ── Answer card ── */
-const AnswerCard = ({
+/* ── Nature Answer card with background image ── */
+const NatureAnswerCard = ({
   card,
   selected,
   onSelect,
+  imageIndex,
 }: {
   card: CardOption;
   selected: boolean;
   onSelect: () => void;
-}) => (
-  <motion.button
-    onClick={onSelect}
-    whileHover={{ scale: 1.02 }}
-    whileTap={{ scale: 0.98 }}
-    className={`relative w-full text-right rounded-2xl p-6 border-2 transition-colors duration-300 cursor-pointer
-      ${selected ? "border-primary bg-primary/10" : "border-border bg-card hover:border-primary/50"}`}
-  >
-    {selected && (
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        className="absolute top-4 left-4 w-6 h-6 rounded-full bg-primary flex items-center justify-center"
-      >
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M3 7l3 3 5-5" stroke="hsl(var(--primary-foreground))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
-      </motion.div>
-    )}
-    <h3 className="font-hebrew text-xl font-bold text-foreground mb-1">{card.title}</h3>
-    {card.subtitle && <p className="font-body text-sm text-muted-foreground">{card.subtitle}</p>}
-  </motion.button>
-);
+  imageIndex: number;
+}) => {
+  const img = CARD_IMAGES[imageIndex % CARD_IMAGES.length];
+
+  return (
+    <motion.button
+      onClick={onSelect}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+      className={`nature-card relative w-full text-right overflow-hidden border-2 transition-all duration-300 cursor-pointer
+        ${selected ? "border-primary ring-2 ring-primary/30" : "border-border/50 hover:border-primary/40"}`}
+    >
+      {/* Background nature image */}
+      <div className="absolute inset-0">
+        <img src={img} alt="" className="w-full h-full object-cover opacity-25" />
+        <div className="absolute inset-0 bg-card/75" />
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 p-6">
+        {selected && (
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="absolute top-4 left-4 w-6 h-6 rounded-full bg-primary flex items-center justify-center"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M3 7l3 3 5-5" stroke="hsl(var(--primary-foreground))" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </motion.div>
+        )}
+        <h3 className="font-hebrew text-xl font-bold text-foreground mb-1">{card.title}</h3>
+        {card.subtitle && <p className="font-body text-sm text-muted-foreground">{card.subtitle}</p>}
+      </div>
+    </motion.button>
+  );
+};
 
 /* ── Main component ── */
 const Questionnaire = () => {
@@ -217,41 +239,24 @@ const Questionnaire = () => {
     setIsLoading(true);
 
     try {
-      // Save to database
       const { data: inserted, error: insertError } = await supabase
         .from("questionnaire_responses")
-        .insert({
-          track,
-          answers,
-          free_text: freeText,
-        })
+        .insert({ track, answers, free_text: freeText })
         .select("id")
         .single();
 
       if (insertError) throw insertError;
 
-      // Generate AI recommendation
       const { data: fnData, error: fnError } = await supabase.functions.invoke(
         "generate-recommendation",
-        {
-          body: {
-            responseId: inserted.id,
-            track,
-            answers,
-            freeText,
-          },
-        }
+        { body: { responseId: inserted.id, track, answers, freeText } }
       );
 
       if (fnError) throw fnError;
-
-      if (fnData?.recommendation) {
-        setRecommendation(fnData.recommendation);
-      }
+      if (fnData?.recommendation) setRecommendation(fnData.recommendation);
     } catch (error) {
       console.error("Error submitting questionnaire:", error);
       toast.error("אירעה שגיאה, מציג המלצות ברירת מחדל");
-      // Use fallback
       setRecommendation(null);
     } finally {
       setIsLoading(false);
@@ -321,8 +326,8 @@ const Questionnaire = () => {
               </h1>
               <p className="font-body text-muted-foreground text-center mb-12">{STEP1.subtext}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {STEP1.cards.map((card) => (
-                  <AnswerCard key={card.id} card={card} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} />
+                {STEP1.cards.map((card, i) => (
+                  <NatureAnswerCard key={card.id} card={card} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} imageIndex={i} />
                 ))}
               </div>
             </motion.div>
@@ -343,8 +348,8 @@ const Questionnaire = () => {
                 {currentStep.headline}
               </h1>
               <div className={`grid grid-cols-1 ${currentStep.cards.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4`}>
-                {currentStep.cards.map((card) => (
-                  <AnswerCard key={card.id} card={card} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} />
+                {currentStep.cards.map((card, i) => (
+                  <NatureAnswerCard key={card.id} card={card} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} imageIndex={i + stepIndex} />
                 ))}
               </div>
             </motion.div>
@@ -371,13 +376,13 @@ const Questionnaire = () => {
                 value={freeText}
                 onChange={(e) => setFreeText(e.target.value)}
                 placeholder="לדוגמה: אני רוצה להרגיש שאני יודע/ת לאן אני הולך/ת..."
-                className="w-full min-h-[160px] rounded-2xl border-2 border-border bg-card p-6 font-body text-foreground text-lg placeholder:text-muted-foreground/60 focus:outline-none focus:border-primary transition-colors resize-none"
+                className="w-full min-h-[160px] rounded-2xl border-2 border-border bg-card p-6 font-body text-foreground text-lg placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary transition-colors resize-none"
               />
               <div className="mt-8 text-center">
                 <button
                   onClick={handleSubmit}
                   disabled={isLoading}
-                  className="btn-glow inline-flex items-center gap-3 bg-primary text-primary-foreground font-body font-medium text-lg px-12 py-4 rounded-full hover:bg-primary/90 transition-colors disabled:opacity-70"
+                  className="btn-glow inline-flex items-center gap-3 bg-primary text-primary-foreground font-body font-medium text-lg px-12 py-4 rounded-full hover:bg-primary-hover transition-colors disabled:opacity-70"
                 >
                   {isLoading ? (
                     <>
@@ -445,7 +450,7 @@ const ResultsPage = ({
           className="rounded-2xl border-2 border-primary bg-card p-8 mb-12 shadow-warm"
         >
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center text-primary text-xl">✦</div>
+            <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary text-xl">🌿</div>
             <div>
               <h2 className="font-hebrew text-2xl font-bold text-foreground mb-2">{primary.title}</h2>
               <p className="font-body text-muted-foreground leading-relaxed">{primary.description}</p>
@@ -470,7 +475,7 @@ const ResultsPage = ({
               <p className="font-body text-sm text-muted-foreground mb-3">{p.title}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {p.tags.map((tag) => (
-                  <span key={tag} className="text-xs font-body bg-primary/10 text-primary px-3 py-1 rounded-full">{tag}</span>
+                  <span key={tag} className="text-xs font-body bg-secondary/10 text-secondary px-3 py-1 rounded-full">{tag}</span>
                 ))}
               </div>
               <p className="font-body text-sm text-muted-foreground mb-4">{p.price}</p>
