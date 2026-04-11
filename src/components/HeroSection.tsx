@@ -1,7 +1,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   const sectionRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -59,15 +61,15 @@ const HeroSection = () => {
           לא עוד עומס של אפשרויות. MapSoul מנווטת אותך למה שמתאים לך בדיוק — טיפול, אימון, ריטריט או קורס.
         </motion.p>
 
-        <motion.a
+        <motion.button
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          href="#"
-          className="btn-glow inline-block bg-primary text-primary-foreground font-body font-medium text-lg px-12 py-5 rounded-pill hover:bg-primary-hover transition-colors duration-300"
+          onClick={() => navigate("/questionnaire")}
+          className="btn-glow inline-block bg-primary text-primary-foreground font-body font-medium text-lg px-12 py-5 rounded-full hover:bg-primary/90 transition-colors duration-300"
         >
           התחל את המסע שלך ←
-        </motion.a>
+        </motion.button>
       </motion.div>
     </section>
   );
