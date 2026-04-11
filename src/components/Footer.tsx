@@ -10,7 +10,7 @@ const Footer = () => {
         </Link>
         <Link
           to="/join-as-practitioner"
-          className="inline-block text-primary/80 hover:text-primary transition-colors text-sm font-medium mb-6"
+          className="inline-block text-primary/70 hover:text-primary transition-colors text-sm font-medium mb-6"
         >
           הצטרפו כמומחים
         </Link>
