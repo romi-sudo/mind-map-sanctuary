@@ -2,19 +2,18 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-foreground relative">
-      <div className="h-px bg-gradient-to-l from-transparent via-primary/40 to-transparent" />
+    <footer className="bg-foreground">
       <div className="container mx-auto px-6 py-14 text-center">
-        <Link to="/" className="font-display text-2xl font-bold text-primary-foreground/90 mb-6 block tracking-wider">
+        <Link to="/" className="font-display text-2xl font-bold text-primary-foreground/90 mb-6 block">
           MapSoul
         </Link>
         <Link
           to="/join-as-practitioner"
-          className="inline-block text-primary/70 hover:text-primary transition-colors text-sm font-medium mb-6"
+          className="inline-block text-primary-foreground/50 hover:text-primary-foreground/80 transition-colors text-sm font-medium mb-6"
         >
           הצטרפו כמומחים
         </Link>
-        <p className="font-body text-primary-foreground/40 text-sm">
+        <p className="font-body text-primary-foreground/35 text-sm">
           MapSoul © 2025 — כל הזכויות שמורות
         </p>
       </div>
