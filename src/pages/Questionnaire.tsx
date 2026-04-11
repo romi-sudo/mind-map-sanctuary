@@ -4,6 +4,8 @@ import { ArrowRight, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { ApproachTooltipButton } from "@/components/ApproachTooltip";
+import { findApproach } from "@/data/approaches";
 import cardFlowers from "@/assets/card-flowers.jpg";
 import cardSeashells from "@/assets/card-seashells.jpg";
 import cardBridge from "@/assets/card-bridge.jpg";
@@ -460,7 +462,10 @@ const ResultsPage = ({
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary text-xl">🌿</div>
             <div>
-              <h2 className="font-hebrew text-2xl font-bold text-foreground mb-2">{primary.title}</h2>
+              <h2 className="font-hebrew text-2xl font-bold text-foreground mb-2 inline-flex items-center gap-2">
+                {primary.title}
+                {findApproach(primary.title) && <ApproachTooltipButton tag={primary.title} />}
+              </h2>
               <p className="font-body text-muted-foreground leading-relaxed">{primary.description}</p>
             </div>
           </div>
@@ -483,7 +488,10 @@ const ResultsPage = ({
               <p className="font-body text-sm text-muted-foreground mb-3">{p.title}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {p.tags.map((tag) => (
-                  <span key={tag} className="text-xs font-body bg-secondary/10 text-secondary px-3 py-1 rounded-full">{tag}</span>
+                  <span key={tag} className="inline-flex items-center gap-1 text-xs font-body bg-secondary/10 text-secondary px-3 py-1 rounded-full">
+                    {tag}
+                    {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
+                  </span>
                 ))}
               </div>
               <p className="font-body text-sm text-muted-foreground mb-4">{p.price}</p>
@@ -493,6 +501,21 @@ const ResultsPage = ({
             </motion.div>
           ))}
         </div>
+
+        {/* Approach info card */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="rounded-2xl border border-primary/20 p-6 mb-8 text-center"
+          style={{ backgroundColor: "#FEF4EC" }}
+        >
+          <p className="font-body text-foreground text-sm leading-relaxed">
+            רוצים להבין יותר על הגישות השונות?{" "}
+            <br className="sm:hidden" />
+            לחצו על סימן ה-<span className="inline-flex items-center mx-1 text-primary">?</span> ליד כל גישה בקטלוג המומחים
+          </p>
+        </motion.div>
 
         <div className="text-center">
           <button onClick={onRestart} className="font-body text-muted-foreground hover:text-primary transition-colors text-sm">
