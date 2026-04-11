@@ -281,7 +281,7 @@ const Questionnaire = () => {
   }
 
   return (
-    <div dir="rtl" className="min-h-screen bg-background grain-overlay flex flex-col">
+    <div dir="rtl" className="min-h-screen bg-background grain-overlay flex flex-col overflow-x-hidden">
       {track && (
         <div className="fixed top-0 left-0 right-0 z-50 h-1.5 bg-muted">
           <motion.div
