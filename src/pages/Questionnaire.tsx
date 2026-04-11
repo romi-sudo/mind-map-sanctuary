@@ -462,7 +462,10 @@ const ResultsPage = ({
           <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-full bg-secondary/20 flex items-center justify-center text-secondary text-xl">🌿</div>
             <div>
-              <h2 className="font-hebrew text-2xl font-bold text-foreground mb-2">{primary.title}</h2>
+              <h2 className="font-hebrew text-2xl font-bold text-foreground mb-2 inline-flex items-center gap-2">
+                {primary.title}
+                {findApproach(primary.title) && <ApproachTooltipButton tag={primary.title} />}
+              </h2>
               <p className="font-body text-muted-foreground leading-relaxed">{primary.description}</p>
             </div>
           </div>
