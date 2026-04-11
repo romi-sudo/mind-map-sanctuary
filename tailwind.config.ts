@@ -49,11 +49,11 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         warm: {
-          walnut: "hsl(var(--text-warm))",
-          clay: "hsl(var(--text-clay))",
+          taupe: "hsl(var(--text-warm))",
           espresso: "hsl(var(--espresso))",
         },
-        blush: "hsl(var(--blush))",
+        sage: "hsl(var(--sage))",
+        sand: "hsl(var(--sand))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
