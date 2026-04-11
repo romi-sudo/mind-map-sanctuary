@@ -6,14 +6,14 @@ import { useAuth } from "@/contexts/AuthContext";
 const linkMap: Record<string, string> = {
   "בית": "/",
   "מצא את המסלול": "/questionnaire",
+  "גישות טיפוליות": "/approaches",
   "מומחים": "/practitioners",
-  "אודות": "#",
 };
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user, signOut } = useAuth();
-  const links = ["בית", "מצא את המסלול", "מומחים", "אודות"];
+  const links = ["בית", "מצא את המסלול", "גישות טיפוליות", "מומחים"];
 
   return (
     <nav className="fixed top-0 right-0 left-0 z-50 bg-shell-white/90 backdrop-blur-xl border-b border-sand-dark/20">

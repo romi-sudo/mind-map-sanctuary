@@ -13,6 +13,7 @@ import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import ForgotPassword from "./pages/ForgotPassword.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
+import Approaches from "./pages/Approaches.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/questionnaire" element={<Questionnaire />} />
             <Route path="/practitioners" element={<Practitioners />} />
+            <Route path="/approaches" element={<Approaches />} />
             <Route path="/practitioners/:id" element={<PractitionerProfile />} />
             <Route path="/join-as-practitioner" element={<JoinAsPractitioner />} />
             <Route path="/login" element={<Login />} />
