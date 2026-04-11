@@ -6,49 +6,45 @@
 
 @layer base {
   :root {
-    /* Coastal sand palette */
-    --background: 40 38% 90%;          /* #F5ECD7 sand light */
-    --foreground: 20 30% 22%;          /* #4A3728 deep earth */
-    --card: 37 30% 85%;                /* #E8D5B0 sand medium */
-    --card-foreground: 20 30% 22%;
-    --popover: 40 50% 96%;             /* #FAF6EE shell white */
-    --popover-foreground: 20 30% 22%;
-    --primary: 25 46% 53%;             /* #C17B4E terracotta accent */
-    --primary-foreground: 40 50% 96%;  /* #FAF6EE shell white */
-    --secondary: 150 14% 57%;          /* #8BA89B ocean hint sage */
-    --secondary-foreground: 40 50% 96%;
-    --muted: 37 25% 87%;
-    --muted-foreground: 30 20% 44%;    /* #8B6F47 driftwood */
-    --accent: 33 22% 76%;              /* #C4A882 sand dark */
-    --accent-foreground: 20 30% 22%;
+    --background: 120 30% 9%;           /* #0D1F0D deep forest */
+    --foreground: 40 38% 96%;           /* #FAF6EE warm cream */
+    --card: 120 33% 9%;                 /* rgba(15,30,15) */
+    --card-foreground: 40 38% 96%;
+    --popover: 120 33% 9%;
+    --popover-foreground: 40 38% 96%;
+    --primary: 24 70% 60%;              /* #E8854A tropical orange */
+    --primary-foreground: 40 38% 96%;
+    --secondary: 38 40% 61%;            /* #C9A96E warm gold */
+    --secondary-foreground: 40 38% 96%;
+    --muted: 120 30% 12%;
+    --muted-foreground: 35 22% 69%;     /* #C8B89A warm sand */
+    --accent: 340 45% 65%;              /* #D4789A tropical pink */
+    --accent-foreground: 40 38% 96%;
     --destructive: 0 72% 51%;
-    --destructive-foreground: 40 50% 96%;
-    --border: 33 22% 76%;              /* #C4A882 sand dark */
-    --input: 33 22% 76%;
-    --ring: 25 46% 53%;
-    --radius: 1.25rem;
+    --destructive-foreground: 40 38% 96%;
+    --border: 35 22% 69% / 0.2;
+    --input: 35 22% 69% / 0.3;
+    --ring: 24 70% 60%;
+    --radius: 1rem;
 
     /* Extended tokens */
-    --shell-white: 40 50% 96%;         /* #FAF6EE */
-    --sand-light: 40 38% 90%;          /* #F5ECD7 */
-    --sand-medium: 37 30% 85%;         /* #E8D5B0 */
-    --sand-dark: 33 22% 76%;           /* #C4A882 */
-    --ocean-hint: 150 14% 57%;         /* #8BA89B */
-    --driftwood: 30 20% 44%;           /* #8B6F47 */
-    --terracotta: 25 46% 53%;          /* #C17B4E */
-    --deep-earth: 20 30% 22%;          /* #4A3728 */
-    --dried-botanical: 30 18% 55%;     /* #A89070 */
-    --primary-hover: 25 50% 46%;
-    --shadow-warm: 30 25% 50%;
+    --forest-deep: 120 30% 9%;          /* #0D1F0D */
+    --forest-surface: 120 33% 16%;      /* #1A3A1A */
+    --tropical-orange: 24 70% 60%;      /* #E8854A */
+    --tropical-orange-hover: 24 60% 50%; /* #C4693A */
+    --warm-gold: 38 40% 61%;            /* #C9A96E */
+    --tropical-pink: 340 45% 65%;       /* #D4789A */
+    --text-cream: 40 38% 96%;           /* #FAF6EE */
+    --text-sand: 35 22% 69%;            /* #C8B89A */
 
-    --sidebar-background: 40 50% 96%;
-    --sidebar-foreground: 20 30% 22%;
-    --sidebar-primary: 25 46% 53%;
-    --sidebar-primary-foreground: 40 50% 96%;
-    --sidebar-accent: 37 30% 85%;
-    --sidebar-accent-foreground: 20 30% 22%;
-    --sidebar-border: 33 22% 76%;
-    --sidebar-ring: 25 46% 53%;
+    --sidebar-background: 120 30% 9%;
+    --sidebar-foreground: 40 38% 96%;
+    --sidebar-primary: 24 70% 60%;
+    --sidebar-primary-foreground: 40 38% 96%;
+    --sidebar-accent: 120 33% 16%;
+    --sidebar-accent-foreground: 40 38% 96%;
+    --sidebar-border: 35 22% 69% / 0.2;
+    --sidebar-ring: 24 70% 60%;
   }
 }
 
@@ -64,12 +60,14 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
-    letter-spacing: 0.01em;
+    color: hsl(35 22% 69%);
+    line-height: 1.8;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
-    letter-spacing: -0.01em;
+    color: hsl(40 38% 96%);
+    letter-spacing: 0.02em;
   }
 }
 
@@ -78,54 +76,55 @@
     font-family: 'Playfair Display', serif;
   }
 
-  .font-hebrew {
-    font-family: 'Playfair Display', serif;
-  }
-
   .font-body {
     font-family: 'Inter', sans-serif;
   }
 
-  /* ── Backgrounds ── */
-  .bg-shell-white {
-    background-color: hsl(var(--shell-white));
-  }
-  .bg-sand-light {
-    background-color: hsl(var(--sand-light));
-  }
-  .bg-sand-medium {
-    background-color: hsl(var(--sand-medium));
-  }
-  .bg-deep-earth {
-    background-color: hsl(var(--deep-earth));
+  /* ── Glass card ── */
+  .glass-card {
+    background: rgba(15, 30, 15, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(200, 184, 154, 0.15);
+    border-radius: 16px;
+    padding: 2rem;
   }
 
-  /* ── Shadows ── */
-  .shadow-warm {
-    box-shadow: 0 4px 24px -4px hsl(var(--shadow-warm) / 0.12);
-  }
-  .shadow-warm-lg {
-    box-shadow: 0 8px 40px -8px hsl(var(--shadow-warm) / 0.18);
-  }
-  .shadow-sandy {
-    box-shadow: 0 6px 28px -6px hsl(var(--sand-dark) / 0.25);
+  .glass-card-light {
+    background: rgba(15, 30, 15, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(200, 184, 154, 0.15);
+    border-radius: 16px;
   }
 
-  /* ── Grain overlay — 4% ── */
-  .grain-overlay::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    opacity: 0.04;
-    pointer-events: none;
-    z-index: 100;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 256px 256px;
+  /* ── Photo section with overlay ── */
+  .photo-section {
+    position: relative;
+    overflow: hidden;
+  }
+  .photo-section > .photo-bg {
+    position: absolute;
+    inset: 0;
+  }
+  .photo-section > .photo-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .photo-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(13, 31, 13, 0.4);
   }
 
-  /* ── Scroll reveal — dreamy 0.8s ── */
+  /* ── Section divider ── */
+  .section-divider {
+    height: 1px;
+    background: rgba(200, 184, 154, 0.2);
+  }
+
+  /* ── Scroll reveal ── */
   .reveal {
     opacity: 0;
     transform: translateY(24px);
@@ -150,71 +149,44 @@
     transform: translateY(0);
   }
 
-  /* ── Button glow — sandy terracotta ── */
-  .btn-glow {
-    position: relative;
-    overflow: visible;
+  /* ── Buttons ── */
+  .btn-primary {
+    background: hsl(var(--tropical-orange));
+    color: hsl(var(--text-cream));
+    border-radius: 50px;
+    padding: 14px 32px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: background 0.3s ease;
   }
-  .btn-glow::after {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 9999px;
-    background: hsl(var(--terracotta) / 0.2);
-    opacity: 0;
-    filter: blur(18px);
-    transition: opacity 0.5s ease;
-    z-index: -1;
+  .btn-primary:hover {
+    background: hsl(var(--tropical-orange-hover));
   }
-  .btn-glow:hover::after {
-    opacity: 1;
+  .btn-primary:disabled {
+    opacity: 0.5;
   }
 
-  /* ── Card hover — wave lift ── */
-  .card-coastal {
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease;
+  .btn-secondary {
+    border: 1px solid hsl(var(--warm-gold));
+    color: hsl(var(--warm-gold));
+    border-radius: 50px;
+    padding: 14px 32px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    transition: all 0.3s ease;
   }
-  .card-coastal:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 48px -12px hsl(var(--sand-dark) / 0.3);
+  .btn-secondary:hover {
+    background: hsl(var(--warm-gold));
+    color: hsl(var(--forest-deep));
   }
 
-  /* ── Gold divider line ── */
+  /* ── Gold line ── */
   .gold-line {
     display: block;
     width: 60px;
     height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--terracotta) / 0.5), transparent);
+    background: linear-gradient(90deg, transparent, hsl(var(--warm-gold) / 0.5), transparent);
     margin: 0 auto;
-  }
-
-  /* ── Photo section ── */
-  .photo-section {
-    position: relative;
-    overflow: hidden;
-  }
-  .photo-section > .photo-bg {
-    position: absolute;
-    inset: 0;
-  }
-  .photo-section > .photo-bg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  /* Legacy class aliases */
-  .card-luxury { @apply card-coastal; }
-  .nature-card {
-    position: relative;
-    overflow: hidden;
-    border-radius: 1.25rem;
-    @apply card-coastal;
-  }
-  .nature-card img {
-    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .nature-card:hover img {
-    transform: scale(1.04);
   }
 }
