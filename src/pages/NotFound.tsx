@@ -10,11 +10,11 @@ const NotFound = () => {
   }, [location.pathname]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center" dir="rtl" style={{ background: "#3D2410" }}>
+    <div className="flex min-h-screen items-center justify-center bg-background" dir="rtl">
       <div className="text-center">
-        <h1 className="mb-4 font-display text-6xl font-bold text-cream">404</h1>
-        <p className="mb-4 text-xl font-body text-sand">העמוד לא נמצא</p>
-        <Link to="/" className="font-body text-sm hover:underline" style={{ color: "#E8854A" }}>
+        <h1 className="mb-4 font-display text-6xl font-bold text-foreground">404</h1>
+        <p className="mb-4 text-xl font-body text-muted-foreground">העמוד לא נמצא</p>
+        <Link to="/" className="font-body text-sm hover:underline text-primary">
           חזרה לדף הבית
         </Link>
       </div>

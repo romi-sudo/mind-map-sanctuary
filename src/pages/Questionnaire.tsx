@@ -115,13 +115,12 @@ const AnswerCard = ({
     onClick={onSelect}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
-    className="w-full text-right overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 glass-card-light !p-6"
-    style={{
-      border: selected ? "1px solid #FAF6EE" : "1px solid rgba(200,184,154,0.15)",
-    }}
+    className={`w-full text-right overflow-hidden rounded-2xl cursor-pointer transition-all duration-300 p-6 ${
+      selected ? "bg-white shadow-lg border-2 border-primary" : "bg-white/85 backdrop-blur-sm shadow-md border border-border hover:shadow-lg"
+    }`}
   >
-    <h3 className="font-display text-xl font-bold text-cream mb-1">{card.title}</h3>
-    {card.subtitle && <p className="font-body text-sm text-sand">{card.subtitle}</p>}
+    <h3 className="font-display text-xl font-bold text-foreground mb-1">{card.title}</h3>
+    {card.subtitle && <p className="font-body text-sm text-muted-foreground">{card.subtitle}</p>}
   </motion.button>
 );
 
@@ -218,18 +217,15 @@ const Questionnaire = () => {
 
   return (
     <div dir="rtl" className="min-h-screen flex flex-col overflow-x-hidden photo-section">
-      {/* Background */}
       <div className="photo-bg">
         <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt="" />
         <div className="photo-overlay" />
       </div>
 
-      {/* Progress bar */}
       {track && (
-        <div className="fixed top-0 left-0 right-0 z-50 h-1" style={{ background: "rgba(200,184,154,0.2)" }}>
+        <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-white/20">
           <motion.div
-            className="h-full rounded-l-full"
-            style={{ background: "#C9A96E" }}
+            className="h-full rounded-l-full bg-primary"
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.4, ease: "easeOut" }}
@@ -237,25 +233,23 @@ const Questionnaire = () => {
         </div>
       )}
 
-      {/* Nav */}
       <div className="fixed top-6 right-6 z-50 flex items-center gap-3 relative">
         {stepIndex > 0 && (
-          <button onClick={goBack} className="text-sand hover:text-cream transition-colors font-body text-sm">
+          <button onClick={goBack} className="text-white/70 hover:text-white transition-colors font-body text-sm">
             חזרה
           </button>
         )}
-        <button onClick={() => navigate("/")} className="text-sand hover:text-cream transition-colors font-body text-sm">
+        <button onClick={() => navigate("/")} className="text-white/70 hover:text-white transition-colors font-body text-sm">
           דף הבית
         </button>
       </div>
 
-      {/* Content */}
       <div className="flex-1 flex items-center justify-center px-6 py-20 relative z-10">
         <AnimatePresence mode="wait" custom={direction}>
           {stepIndex === 0 && (
             <motion.div key="gate" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-2xl">
-              <h1 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-cream text-center mb-3">{STEP1.headline}</h1>
-              <p className="font-body text-sand text-center mb-12">{STEP1.subtext}</p>
+              <h1 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-white text-center mb-3">{STEP1.headline}</h1>
+              <p className="font-body text-white/75 text-center mb-12">{STEP1.subtext}</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {STEP1.cards.map((card) => (
                   <AnswerCard key={card.id} card={card} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} />
@@ -266,7 +260,7 @@ const Questionnaire = () => {
 
           {currentStep && !isFreeTextStep && (
             <motion.div key={`step-${stepIndex}`} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-2xl">
-              <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-cream text-center mb-10">{currentStep.headline}</h1>
+              <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-white text-center mb-10">{currentStep.headline}</h1>
               <div className={`grid grid-cols-1 ${currentStep.cards.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4`}>
                 {currentStep.cards.map((card) => (
                   <AnswerCard key={card.id} card={card} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} />
@@ -277,16 +271,15 @@ const Questionnaire = () => {
 
           {isFreeTextStep && (
             <motion.div key="freetext" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-2xl">
-              <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-cream text-center mb-3">
+              <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-white text-center mb-3">
                 במשפט אחד — מה את/ה מחפש/ת?
               </h1>
-              <p className="font-body text-sand text-center mb-10">זה עוזר לנו לדייק את ההמלצה שלך</p>
+              <p className="font-body text-white/75 text-center mb-10">זה עוזר לנו לדייק את ההמלצה שלך</p>
               <textarea
                 value={freeText}
                 onChange={(e) => setFreeText(e.target.value)}
                 placeholder="לדוגמה: אני רוצה להרגיש שאני יודע/ת לאן אני הולך/ת..."
-                className="w-full min-h-[160px] rounded-2xl p-6 font-body text-cream text-lg placeholder:text-sand/50 focus:outline-none resize-none"
-                style={{ background: "rgba(61,36,16,0.6)", backdropFilter: "blur(10px)", border: "1px solid rgba(200,184,154,0.15)" }}
+                className="w-full min-h-[160px] rounded-2xl p-6 font-body text-foreground text-lg placeholder:text-muted-foreground/50 focus:outline-none resize-none bg-white/90 backdrop-blur-sm shadow-md border border-border"
               />
               <div className="mt-8 text-center">
                 <button onClick={handleSubmit} disabled={isLoading} className="btn-primary text-lg inline-flex items-center gap-3">
@@ -326,58 +319,51 @@ const ResultsPage = ({
   const practitioners = recommendation?.practitioners ?? FALLBACK_PRACTITIONERS;
 
   return (
-    <div dir="rtl" className="min-h-screen photo-section">
-      <div className="photo-bg">
-        <img src="https://images.unsplash.com/photo-1504567961542-e24d9439a724?w=1920&q=80" alt="" />
-        <div className="photo-overlay" />
-      </div>
-
-      <div className="max-w-3xl mx-auto px-6 py-20 relative z-10">
-        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-cream text-center mb-12">
+    <div dir="rtl" className="min-h-screen bg-background">
+      <div className="max-w-3xl mx-auto px-6 py-20">
+        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-12">
           {headline}
         </motion.h1>
 
-        {/* Recommendation card */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="glass-card mb-12" style={{ background: "rgba(232,133,74,0.15)", border: "1px solid rgba(232,133,74,0.3)" }}>
-          <h2 className="font-display text-2xl font-bold text-cream mb-2 inline-flex items-center gap-2">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="spa-card mb-12 border-l-4 border-l-primary">
+          <h2 className="font-display text-2xl font-bold text-foreground mb-2 inline-flex items-center gap-2">
             {primary.title}
-            {findApproach(primary.title) && <ApproachTooltipButton tag={primary.title} className="text-cream/60 hover:text-cream" />}
+            {findApproach(primary.title) && <ApproachTooltipButton tag={primary.title} className="text-muted-foreground hover:text-foreground" />}
           </h2>
-          <p className="font-body text-sand leading-relaxed">{primary.description}</p>
+          <p className="font-body text-muted-foreground leading-relaxed">{primary.description}</p>
         </motion.div>
 
-        <h3 className="font-display text-xl font-bold text-cream mb-6">מומחים שמתאימים לך</h3>
+        <h3 className="font-display text-xl font-bold text-foreground mb-6">מומחים שמתאימים לך</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
           {practitioners.map((p, i) => (
-            <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="glass-card">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center font-display text-xl font-bold mb-4" style={{ background: "#4D3520", color: "#C9A96E" }}>
+            <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="spa-card">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center font-display text-xl font-bold mb-4 bg-muted text-primary">
                 {p.initials}
               </div>
-              <h4 className="font-display text-lg font-bold text-cream">{p.name}</h4>
-              <p className="font-body text-sm text-sand mb-3">{p.title}</p>
+              <h4 className="font-display text-lg font-bold text-foreground">{p.name}</h4>
+              <p className="font-body text-sm text-muted-foreground mb-3">{p.title}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {p.tags.map((tag) => (
-                  <span key={tag} className="inline-flex items-center gap-1 text-xs font-body px-3 py-1 rounded-full" style={{ border: "1px solid rgba(200,184,154,0.2)", color: "#C9A96E" }}>
+                  <span key={tag} className="inline-flex items-center gap-1 text-xs font-body px-3 py-1 rounded-full border border-border text-primary">
                     {tag}
                     {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
                   </span>
                 ))}
               </div>
-              <p className="font-body text-sm text-sand mb-4">{p.price}</p>
+              <p className="font-body text-sm text-muted-foreground mb-4">{p.price}</p>
               <button className="btn-secondary w-full !py-2 text-sm">לפנייה</button>
             </motion.div>
           ))}
         </div>
 
-        {/* Info card */}
-        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="glass-card mb-8 text-center">
-          <p className="font-body text-sand text-sm leading-relaxed">
+        <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="spa-card mb-8 text-center">
+          <p className="font-body text-muted-foreground text-sm leading-relaxed">
             רוצים להבין יותר על הגישות השונות? לחצו על סימן ה-? ליד כל גישה בקטלוג המומחים
           </p>
         </motion.div>
 
         <div className="text-center">
-          <button onClick={onRestart} className="font-body text-sand hover:text-cream transition-colors text-sm">
+          <button onClick={onRestart} className="font-body text-muted-foreground hover:text-foreground transition-colors text-sm">
             רוצה לנסות מסלול אחר? חזור לשאלון
           </button>
         </div>

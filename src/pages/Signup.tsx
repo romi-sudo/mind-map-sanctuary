@@ -42,60 +42,53 @@ const Signup = () => {
     navigate("/");
   };
 
-  const inputClass = "w-full py-3 bg-transparent text-cream placeholder:text-sand/50 focus:outline-none font-body text-sm";
+  const inputClass = "w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm";
 
   return (
-    <div dir="rtl" className="min-h-screen flex items-center justify-center px-4 py-12 photo-section">
-      <div className="photo-bg">
-        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt="" />
-        <div className="photo-overlay" />
-      </div>
-
+    <div dir="rtl" className="min-h-screen flex items-center justify-center px-4 py-12 bg-background">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="glass-card w-full max-w-md relative z-10"
+        className="spa-card w-full max-w-md"
       >
         <div className="mb-5">
-          <Link to="/" className="font-body text-sm text-sand hover:text-cream transition-colors">← חזרה לדף הבית</Link>
+          <Link to="/" className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors">← חזרה לדף הבית</Link>
         </div>
 
-        <Link to="/" className="font-display text-2xl font-bold block text-center mb-6" style={{ color: "#C9A96E" }}>MapSoul</Link>
+        <Link to="/" className="font-display text-2xl font-bold block text-center mb-6 text-foreground">MapSoul</Link>
 
-        <h1 className="font-display text-3xl font-bold text-cream text-center mb-2">צרו חשבון</h1>
-        <p className="font-body text-sand text-center mb-6">התחילו את המסע שלכם עם MapSoul</p>
+        <h1 className="font-display text-3xl font-bold text-foreground text-center mb-2">צרו חשבון</h1>
+        <p className="font-body text-muted-foreground text-center mb-6">התחילו את המסע שלכם עם MapSoul</p>
 
-        {/* Tabs */}
-        <div className="flex mb-8" style={{ borderBottom: "1px solid rgba(200,184,154,0.2)" }}>
+        <div className="flex mb-8 border-b border-border">
           {(["user", "practitioner"] as Tab[]).map((t) => (
             <button key={t} onClick={() => setTab(t)}
-              className={`flex-1 pb-3 font-body text-sm transition-colors border-b-2 ${tab === t ? "text-cream" : "border-transparent text-sand hover:text-cream"}`}
-              style={tab === t ? { borderColor: "#E8854A" } : {}}>
+              className={`flex-1 pb-3 font-body text-sm transition-colors border-b-2 ${tab === t ? "text-foreground border-primary" : "border-transparent text-muted-foreground hover:text-foreground"}`}>
               {t === "user" ? "אני מחפש/ת מסלול" : "אני מומחה/ית"}
             </button>
           ))}
         </div>
 
         <form onSubmit={handleSignup} className="space-y-4">
-          <div style={{ borderBottom: "1px solid rgba(201,169,110,0.3)" }}>
+          <div className="border-b border-border">
             <input type="text" required value={name} onChange={(e) => setName(e.target.value)} placeholder="שם פרטי" className={inputClass} />
           </div>
-          <div style={{ borderBottom: "1px solid rgba(201,169,110,0.3)" }}>
+          <div className="border-b border-border">
             <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="אימייל" className={inputClass} />
           </div>
-          <div className="relative" style={{ borderBottom: "1px solid rgba(201,169,110,0.3)" }}>
+          <div className="relative border-b border-border">
             <input type={showPassword ? "text" : "password"} required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" className={inputClass} />
-            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute left-0 top-1/2 -translate-y-1/2 text-sand hover:text-cream transition-colors font-body text-xs">
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors font-body text-xs">
               {showPassword ? "הסתר" : "הצג"}
             </button>
           </div>
-          <div style={{ borderBottom: "1px solid rgba(201,169,110,0.3)" }}>
+          <div className="border-b border-border">
             <input type={showPassword ? "text" : "password"} required minLength={6} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="אימות סיסמה" className={inputClass} />
           </div>
           <label className="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="w-4 h-4 rounded" style={{ accentColor: "#E8854A" }} />
-            <span className="font-body text-sm text-sand">קראתי ואני מסכים/ה לתנאי השימוש</span>
+            <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="w-4 h-4 rounded" style={{ accentColor: "hsl(24 44% 50%)" }} />
+            <span className="font-body text-sm text-muted-foreground">קראתי ואני מסכים/ה לתנאי השימוש</span>
           </label>
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? "יוצר חשבון..." : "יצירת חשבון"}
@@ -103,9 +96,9 @@ const Signup = () => {
         </form>
 
         <div className="flex items-center gap-4 my-6">
-          <div className="flex-1 h-px" style={{ background: "rgba(200,184,154,0.2)" }} />
-          <span className="font-body text-sm text-sand">או</span>
-          <div className="flex-1 h-px" style={{ background: "rgba(200,184,154,0.2)" }} />
+          <div className="flex-1 h-px bg-border" />
+          <span className="font-body text-sm text-muted-foreground">או</span>
+          <div className="flex-1 h-px bg-border" />
         </div>
 
         <button onClick={handleGoogle} className="btn-secondary w-full flex items-center justify-center gap-3 !py-3">
@@ -119,9 +112,9 @@ const Signup = () => {
         </button>
 
         <div className="mt-8 text-center">
-          <p className="font-body text-sm text-sand">
+          <p className="font-body text-sm text-muted-foreground">
             כבר יש לכם חשבון?{" "}
-            <Link to="/login" className="hover:underline" style={{ color: "#E8854A" }}>התחברו כאן</Link>
+            <Link to="/login" className="hover:underline text-primary">התחברו כאן</Link>
           </p>
         </div>
       </motion.div>
