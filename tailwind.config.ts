@@ -48,11 +48,19 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        warm: {
-          walnut: "hsl(var(--text-warm))",
-          espresso: "hsl(var(--espresso))",
+        shell: {
+          white: "hsl(var(--shell-white))",
         },
-        blush: "hsl(var(--blush))",
+        sand: {
+          light: "hsl(var(--sand-light))",
+          medium: "hsl(var(--sand-medium))",
+          dark: "hsl(var(--sand-dark))",
+        },
+        ocean: "hsl(var(--ocean-hint))",
+        driftwood: "hsl(var(--driftwood))",
+        terracotta: "hsl(var(--terracotta))",
+        "deep-earth": "hsl(var(--deep-earth))",
+        "dried-botanical": "hsl(var(--dried-botanical))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -81,7 +89,7 @@ export default {
         },
         "float": {
           "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-12px)" },
+          "50%": { transform: "translateY(-10px)" },
         },
       },
       animation: {
