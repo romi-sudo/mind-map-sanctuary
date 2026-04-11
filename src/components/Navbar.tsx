@@ -1,5 +1,13 @@
 import { Menu, X, Compass } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+const linkMap: Record<string, string> = {
+  "בית": "/",
+  "מצא את המסלול": "/questionnaire",
+  "מומחים": "/practitioners",
+  "אודות": "#",
+};
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
