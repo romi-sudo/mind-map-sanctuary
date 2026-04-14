@@ -111,7 +111,10 @@ const CourseCard = ({ course, index }: { course: Course; index: number }) => (
 );
 
 const Practitioners = () => {
-  const [activeTab, setActiveTab] = useState<"practitioners" | "courses">("practitioners");
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState<"practitioners" | "courses">(
+    searchParams.get("tab") === "courses" ? "courses" : "practitioners"
+  );
   const [search, setSearch] = useState("");
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
 
