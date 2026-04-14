@@ -81,7 +81,7 @@
 
   /* ── Elevated card ── */
   .spa-card {
-    background: white;
+    background: #F5ECD7;
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 4px 24px rgba(44, 31, 15, 0.08);
