@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ApproachTooltipButton } from "@/components/ApproachTooltip";
@@ -359,6 +359,41 @@ const ResultsPage = ({
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="spa-card mb-8 text-center">
           <p className="font-body text-muted-foreground text-sm leading-relaxed">
             רוצים להבין יותר על הגישות השונות? לחצו על סימן ה-? ליד כל גישה בקטלוג המומחים
+          </p>
+        </motion.div>
+
+        {/* Course suggestion */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="mb-12">
+          <h3 className="font-display text-xl font-bold text-foreground mb-2 text-center">קורס שיכול לעזור לך</h3>
+          <p className="font-body text-muted-foreground text-sm text-center mb-6">למידה עצמית שמשלימה את המסלול שלך</p>
+
+          <div className="spa-card overflow-hidden !p-0 max-w-sm mx-auto">
+            <div className="h-36 relative overflow-hidden rounded-t-2xl" style={{ background: 'linear-gradient(135deg, hsl(var(--primary) / 0.15), hsl(var(--secondary) / 0.2))' }}>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="font-display text-6xl font-bold text-primary/10">A</span>
+              </div>
+            </div>
+            <div className="p-6">
+              <h4 className="font-display text-lg font-bold text-foreground mb-1">AI לצמיחה אישית — כלים לחיים</h4>
+              <p className="text-muted-foreground text-sm mb-4">רותם לוי</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                <span className="text-xs font-body px-3 py-1 rounded-full bg-primary text-white">לכולם</span>
+                <span className="text-xs font-body px-3 py-1 rounded-full border border-border text-primary">מוקלט</span>
+              </div>
+              <div className="pt-3 border-t border-border flex items-center justify-between text-sm text-muted-foreground">
+                <span>6 שבועות</span>
+                <span className="font-display font-bold text-foreground">₪350</span>
+              </div>
+            </div>
+            <button className="w-full py-3 text-sm font-body text-center transition-colors duration-300 border-t border-border text-primary hover:bg-primary/5">
+              לפרטים והרשמה
+            </button>
+          </div>
+
+          <p className="text-center mt-4">
+            <Link to="/practitioners?tab=courses" className="font-body text-sm text-primary hover:underline transition-colors">
+              לכל הקורסים וההכשרות ←
+            </Link>
           </p>
         </motion.div>
 

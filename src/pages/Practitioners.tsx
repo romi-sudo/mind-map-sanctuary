@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { practitioners, type Practitioner } from "@/data/practitioners";
@@ -111,7 +111,10 @@ const CourseCard = ({ course, index }: { course: Course; index: number }) => (
 );
 
 const Practitioners = () => {
-  const [activeTab, setActiveTab] = useState<"practitioners" | "courses">("practitioners");
+  const [searchParams] = useSearchParams();
+  const [activeTab, setActiveTab] = useState<"practitioners" | "courses">(
+    searchParams.get("tab") === "courses" ? "courses" : "practitioners"
+  );
   const [search, setSearch] = useState("");
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
 
