@@ -9,11 +9,11 @@ const TrustBar = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28" style={{ background: '#F5ECD7' }}>
+    <section className="py-20 md:py-28 bg-secondary/20">
       <div className="container mx-auto px-6">
-        <div ref={ref} className={`flex flex-row items-center justify-center reveal ${isVisible ? "visible" : ""}`}>
+        <div ref={ref} className={`flex flex-row flex-nowrap items-center justify-center overflow-x-auto reveal ${isVisible ? "visible" : ""}`}>
           {stats.map((stat, i) => (
-            <div key={stat.label} className="flex items-center">
+            <div key={stat.label} className="flex items-center shrink-0">
               <div className="text-center px-8 md:px-12">
                 <span className="font-display text-4xl md:text-6xl font-bold block mb-2 text-primary">{stat.value}</span>
                 <span className="font-body text-muted-foreground text-xs md:text-sm">{stat.label}</span>
