@@ -14,6 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
+      course_applications: {
+        Row: {
+          course_description: string | null
+          course_name: string
+          created_at: string
+          duration: string | null
+          email: string
+          format: string
+          free_intro: boolean
+          full_name: string
+          id: string
+          level: string
+          phone: string
+          price: number
+          professional_title: string
+          sample_link: string | null
+          teaching_experience: string | null
+          tools: string[] | null
+          topic: string
+          website: string | null
+          whatsapp: string | null
+        }
+        Insert: {
+          course_description?: string | null
+          course_name: string
+          created_at?: string
+          duration?: string | null
+          email: string
+          format: string
+          free_intro?: boolean
+          full_name: string
+          id?: string
+          level: string
+          phone: string
+          price?: number
+          professional_title: string
+          sample_link?: string | null
+          teaching_experience?: string | null
+          tools?: string[] | null
+          topic: string
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Update: {
+          course_description?: string | null
+          course_name?: string
+          created_at?: string
+          duration?: string | null
+          email?: string
+          format?: string
+          free_intro?: boolean
+          full_name?: string
+          id?: string
+          level?: string
+          phone?: string
+          price?: number
+          professional_title?: string
+          sample_link?: string | null
+          teaching_experience?: string | null
+          tools?: string[] | null
+          topic?: string
+          website?: string | null
+          whatsapp?: string | null
+        }
+        Relationships: []
+      }
       practitioner_applications: {
         Row: {
           accepting_new_clients: boolean
