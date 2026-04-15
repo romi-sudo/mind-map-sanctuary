@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,48 +6,46 @@
 
 @layer base {
   :root {
-    --background: 34 33% 93%;              /* #F5EFE6 warm beige */
-    --foreground: 20 30% 14%;              /* #2C1F0F dark brown */
-    --card: 0 0% 100%;                     /* white */
+    --background: 35 30% 94%;
+    --foreground: 20 30% 14%;
+    --card: 35 25% 90%;
     --card-foreground: 20 30% 14%;
-    --popover: 0 0% 100%;
+    --popover: 35 30% 94%;
     --popover-foreground: 20 30% 14%;
-    --primary: 24 44% 50%;                 /* #B5784A terracotta */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 38 40% 61%;               /* #C9A96E warm gold */
+    --primary: 25 45% 45%;
+    --primary-foreground: 35 30% 94%;
+    --secondary: 35 25% 85%;
     --secondary-foreground: 20 30% 14%;
-    --muted: 34 20% 88%;                   /* #E8E0D4 */
-    --muted-foreground: 20 12% 42%;        /* #6B5B4E */
-    --accent: 34 33% 93%;
+    --muted: 35 20% 88%;
+    --muted-foreground: 20 20% 45%;
+    --accent: 35 40% 75%;
     --accent-foreground: 20 30% 14%;
+    --border: 35 20% 82%;
+    --input: 35 20% 82%;
+    --radius: 0.75rem;
+    --ring: 25 45% 45%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 30 15% 80%;
-    --input: 30 15% 80%;
-    --ring: 24 44% 50%;
-    --radius: 1rem;
 
     /* Extended tokens */
-    --terracotta: 24 44% 50%;              /* #B5784A */
-    --terracotta-hover: 24 44% 42%;        /* darker */
-    --warm-gold: 38 40% 61%;               /* #C9A96E */
-    --text-dark: 20 30% 14%;               /* #2C1F0F */
-    --text-mid: 20 12% 42%;                /* #6B5B4E */
-    --surface-warm: 34 33% 93%;            /* #F5EFE6 */
-    --surface-card: 0 0% 100%;             /* white */
+    --terracotta: 25 45% 45%;
+    --terracotta-hover: 25 45% 38%;
+    --warm-gold: 38 40% 61%;
+    --text-dark: 20 30% 14%;
+    --text-mid: 20 20% 45%;
+    --surface-warm: 35 30% 94%;
+    --surface-card: 35 25% 90%;
 
-    --sidebar-background: 0 0% 100%;
+    --sidebar-background: 35 25% 90%;
     --sidebar-foreground: 20 30% 14%;
-    --sidebar-primary: 24 44% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 34 33% 93%;
+    --sidebar-primary: 25 45% 45%;
+    --sidebar-primary-foreground: 35 30% 94%;
+    --sidebar-accent: 35 30% 94%;
     --sidebar-accent-foreground: 20 30% 14%;
-    --sidebar-border: 30 15% 80%;
-    --sidebar-ring: 24 44% 50%;
+    --sidebar-border: 35 20% 82%;
+    --sidebar-ring: 25 45% 45%;
   }
-}
 
-@layer base {
   * {
     @apply border-border;
   }
@@ -59,18 +57,21 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
-    color: hsl(20 12% 42%);
+    background-color: #F5ECD7;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
     line-height: 1.8;
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
-    color: hsl(20 30% 14%);
+    color: #2C1A0E;
     letter-spacing: 0.02em;
   }
 }
 
 @layer components {
+  /* ── Typography helpers ── */
   .font-display {
     font-family: 'Playfair Display', serif;
   }
@@ -79,38 +80,113 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* ── Elevated card ── */
+  .heading-nature {
+    font-family: 'Playfair Display', serif;
+    color: #2C1A0E;
+    line-height: 1.2;
+  }
+
+  .text-warm {
+    color: #6B4226;
+  }
+
+  .text-sand {
+    color: #8B6914;
+  }
+
+  /* ── NATURE TEXTURE BACKGROUNDS ── */
+  .bg-sand {
+    background-color: #F5ECD7;
+    background-image: url("https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=1200&auto=format&fit=crop&q=60");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .bg-leaves {
+    background-color: #F0EAD6;
+    background-image: url("https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&auto=format&fit=crop&q=60");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+  }
+
+  .bg-shadow-leaves {
+    background-color: #F5F0E8;
+    background-image: url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=60");
+    background-size: cover;
+    background-position: center;
+  }
+
+  .bg-tropical-mist {
+    background-color: #EDE0CC;
+    background-image: url("https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200&auto=format&fit=crop&q=60");
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* ── NATURE OVERLAY ── */
+  .nature-overlay {
+    position: relative;
+  }
+  .nature-overlay::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(245, 236, 215, 0.55);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .nature-overlay > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Elevated card (legacy compat) ── */
   .spa-card {
-    background: #F5ECD7;
+    background: rgba(245, 236, 215, 0.75);
+    backdrop-filter: blur(8px);
     border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 4px 24px rgba(44, 31, 15, 0.08);
-    border: 1px solid rgba(201, 169, 110, 0.12);
+    box-shadow: 0 4px 16px rgba(44, 26, 14, 0.08);
+    border: 1px solid rgba(196, 168, 130, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   .spa-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 32px rgba(44, 31, 15, 0.12);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(44, 26, 14, 0.12);
   }
 
-  /* Glass card for dark overlays */
+  /* ── Glass cards ── */
+  .card-nature {
+    background: rgba(245, 236, 215, 0.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(196, 168, 130, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(44, 26, 14, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-nature:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(44, 26, 14, 0.12);
+  }
+
   .glass-card {
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(245, 236, 215, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(201, 169, 110, 0.15);
+    border: 1px solid rgba(196, 168, 130, 0.25);
     border-radius: 16px;
     padding: 2rem;
-    box-shadow: 0 4px 24px rgba(44, 31, 15, 0.08);
+    box-shadow: 0 4px 16px rgba(44, 26, 14, 0.08);
   }
 
   .glass-card-light {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(245, 236, 215, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(201, 169, 110, 0.12);
+    border: 1px solid rgba(196, 168, 130, 0.2);
     border-radius: 16px;
-    box-shadow: 0 2px 12px rgba(44, 31, 15, 0.06);
+    box-shadow: 0 2px 12px rgba(44, 26, 14, 0.06);
   }
 
   /* ── Photo section with overlay ── */
@@ -130,13 +206,19 @@
   .photo-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(44, 31, 15, 0.35) 0%, rgba(44, 31, 15, 0.55) 100%);
+    background: linear-gradient(180deg, rgba(44, 26, 14, 0.35) 0%, rgba(44, 26, 14, 0.55) 100%);
   }
 
-  /* ── Section divider ── */
+  /* ── Section dividers ── */
   .section-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.3), transparent);
+    background: linear-gradient(90deg, transparent, rgba(196, 168, 130, 0.4), transparent);
+  }
+
+  .divider-nature {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #C4A882, transparent);
+    margin: 2rem 0;
   }
 
   /* ── Scroll reveal ── */
@@ -164,7 +246,26 @@
     transform: translateY(0);
   }
 
-  /* ── Buttons ── */
+  /* ── STONE BUTTONS ── */
+  .btn-stone {
+    background-color: #C4A882;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='stone'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.3'/%3E%3CfeBlend in='SourceGraphic' mode='multiply' result='blend'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23stone)' opacity='0.15'/%3E%3C/svg%3E");
+    color: #2C1A0E;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 28px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 2px 4px rgba(44,26,14,0.2);
+  }
+  .btn-stone:hover {
+    background-color: #B8956E;
+    transform: translateY(-1px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 4px 8px rgba(44,26,14,0.25);
+  }
+
   .btn-primary {
     background: hsl(var(--terracotta));
     color: white;
@@ -196,6 +297,23 @@
     color: white;
   }
 
+  /* ── FILTER PILLS ── */
+  .pill {
+    background: rgba(196, 168, 130, 0.2);
+    border: 1px solid #C4A882;
+    border-radius: 99px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    color: #6B4226;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .pill:hover, .pill.active {
+    background: #C4A882;
+    color: #2C1A0E;
+    border-color: #C4A882;
+  }
+
   /* ── Gold line ── */
   .gold-line {
     display: block;
@@ -204,4 +322,42 @@
     background: linear-gradient(90deg, transparent, hsl(var(--warm-gold) / 0.6), transparent);
     margin: 0 auto;
   }
+}
+
+/* ── LEAF ANIMATIONS ── */
+@keyframes leafSway {
+  0%, 100% { transform: rotate(-2deg) translateX(0px); }
+  50% { transform: rotate(2deg) translateX(4px); }
+}
+
+@keyframes leafFloat {
+  0%, 100% { transform: translateY(0px) rotate(-1deg); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.leaf-sway {
+  animation: leafSway 4s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.leaf-float {
+  animation: leafFloat 6s ease-in-out infinite;
+}
+
+.shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease forwards;
 }
