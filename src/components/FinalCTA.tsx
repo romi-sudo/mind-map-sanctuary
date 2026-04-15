@@ -6,24 +6,21 @@ const FinalCTA = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="photo-section min-h-[60vh] flex items-center justify-center">
-      <div className="photo-bg">
-        <img src="https://images.unsplash.com/photo-1504567961542-e24d9439a724?w=1920&q=80" alt="" loading="lazy" />
-        <div className="photo-overlay" />
-      </div>
-
-      <div ref={ref} className={`container mx-auto px-6 text-center relative z-10 py-28 reveal ${isVisible ? "visible" : ""}`}>
-        <p className="font-body text-sm tracking-[0.25em] uppercase mb-6 text-white/80">הצעד הבא שלכם</p>
-        <h2 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-white mb-6 leading-tight">
-          מוכנים למצוא את המסלול שלכם?
-        </h2>
-        <div className="w-14 h-px mx-auto mb-10 bg-white/40" />
-        <button
-          onClick={() => navigate("/questionnaire")}
-          className="btn-primary text-lg"
-        >
-          בואו נתחיל
-        </button>
+    <section className="relative min-h-[60vh] flex items-center justify-center bg-leaves nature-overlay">
+      <div ref={ref} className={`container mx-auto px-6 relative z-10 py-28 reveal ${isVisible ? "visible" : ""}`}>
+        <div className="glass-card max-w-2xl mx-auto text-center">
+          <p className="font-body text-sm tracking-[0.25em] uppercase mb-6 text-primary">הצעד הבא שלכם</p>
+          <h2 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-foreground mb-6 leading-tight">
+            מוכנים למצוא את המסלול שלכם?
+          </h2>
+          <div className="w-14 h-px mx-auto mb-10 bg-primary/30" />
+          <button
+            onClick={() => navigate("/questionnaire")}
+            className="btn-primary text-lg"
+          >
+            בואו נתחיל
+          </button>
+        </div>
       </div>
     </section>
   );
