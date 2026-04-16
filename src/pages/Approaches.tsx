@@ -72,7 +72,7 @@ const Approaches = () => {
   const allApproaches = Object.values(approaches);
 
   return (
-    <div className="min-h-screen font-body bg-background" dir="rtl">
+    <div className="min-h-screen font-body bg-sand nature-overlay ambient-leaves" dir="rtl">
       <Navbar />
       <main className="pt-28 pb-20 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">

@@ -45,7 +45,7 @@ const Signup = () => {
   const inputClass = "w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm";
 
   return (
-    <div dir="rtl" className="min-h-screen flex items-center justify-center px-4 py-12 bg-background">
+    <div dir="rtl" className="min-h-screen flex items-center justify-center px-4 py-12 bg-shadow-leaves nature-overlay ambient-leaves ambient-mist">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
