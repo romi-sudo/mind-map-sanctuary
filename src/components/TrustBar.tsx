@@ -9,8 +9,11 @@ const TrustBar = () => {
   ];
 
   return (
-    <section className="py-20 md:py-28 bg-secondary/20">
-      <div className="container mx-auto px-6">
+    <section className="relative py-20 md:py-28 bg-secondary/20 overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none water-shimmer" style={{
+        backgroundImage: 'radial-gradient(ellipse at 20% 50%, hsl(var(--water-teal) / 0.25), transparent 55%), radial-gradient(ellipse at 80% 50%, hsl(var(--warm-gold) / 0.18), transparent 55%)',
+      }} />
+      <div className="container mx-auto px-6 relative z-10">
         <div ref={ref} className={`flex flex-row flex-nowrap items-center justify-center overflow-x-auto reveal ${isVisible ? "visible" : ""}`}>
           {stats.map((stat, i) => (
             <div key={stat.label} className="flex items-center shrink-0">
