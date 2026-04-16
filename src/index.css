@@ -370,19 +370,21 @@
 .ambient-leaves {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
 }
 .ambient-leaves::after {
   content: '';
   position: absolute;
-  inset: -10%;
+  inset: 0;
   background-image: url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=60");
   background-size: cover;
   background-position: center;
-  opacity: 0.12;
+  opacity: 0.10;
   mix-blend-mode: multiply;
   pointer-events: none;
   z-index: 0;
   animation: leafDrift 18s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 .ambient-leaves > * { position: relative; z-index: 1; }
 
