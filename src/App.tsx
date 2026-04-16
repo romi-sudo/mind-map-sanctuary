@@ -15,6 +15,7 @@ import ForgotPassword from "./pages/ForgotPassword.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Approaches from "./pages/Approaches.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import AmbientPlayer from "./components/AmbientPlayer";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <AmbientPlayer />
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
