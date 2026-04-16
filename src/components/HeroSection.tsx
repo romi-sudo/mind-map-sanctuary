@@ -5,7 +5,7 @@ const HeroSection = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-screen overflow-hidden bg-shadow-leaves nature-overlay">
+    <section className="relative min-h-screen overflow-hidden bg-shadow-leaves nature-overlay ambient-leaves ambient-mist">
       <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/45 to-foreground/25" />
 
       <motion.div
