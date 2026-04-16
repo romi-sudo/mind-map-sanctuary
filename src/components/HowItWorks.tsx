@@ -10,7 +10,7 @@ const HowItWorks = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section className="relative min-h-[80vh] flex items-center bg-tropical-mist nature-overlay">
+    <section className="relative min-h-[80vh] flex items-center bg-tropical-mist nature-overlay ambient-mist">
       <div className="container mx-auto px-6 py-28 md:py-36 relative z-10">
         <div ref={ref} className={`reveal ${isVisible ? "visible" : ""}`}>
           <p className="font-body text-sm tracking-[0.25em] uppercase text-center mb-4 text-primary">שלושה צעדים</p>

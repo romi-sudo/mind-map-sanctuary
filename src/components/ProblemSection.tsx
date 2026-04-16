@@ -11,7 +11,7 @@ const ProblemSection = () => {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section className="py-24 md:py-32 bg-sand nature-overlay">
+    <section className="py-24 md:py-32 bg-sand nature-overlay ambient-leaves">
       <div className="container mx-auto px-6 relative z-10">
         <div ref={ref} className={`text-center mb-16 reveal ${isVisible ? "visible" : ""}`}>
           <p className="font-body text-sm tracking-[0.25em] uppercase text-primary mb-4">מכירים?</p>

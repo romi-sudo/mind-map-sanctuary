@@ -6,7 +6,7 @@ const FinalCTA = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="relative min-h-[60vh] flex items-center justify-center bg-leaves nature-overlay">
+    <section className="relative min-h-[60vh] flex items-center justify-center bg-leaves nature-overlay ambient-leaves ambient-mist">
       <div ref={ref} className={`container mx-auto px-6 relative z-10 py-28 reveal ${isVisible ? "visible" : ""}`}>
         <div className="glass-card max-w-2xl mx-auto text-center">
           <p className="font-body text-sm tracking-[0.25em] uppercase mb-6 text-primary">הצעד הבא שלכם</p>

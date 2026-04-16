@@ -230,7 +230,7 @@ const Questionnaire = () => {
   }
 
   return (
-    <div dir="rtl" className="relative min-h-screen overflow-x-hidden bg-leaves nature-overlay">
+    <div dir="rtl" className="relative min-h-screen overflow-x-hidden bg-leaves nature-overlay ambient-leaves ambient-mist">
       {track && (
         <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-foreground/10">
           <motion.div
@@ -326,7 +326,7 @@ const ResultsPage = ({
   const practitioners = recommendation?.practitioners ?? FALLBACK_PRACTITIONERS;
 
   return (
-    <div dir="rtl" className="relative min-h-screen bg-sand nature-overlay">
+    <div dir="rtl" className="relative min-h-screen bg-sand nature-overlay ambient-leaves">
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-20">
         <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-12">
           {headline}
