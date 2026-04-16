@@ -31,6 +31,9 @@
     --terracotta: 25 45% 45%;
     --terracotta-hover: 25 45% 38%;
     --warm-gold: 38 40% 61%;
+    --water-teal: 176 30% 74%;
+    --leaf-green: 95 17% 35%;
+    --bark-brown: 25 35% 28%;
     --text-dark: 20 30% 14%;
     --text-mid: 20 20% 45%;
     --surface-warm: 35 30% 94%;
@@ -324,40 +327,77 @@
   }
 }
 
-/* ── LEAF ANIMATIONS ── */
+/* ── NATURAL AMBIENT ANIMATIONS ── */
 @keyframes leafSway {
   0%, 100% { transform: rotate(-2deg) translateX(0px); }
   50% { transform: rotate(2deg) translateX(4px); }
 }
-
 @keyframes leafFloat {
   0%, 100% { transform: translateY(0px) rotate(-1deg); }
-  50% { transform: translateY(-8px) rotate(1deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
 }
-
+@keyframes leafDrift {
+  0% { transform: translate(0, 0) rotate(0deg); opacity: 0.25; }
+  50% { transform: translate(20px, -14px) rotate(6deg); opacity: 0.45; }
+  100% { transform: translate(0, 0) rotate(0deg); opacity: 0.25; }
+}
+@keyframes waterShimmer {
+  0%, 100% { opacity: 0.35; transform: translateX(0); }
+  50% { opacity: 0.6; transform: translateX(8px); }
+}
+@keyframes goldMist {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(1.05); }
+}
 @keyframes shimmer {
   0%, 100% { opacity: 0.6; }
   50% { opacity: 1; }
 }
-
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-.leaf-sway {
-  animation: leafSway 4s ease-in-out infinite;
-  transform-origin: bottom center;
-}
+.leaf-sway { animation: leafSway 6s ease-in-out infinite; transform-origin: bottom center; }
+.leaf-float { animation: leafFloat 8s ease-in-out infinite; }
+.leaf-drift { animation: leafDrift 12s ease-in-out infinite; }
+.water-shimmer { animation: waterShimmer 7s ease-in-out infinite; }
+.gold-mist { animation: goldMist 9s ease-in-out infinite; }
+.shimmer { animation: shimmer 3s ease-in-out infinite; }
+.fade-in-up { animation: fadeInUp 0.8s ease forwards; }
 
-.leaf-float {
-  animation: leafFloat 6s ease-in-out infinite;
+/* Ambient natural shadow-leaf overlay — gently moves like wind */
+.ambient-leaves {
+  position: relative;
+  isolation: isolate;
 }
+.ambient-leaves::after {
+  content: '';
+  position: absolute;
+  inset: -10%;
+  background-image: url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=60");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.12;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 0;
+  animation: leafDrift 18s ease-in-out infinite;
+}
+.ambient-leaves > * { position: relative; z-index: 1; }
 
-.shimmer {
-  animation: shimmer 3s ease-in-out infinite;
+/* Gentle gold mist overlay for hero/CTA sections */
+.ambient-mist {
+  position: relative;
 }
-
-.fade-in-up {
-  animation: fadeInUp 0.8s ease forwards;
+.ambient-mist::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 20%, hsl(var(--warm-gold) / 0.18), transparent 60%),
+              radial-gradient(ellipse at 70% 80%, hsl(var(--water-teal) / 0.12), transparent 55%);
+  pointer-events: none;
+  animation: goldMist 10s ease-in-out infinite;
+  z-index: 0;
 }
+.ambient-mist > * { position: relative; z-index: 1; }

@@ -52,6 +52,9 @@ export default {
           hover: "hsl(var(--terracotta-hover))",
         },
         gold: "hsl(var(--warm-gold))",
+        water: "hsl(var(--water-teal))",
+        leaf: "hsl(var(--leaf-green))",
+        bark: "hsl(var(--bark-brown))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
