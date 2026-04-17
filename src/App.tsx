@@ -14,6 +14,7 @@ import Signup from "./pages/Signup.tsx";
 import ForgotPassword from "./pages/ForgotPassword.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Approaches from "./pages/Approaches.tsx";
+import CorporateWellness from "./pages/CorporateWellness.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import AmbientPlayer from "./components/AmbientPlayer";
 
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/practitioners" element={<Practitioners />} />
             <Route path="/approaches" element={<Approaches />} />
             <Route path="/practitioners/:id" element={<PractitionerProfile />} />
+            <Route path="/corporate" element={<CorporateWellness />} />
             <Route path="/join-as-practitioner" element={<JoinAsPractitioner />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />

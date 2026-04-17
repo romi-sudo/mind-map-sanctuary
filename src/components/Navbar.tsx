@@ -7,6 +7,7 @@ const linkMap: Record<string, string> = {
   "מצא את המסלול": "/questionnaire",
   "גישות טיפוליות": "/approaches",
   "מומחים": "/practitioners",
+  "לחברות": "/corporate",
 };
 
 const Navbar = () => {
