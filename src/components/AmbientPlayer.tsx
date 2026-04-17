@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX, Music } from "lucide-react";
 
-// Free ambient nature loop (CC0). Soft forest + gentle waves.
+// Free ambient nature loop (CC0). Soft forest stream + birds.
+// SoundHelix mirrors are reliable for cross-origin audio playback.
 const AMBIENT_TRACK_URL =
-  "https://cdn.pixabay.com/audio/2022/03/15/audio_27e5b6a9c8.mp3";
+  "https://cdn.freesound.org/previews/459/459977_4914705-lq.mp3";
+const AMBIENT_FALLBACK_URL =
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3";
 
 const STORAGE_KEY = "mapsoul_ambient_state_v1";
 
@@ -76,11 +79,23 @@ const AmbientPlayer = () => {
     >
       <audio
         ref={audioRef}
-        src={AMBIENT_TRACK_URL}
         loop
         preload="auto"
+        crossOrigin="anonymous"
         onCanPlay={() => setReady(true)}
-      />
+        onLoadedData={() => setReady(true)}
+        onError={(e) => {
+          const a = e.currentTarget;
+          if (a.src !== AMBIENT_FALLBACK_URL) {
+            console.warn("Ambient primary failed, switching to fallback");
+            a.src = AMBIENT_FALLBACK_URL;
+            a.load();
+          }
+        }}
+      >
+        <source src={AMBIENT_TRACK_URL} type="audio/mpeg" />
+        <source src={AMBIENT_FALLBACK_URL} type="audio/mpeg" />
+      </audio>
 
       {/* Volume slider — appears on hover or when playing */}
       <div
@@ -102,7 +117,6 @@ const AmbientPlayer = () => {
 
       <button
         onClick={toggle}
-        disabled={!ready}
         aria-label={playing ? "השתק מוזיקת רקע" : "הפעל מוזיקת רקע"}
         title={playing ? "השתק מוזיקת רקע" : "הפעל מוזיקת רקע אמביינט"}
         className="flex h-11 w-11 items-center justify-center rounded-full border border-border/40 bg-background/80 text-foreground shadow-md backdrop-blur-md transition-all duration-300 hover:bg-background hover:text-primary disabled:opacity-40"
