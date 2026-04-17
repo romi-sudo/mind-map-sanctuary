@@ -1,17 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX, Music } from "lucide-react";
 
-// Free ambient nature loop (CC0). Soft forest stream + birds.
-// SoundHelix mirrors are reliable for cross-origin audio playback.
-const AMBIENT_TRACK_URL =
-  "https://cdn.freesound.org/previews/459/459977_4914705-lq.mp3";
-const AMBIENT_FALLBACK_URL =
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3";
-
+// Local ambient loop — guaranteed to load (no CORS, no external CDN).
+const AMBIENT_TRACK_URL = "/audio/ambient.mp3";
 const STORAGE_KEY = "mapsoul_ambient_state_v1";
 
 interface StoredState {
-  playing: boolean;
   volume: number;
 }
 
@@ -20,33 +14,28 @@ const AmbientPlayer = () => {
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.25);
   const [expanded, setExpanded] = useState(false);
-  const [ready, setReady] = useState(false);
 
-  // Restore state
+  // Restore volume
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) {
         const s: StoredState = JSON.parse(raw);
-        setVolume(typeof s.volume === "number" ? s.volume : 0.25);
-        // Don't auto-resume — browsers block it without user gesture
+        if (typeof s.volume === "number") setVolume(s.volume);
       }
     } catch {
       /* ignore */
     }
   }, []);
 
-  // Persist state
+  // Persist volume
   useEffect(() => {
     try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({ playing, volume } satisfies StoredState),
-      );
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ volume }));
     } catch {
       /* ignore */
     }
-  }, [playing, volume]);
+  }, [volume]);
 
   // Keep audio volume in sync
   useEffect(() => {
@@ -77,32 +66,30 @@ const AmbientPlayer = () => {
       onMouseEnter={() => setExpanded(true)}
       onMouseLeave={() => setExpanded(false)}
     >
-      <audio
-        ref={audioRef}
-        loop
-        preload="auto"
-        crossOrigin="anonymous"
-        onCanPlay={() => setReady(true)}
-        onLoadedData={() => setReady(true)}
-        onError={(e) => {
-          const a = e.currentTarget;
-          if (a.src !== AMBIENT_FALLBACK_URL) {
-            console.warn("Ambient primary failed, switching to fallback");
-            a.src = AMBIENT_FALLBACK_URL;
-            a.load();
-          }
-        }}
+      <audio ref={audioRef} src={AMBIENT_TRACK_URL} loop preload="auto" />
+
+      <button
+        onClick={toggle}
+        aria-label={playing ? "השתק מוזיקת רקע" : "הפעל מוזיקת רקע"}
+        title={playing ? "השתק מוזיקת רקע" : "הפעל מוזיקת רקע אמביינט"}
+        className="flex h-11 w-11 items-center justify-center rounded-full border border-border/40 bg-background/80 text-foreground shadow-md backdrop-blur-md transition-all duration-300 hover:bg-background hover:text-primary"
       >
-        <source src={AMBIENT_TRACK_URL} type="audio/mpeg" />
-        <source src={AMBIENT_FALLBACK_URL} type="audio/mpeg" />
-      </audio>
+        {playing ? <Volume2 className="h-4 w-4" /> : <Music className="h-4 w-4" />}
+      </button>
 
       {/* Volume slider — appears on hover or when playing */}
       <div
-        className={`flex items-center gap-2 overflow-hidden rounded-full border border-border/40 bg-background/80 px-3 py-2 shadow-md backdrop-blur-md transition-all duration-300 ${
-          expanded || playing ? "w-44 opacity-100" : "w-0 opacity-0 px-0 border-transparent"
+        className={`flex items-center gap-2 overflow-hidden rounded-full border border-border/40 bg-background/80 shadow-md backdrop-blur-md transition-all duration-300 ${
+          expanded || playing
+            ? "w-44 opacity-100 px-3 py-2"
+            : "w-0 opacity-0 px-0 py-2 border-transparent"
         }`}
       >
+        {playing ? (
+          <Volume2 className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+        ) : (
+          <VolumeX className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
+        )}
         <input
           type="range"
           min={0}
@@ -114,21 +101,6 @@ const AmbientPlayer = () => {
           aria-label="עוצמת מוזיקה"
         />
       </div>
-
-      <button
-        onClick={toggle}
-        aria-label={playing ? "השתק מוזיקת רקע" : "הפעל מוזיקת רקע"}
-        title={playing ? "השתק מוזיקת רקע" : "הפעל מוזיקת רקע אמביינט"}
-        className="flex h-11 w-11 items-center justify-center rounded-full border border-border/40 bg-background/80 text-foreground shadow-md backdrop-blur-md transition-all duration-300 hover:bg-background hover:text-primary disabled:opacity-40"
-      >
-        {playing ? (
-          <Volume2 className="h-4 w-4" />
-        ) : ready ? (
-          <Music className="h-4 w-4" />
-        ) : (
-          <VolumeX className="h-4 w-4" />
-        )}
-      </button>
     </div>
   );
 };
