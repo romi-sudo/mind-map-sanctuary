@@ -11,8 +11,8 @@
         <meta name="google-site-verification" content="Q2YSouphkkgHkFNP7FgAkc4TmBs1Gmag3uGNndb53B8" />
     <meta name="google-site-verification" content="bpjKvUvsX0lxfmjg19TLblckWkDpnptZEYsBntApxUk" />
 
-    <meta name="baggage" content="sentry-trace_id=f6f5568cc3e64f85a3deca2fac44deff,sentry-sample_rate=0.001,sentry-transaction=%2Fdownload.php,sentry-public_key=94bf3037c1e245c8a927aaa4daad2dbb,sentry-environment=production,sentry-sampled=false,sentry-sample_rand=0.510214"/>    <meta name="sentry-trace" content="f6f5568cc3e64f85a3deca2fac44deff-6760e648a69b4f59-0"/>
-    <script  nonce="f9d34c3bad7c53529943f4cdcf3cd3ac" >
+    <meta name="baggage" content="sentry-trace_id=3f23b3ab5f9b422882a073c10ef8b6b7,sentry-sample_rate=0.001,sentry-transaction=%2Fdownload.php,sentry-public_key=94bf3037c1e245c8a927aaa4daad2dbb,sentry-environment=production,sentry-sampled=false,sentry-sample_rand=0.741224"/>    <meta name="sentry-trace" content="3f23b3ab5f9b422882a073c10ef8b6b7-cbe096c7debf4300-0"/>
+    <script  nonce="70453da040cc75b4c20d373aac314824" >
 /* @licstart  The following is the entire license notice for the
  * JavaScript code in this page.
  *
@@ -40,7 +40,7 @@
     <script src="//archive.org/includes/apollo.js?v=6264ef5b" type="text/javascript"></script>
     <script src="//archive.org/components/npm/lit/polyfill-support.js?v=6264ef5b" type="text/javascript"></script>
     <script src="//archive.org/components/npm/@webcomponents/webcomponentsjs/webcomponents-bundle.js?v=6264ef5b" type="text/javascript"></script>
-<script nonce="f9d34c3bad7c53529943f4cdcf3cd3ac" >
+<script nonce="70453da040cc75b4c20d373aac314824" >
       window.__realDefine = customElements.define.bind(customElements);
       customElements.define = function() {
         try {
@@ -2963,7 +2963,7 @@
   0.0000   0.0000                                petabox start   var/cache/petabox/petabox/www/sf/download.php:1:require
                                              |common/ia:66:require_once
                                              |setup.php:384:log
-  0.0118   0.0118                             redis_read start   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
+  0.0165   0.0165                             redis_read start   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
                                              |download.php:98:main
                                              |download.php:295:quickFileRedir
                                              |download.php:1007:get_obj_fast
@@ -2993,7 +2993,7 @@
                                              |AdapterPipeline.inc:466:fetch
                                              |AdapterPipeline.inc:895:execute_pipeline
                                              |RecordServer.inc:184:log
-  0.0156   0.0038                            redis_read finish   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
+  0.0213   0.0048                            redis_read finish   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
                                              |download.php:98:main
                                              |download.php:295:quickFileRedir
                                              |download.php:1007:get_obj_fast
@@ -3023,7 +3023,7 @@
                                              |AdapterPipeline.inc:466:fetch
                                              |AdapterPipeline.inc:895:execute_pipeline
                                              |RecordServer.inc:193:log
-  2.3359   2.3203                          begin session_start   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
+  2.3604   2.3391                          begin session_start   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
                                              |download.php:98:main
                                              |download.php:295:quickFileRedir
                                              |download.php:1044:exit_service_unavailable
@@ -3031,7 +3031,7 @@
                                              |Nav.inc:152:__construct
                                              |Nav.inc:222:session_start
                                              |Cookies.inc:50:log
-  2.3359   0.0001   skipping session_start, user not logged-in   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
+  2.3605   0.0000   skipping session_start, user not logged-in   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
                                              |download.php:98:main
                                              |download.php:295:quickFileRedir
                                              |download.php:1044:exit_service_unavailable
@@ -3039,7 +3039,7 @@
                                              |Nav.inc:152:__construct
                                              |Nav.inc:222:session_start
                                              |Cookies.inc:60:log
-  2.3530   0.0170                                     bug dump   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
+  2.3729   0.0125                                     bug dump   var/cache/petabox/petabox/www/sf/download.php:79:main_wrap
                                              |download.php:98:main
                                              |download.php:295:quickFileRedir
                                              |download.php:1044:exit_service_unavailable
@@ -3049,7 +3049,7 @@
                                              |Nav.inc:806:dump
                                              |Bug.inc:94:log
     -->
-    <script  nonce="f9d34c3bad7c53529943f4cdcf3cd3ac" >
+    <script  nonce="70453da040cc75b4c20d373aac314824" >
 if (typeof archive_analytics !== 'undefined') {
   archive_analytics.send_pageview_on_load(archive_analytics);
   archive_analytics.process_url_events(location);
@@ -3059,16 +3059,16 @@ if (typeof archive_analytics !== 'undefined') {
       vs[i] = {};
     }
     vs[i]['cache_bust']=Math.random();
-    vs[i]['server_ms']=2352;
+    vs[i]['server_ms']=2372;
     vs[i]['server_name']="www24.us.archive.org";
       }
 }
 </script>
-          <img src="//athena.archive.org/0.gif?kind=track_js&track_js_case=control&cache_bust=1966867281" alt="" />
+          <img src="//athena.archive.org/0.gif?kind=track_js&track_js_case=control&cache_bust=940209044" alt="" />
           <noscript>
-        <img src="//athena.archive.org/0.gif?kind=track_js&track_js_case=disabled&cache_bust=1598409451" />
+        <img src="//athena.archive.org/0.gif?kind=track_js&track_js_case=disabled&cache_bust=871571568" />
       </noscript>
-          <script  nonce="f9d34c3bad7c53529943f4cdcf3cd3ac" >
+          <script  nonce="70453da040cc75b4c20d373aac314824" >
         document.addEventListener('DOMContentLoaded', function() {
           if (typeof archive_analytics !== 'undefined')
             archive_analytics.create_tracking_image('in_page_executes');
