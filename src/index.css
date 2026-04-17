@@ -366,27 +366,25 @@
 .shimmer { animation: shimmer 3s ease-in-out infinite; }
 .fade-in-up { animation: fadeInUp 0.8s ease forwards; }
 
-/* Ambient natural shadow-leaf overlay — gently moves like wind */
+/* Ambient natural shadow-leaf overlay — gently moves like wind.
+   Lightweight: pure CSS gradients, no blend-mode, no large bitmaps,
+   and no `isolation` so fixed-position children (nav, buttons) stay clickable. */
 .ambient-leaves {
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
+  overflow-x: hidden;
 }
-.ambient-leaves::after {
+.ambient-leaves::before {
   content: '';
   position: absolute;
   inset: 0;
-  background-image: url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=60");
-  background-size: cover;
-  background-position: center;
-  opacity: 0.10;
-  mix-blend-mode: multiply;
+  background:
+    radial-gradient(ellipse 320px 220px at 12% 18%, hsl(var(--leaf-green) / 0.08), transparent 70%),
+    radial-gradient(ellipse 380px 260px at 88% 72%, hsl(var(--bark-brown) / 0.07), transparent 70%),
+    radial-gradient(ellipse 260px 200px at 55% 45%, hsl(var(--warm-gold) / 0.06), transparent 70%);
   pointer-events: none;
   z-index: 0;
-  animation: leafDrift 18s ease-in-out infinite;
-  will-change: transform, opacity;
+  animation: leafDrift 22s ease-in-out infinite;
 }
-.ambient-leaves > * { position: relative; z-index: 1; }
 
 /* Gentle gold mist overlay for hero/CTA sections */
 .ambient-mist {
