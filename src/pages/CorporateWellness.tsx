@@ -67,7 +67,7 @@ const CorporateWellness = () => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    setDirection(1);
+    
     setStep(5);
     try {
       const { data: fnData, error } = await supabase.functions.invoke("corporate-recommendation", {
