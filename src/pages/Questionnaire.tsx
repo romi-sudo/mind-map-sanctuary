@@ -1,5 +1,5 @@
 import { forwardRef, useCallback, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -98,10 +98,9 @@ const CAREER_STEPS: StepDef[] = [
   },
 ];
 
-const slideVariants = {
-  enter: (dir: number) => ({ x: dir > 0 ? 300 : -300, opacity: 0 }),
-  center: { x: 0, opacity: 1 },
-  exit: (dir: number) => ({ x: dir > 0 ? -300 : 300, opacity: 0 }),
+const fadeIn = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
 };
 
 interface AnswerCardProps {
@@ -173,7 +172,6 @@ const Questionnaire = () => {
   };
 
   const goBack = () => {
-    setDirection(-1);
     if (stepIndex === 1) {
       setTrack(null);
       setStepIndex(0);
@@ -242,62 +240,60 @@ const Questionnaire = () => {
         </div>
       )}
 
-      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+      <div className="fixed top-6 right-6 z-[60] flex items-center gap-3 pointer-events-auto">
         {stepIndex > 0 && (
-          <button onClick={goBack} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors">
+          <button type="button" onClick={goBack} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors cursor-pointer">
             חזרה
           </button>
         )}
-        <button onClick={() => navigate("/")} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors">
+        <button type="button" onClick={() => navigate("/")} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors cursor-pointer">
           דף הבית
         </button>
       </div>
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-6 py-24">
-        <AnimatePresence mode="wait" custom={direction}>
-          {stepIndex === 0 && (
-            <motion.div key="gate" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-3xl">
-              <h1 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-foreground text-center mb-3">{STEP1.headline}</h1>
-              <p className="font-body text-muted-foreground text-center mb-12">{STEP1.subtext}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {STEP1.cards.map((card) => (
-                  <AnswerCard key={card.id} card={card} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} />
-                ))}
-              </div>
-            </motion.div>
-          )}
+        {stepIndex === 0 && (
+          <motion.div key="gate" {...fadeIn} transition={{ duration: 0.25 }} className="w-full max-w-3xl">
+            <h1 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-foreground text-center mb-3">{STEP1.headline}</h1>
+            <p className="font-body text-muted-foreground text-center mb-12">{STEP1.subtext}</p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {STEP1.cards.map((card) => (
+                <AnswerCard key={card.id} card={card} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} />
+              ))}
+            </div>
+          </motion.div>
+        )}
 
-          {currentStep && !isFreeTextStep && (
-            <motion.div key={`step-${stepIndex}`} custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-3xl">
-              <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-10">{currentStep.headline}</h1>
-              <div className={`grid grid-cols-1 ${currentStep.cards.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4`}>
-                {currentStep.cards.map((card) => (
-                  <AnswerCard key={card.id} card={card} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} />
-                ))}
-              </div>
-            </motion.div>
-          )}
+        {currentStep && !isFreeTextStep && (
+          <motion.div key={`step-${stepIndex}`} {...fadeIn} transition={{ duration: 0.25 }} className="w-full max-w-3xl">
+            <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-10">{currentStep.headline}</h1>
+            <div className={`grid grid-cols-1 ${currentStep.cards.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4`}>
+              {currentStep.cards.map((card) => (
+                <AnswerCard key={card.id} card={card} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} />
+              ))}
+            </div>
+          </motion.div>
+        )}
 
-          {isFreeTextStep && (
-            <motion.div key="freetext" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="w-full max-w-2xl spa-card !p-8 md:!p-10">
-              <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-3">
-                במשפט אחד — מה את/ה מחפש/ת?
-              </h1>
-              <p className="font-body text-muted-foreground text-center mb-10">זה עוזר לנו לדייק את ההמלצה שלך</p>
-              <textarea
-                value={freeText}
-                onChange={(e) => setFreeText(e.target.value)}
-                placeholder="לדוגמה: אני רוצה להרגיש שאני יודע/ת לאן אני הולך/ת..."
-                className="w-full min-h-[160px] rounded-2xl border border-border bg-background/70 p-6 font-body text-foreground text-lg placeholder:text-muted-foreground/50 focus:outline-none resize-none"
-              />
-              <div className="mt-8 text-center">
-                <button onClick={handleSubmit} disabled={isLoading} className="btn-primary text-lg inline-flex items-center gap-3">
-                  {isLoading ? "מייצר המלצה מותאמת אישית..." : "הראה לי את המסלול שלי"}
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {isFreeTextStep && (
+          <motion.div key="freetext" {...fadeIn} transition={{ duration: 0.25 }} className="w-full max-w-2xl spa-card !p-8 md:!p-10">
+            <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-3">
+              במשפט אחד — מה את/ה מחפש/ת?
+            </h1>
+            <p className="font-body text-muted-foreground text-center mb-10">זה עוזר לנו לדייק את ההמלצה שלך</p>
+            <textarea
+              value={freeText}
+              onChange={(e) => setFreeText(e.target.value)}
+              placeholder="לדוגמה: אני רוצה להרגיש שאני יודע/ת לאן אני הולך/ת..."
+              className="w-full min-h-[160px] rounded-2xl border border-border bg-background/70 p-6 font-body text-foreground text-lg placeholder:text-muted-foreground/50 focus:outline-none resize-none"
+            />
+            <div className="mt-8 text-center">
+              <button onClick={handleSubmit} disabled={isLoading} className="btn-primary text-lg inline-flex items-center gap-3">
+                {isLoading ? "מייצר המלצה מותאמת אישית..." : "הראה לי את המסלול שלי"}
+              </button>
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );
