@@ -25,10 +25,9 @@ const NEEDS = ["פעילות חברתית", "גיבוש צוות", "מנהיגו
 const FORMATS = ["סדנה חד-פעמית", "קורס", "ריטריט", "אונליין", "היברידי"];
 const BUDGETS = ['עד 2,000 ש"ח', '2,000-5,000 ש"ח', '5,000-15,000 ש"ח', '15,000+ ש"ח'];
 
-const slideVariants = {
-  enter: (dir: number) => ({ x: dir > 0 ? 300 : -300, opacity: 0 }),
-  center: { x: 0, opacity: 1 },
-  exit: (dir: number) => ({ x: dir > 0 ? -300 : 300, opacity: 0 }),
+const fadeIn = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
 };
 
 const CorporateWellness = () => {
