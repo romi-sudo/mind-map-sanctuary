@@ -172,7 +172,6 @@ const Questionnaire = () => {
   };
 
   const goBack = () => {
-    console.log("[goBack] clicked, current stepIndex=", stepIndex);
     if (stepIndex === 1) {
       setTrack(null);
       setStepIndex(0);
