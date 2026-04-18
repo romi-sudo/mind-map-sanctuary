@@ -241,13 +241,13 @@ const Questionnaire = () => {
         </div>
       )}
 
-      <div className="fixed top-6 right-6 z-50 flex items-center gap-3">
+      <div className="fixed top-6 right-6 z-[60] flex items-center gap-3 pointer-events-auto">
         {stepIndex > 0 && (
-          <button onClick={goBack} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors">
+          <button type="button" onClick={goBack} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors cursor-pointer">
             חזרה
           </button>
         )}
-        <button onClick={() => navigate("/")} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors">
+        <button type="button" onClick={() => navigate("/")} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors cursor-pointer">
           דף הבית
         </button>
       </div>
