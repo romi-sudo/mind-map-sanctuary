@@ -387,18 +387,22 @@ const CorporateWellness = () => {
 
             {step < 4 ? (
               <button
+                type="button"
                 onClick={next}
-                disabled={!canContinue()}
-                className="btn-primary !py-2.5 !px-6 inline-flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="btn-primary !py-2.5 !px-6 inline-flex items-center gap-2 cursor-pointer"
               >
                 המשך
                 <ArrowLeft className="h-4 w-4" />
               </button>
             ) : (
               <button
-                onClick={handleSubmit}
-                disabled={!canContinue()}
-                className="btn-primary !py-2.5 !px-6 inline-flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                type="button"
+                onClick={() => {
+                  const err = validateStep();
+                  if (err) { toast.error(err); return; }
+                  handleSubmit();
+                }}
+                className="btn-primary !py-2.5 !px-6 inline-flex items-center gap-2 cursor-pointer"
               >
                 <Sparkles className="h-4 w-4" />
                 קבלת המלצה
