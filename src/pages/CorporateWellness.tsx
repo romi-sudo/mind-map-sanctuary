@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, ArrowLeft, Check, Sparkles, Building2, Users, Target } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -25,16 +25,14 @@ const NEEDS = ["פעילות חברתית", "גיבוש צוות", "מנהיגו
 const FORMATS = ["סדנה חד-פעמית", "קורס", "ריטריט", "אונליין", "היברידי"];
 const BUDGETS = ['עד 2,000 ש"ח', '2,000-5,000 ש"ח', '5,000-15,000 ש"ח', '15,000+ ש"ח'];
 
-const slideVariants = {
-  enter: (dir: number) => ({ x: dir > 0 ? 300 : -300, opacity: 0 }),
-  center: { x: 0, opacity: 1 },
-  exit: (dir: number) => ({ x: dir > 0 ? -300 : 300, opacity: 0 }),
+const fadeIn = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
 };
 
 const CorporateWellness = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [direction, setDirection] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
   const [data, setData] = useState<FormData>({
@@ -49,8 +47,8 @@ const CorporateWellness = () => {
   const totalSteps = 5;
   const progress = (step / totalSteps) * 100;
 
-  const next = () => { setDirection(1); setStep((s) => Math.min(totalSteps, s + 1)); };
-  const back = () => { setDirection(-1); setStep((s) => Math.max(1, s - 1)); };
+  const next = () => { setStep((s) => Math.min(totalSteps, s + 1)); };
+  const back = () => { setStep((s) => Math.max(1, s - 1)); };
 
   const toggleNeed = (need: string) => {
     setData((d) => ({
@@ -69,7 +67,7 @@ const CorporateWellness = () => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    setDirection(1);
+    
     setStep(5);
     try {
       const { data: fnData, error } = await supabase.functions.invoke("corporate-recommendation", {
@@ -123,10 +121,10 @@ const CorporateWellness = () => {
           </p>
         </div>
 
-        <AnimatePresence mode="wait" custom={direction}>
+        
           {/* STEP 1 */}
           {step === 1 && (
-            <motion.div key="s1" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="spa-card !p-8 md:!p-10">
+            <motion.div key="s1" {...fadeIn} transition={{ duration: 0.25 }} className="spa-card !p-8 md:!p-10">
               <div className="flex items-center gap-3 mb-6">
                 <Building2 className="h-6 w-6 text-primary" />
                 <h2 className="font-display text-2xl font-bold text-foreground">פרטי החברה</h2>
@@ -167,7 +165,7 @@ const CorporateWellness = () => {
 
           {/* STEP 2 */}
           {step === 2 && (
-            <motion.div key="s2" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="spa-card !p-8 md:!p-10">
+            <motion.div key="s2" {...fadeIn} transition={{ duration: 0.25 }} className="spa-card !p-8 md:!p-10">
               <div className="flex items-center gap-3 mb-2">
                 <Target className="h-6 w-6 text-primary" />
                 <h2 className="font-display text-2xl font-bold text-foreground">מה הצורך?</h2>
@@ -201,7 +199,7 @@ const CorporateWellness = () => {
 
           {/* STEP 3 */}
           {step === 3 && (
-            <motion.div key="s3" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="spa-card !p-8 md:!p-10">
+            <motion.div key="s3" {...fadeIn} transition={{ duration: 0.25 }} className="spa-card !p-8 md:!p-10">
               <div className="flex items-center gap-3 mb-6">
                 <Users className="h-6 w-6 text-primary" />
                 <h2 className="font-display text-2xl font-bold text-foreground">פורמט ותקציב</h2>
@@ -245,7 +243,7 @@ const CorporateWellness = () => {
 
           {/* STEP 4 */}
           {step === 4 && (
-            <motion.div key="s4" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="spa-card !p-8 md:!p-10">
+            <motion.div key="s4" {...fadeIn} transition={{ duration: 0.25 }} className="spa-card !p-8 md:!p-10">
               <h2 className="font-display text-2xl font-bold text-foreground mb-2">ציפיות ויעדים</h2>
               <p className="font-body text-sm text-muted-foreground mb-6">
                 ספר/י לנו בחופשיות מה הייתם רוצים להשיג מהפעילות
@@ -261,7 +259,7 @@ const CorporateWellness = () => {
 
           {/* STEP 5 — Results */}
           {step === 5 && (
-            <motion.div key="s5" custom={direction} variants={slideVariants} initial="enter" animate="center" exit="exit" transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>
+            <motion.div key="s5" {...fadeIn} transition={{ duration: 0.3 }}>
               {isLoading || !recommendation ? (
                 <div className="spa-card !p-12 text-center">
                   <Sparkles className="h-10 w-10 text-primary mx-auto mb-4 animate-pulse" />
@@ -359,7 +357,7 @@ const CorporateWellness = () => {
               )}
             </motion.div>
           )}
-        </AnimatePresence>
+        
 
         {/* Navigation */}
         {step < 5 && (
