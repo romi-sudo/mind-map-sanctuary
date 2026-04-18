@@ -47,7 +47,25 @@ const CorporateWellness = () => {
   const totalSteps = 5;
   const progress = (step / totalSteps) * 100;
 
-  const next = () => { setStep((s) => Math.min(totalSteps, s + 1)); };
+  const validateStep = (): string | null => {
+    if (step === 1) {
+      if (data.companyName.trim().length < 2) return "אנא הזן את שם החברה";
+      if (!data.companySize) return "אנא בחר את מספר העובדים";
+    }
+    if (step === 2 && data.needs.length === 0) return "אנא בחר לפחות צורך אחד";
+    if (step === 3) {
+      if (!data.format) return "אנא בחר פורמט מועדף";
+      if (!data.budget) return "אנא בחר תקציב משוער";
+    }
+    if (step === 4 && data.expectations.trim().length < 6) return "אנא כתוב כמה מילים על הציפיות";
+    return null;
+  };
+
+  const next = () => {
+    const err = validateStep();
+    if (err) { toast.error(err); return; }
+    setStep((s) => Math.min(totalSteps, s + 1));
+  };
   const back = () => { setStep((s) => Math.max(1, s - 1)); };
 
   const toggleNeed = (need: string) => {
@@ -55,14 +73,6 @@ const CorporateWellness = () => {
       ...d,
       needs: d.needs.includes(need) ? d.needs.filter((n) => n !== need) : [...d.needs, need],
     }));
-  };
-
-  const canContinue = () => {
-    if (step === 1) return data.companyName.trim().length > 1 && data.companySize !== "";
-    if (step === 2) return data.needs.length > 0;
-    if (step === 3) return data.format !== "" && data.budget !== "";
-    if (step === 4) return data.expectations.trim().length > 5;
-    return true;
   };
 
   const handleSubmit = async () => {
@@ -377,18 +387,22 @@ const CorporateWellness = () => {
 
             {step < 4 ? (
               <button
+                type="button"
                 onClick={next}
-                disabled={!canContinue()}
-                className="btn-primary !py-2.5 !px-6 inline-flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="btn-primary !py-2.5 !px-6 inline-flex items-center gap-2 cursor-pointer"
               >
                 המשך
                 <ArrowLeft className="h-4 w-4" />
               </button>
             ) : (
               <button
-                onClick={handleSubmit}
-                disabled={!canContinue()}
-                className="btn-primary !py-2.5 !px-6 inline-flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
+                type="button"
+                onClick={() => {
+                  const err = validateStep();
+                  if (err) { toast.error(err); return; }
+                  handleSubmit();
+                }}
+                className="btn-primary !py-2.5 !px-6 inline-flex items-center gap-2 cursor-pointer"
               >
                 <Sparkles className="h-4 w-4" />
                 קבלת המלצה
