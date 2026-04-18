@@ -33,7 +33,6 @@ const fadeIn = {
 const CorporateWellness = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [direction, setDirection] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
   const [data, setData] = useState<FormData>({
@@ -48,8 +47,8 @@ const CorporateWellness = () => {
   const totalSteps = 5;
   const progress = (step / totalSteps) * 100;
 
-  const next = () => { setDirection(1); setStep((s) => Math.min(totalSteps, s + 1)); };
-  const back = () => { setDirection(-1); setStep((s) => Math.max(1, s - 1)); };
+  const next = () => { setStep((s) => Math.min(totalSteps, s + 1)); };
+  const back = () => { setStep((s) => Math.max(1, s - 1)); };
 
   const toggleNeed = (need: string) => {
     setData((d) => ({
