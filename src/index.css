@@ -400,4 +400,4 @@
   animation: goldMist 10s ease-in-out infinite;
   z-index: 0;
 }
-.ambient-mist > * { position: relative; z-index: 1; }
+.ambient-mist > *:not(.fixed) { position: relative; z-index: 1; }
