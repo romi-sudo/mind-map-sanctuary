@@ -341,19 +341,22 @@
 
   /* ── FILTER PILLS ── */
   .pill {
-    background: rgba(196, 168, 130, 0.2);
+    background: rgba(245, 236, 215, 0.9);
     border: 1px solid #C4A882;
     border-radius: 99px;
     padding: 6px 16px;
     font-size: 0.85rem;
-    color: #6B4226;
+    color: #2C1A0E;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
   .pill:hover, .pill.active {
     background: #C4A882;
     color: #2C1A0E;
-    border-color: #C4A882;
+    border-color: #B8956E;
   }
 
   /* ── Gold line ── */
