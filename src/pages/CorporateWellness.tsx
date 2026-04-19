@@ -105,18 +105,22 @@ const CorporateWellness = () => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    
+
     setStep(5);
+    let recResult: Recommendation | null = null;
     try {
       const { data: fnData, error } = await supabase.functions.invoke("corporate-recommendation", {
         body: data,
       });
       if (error) throw error;
-      if (fnData?.recommendation) setRecommendation(fnData.recommendation);
+      if (fnData?.recommendation) {
+        recResult = fnData.recommendation;
+        setRecommendation(fnData.recommendation);
+      }
     } catch (e) {
       console.error(e);
       toast.error("אירעה שגיאה. מציג המלצות גנריות.");
-      setRecommendation({
+      recResult = {
         summary: `${data.companyName} מחפשת לחזק את ${data.needs.slice(0, 2).join(" ו")}.`,
         activities: [
           { title: "סדנת גיבוש", description: "יום חוויה בטבע לחיזוק הצוות.", format: "סדנה", duration: "6 שעות" },
@@ -124,9 +128,34 @@ const CorporateWellness = () => {
         practitioners: [
           { name: "רותם בן-דוד", title: "מנחת גיבוש", tags: ["צוות", "טבע"], matchReason: "התאמה גבוהה" },
         ],
-      });
+      };
+      setRecommendation(recResult);
     } finally {
       setIsLoading(false);
+    }
+
+    // Persist inquiry linked to user + company
+    if (user) {
+      try {
+        const { data: cp } = await supabase
+          .from("company_profiles")
+          .select("id")
+          .eq("user_id", user.id)
+          .maybeSingle();
+        await supabase.from("corporate_inquiries").insert({
+          user_id: user.id,
+          company_id: cp?.id ?? null,
+          company_name: data.companyName,
+          company_size: data.companySize,
+          needs: data.needs,
+          format: data.format,
+          budget: data.budget,
+          expectations: data.expectations,
+          recommendation: recResult as any,
+        });
+      } catch (err) {
+        console.error("Failed to save inquiry:", err);
+      }
     }
   };
 
