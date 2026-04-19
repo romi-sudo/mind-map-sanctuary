@@ -46,6 +46,7 @@ const CourseForm = ({ onSuccess }: Props) => {
     e.preventDefault();
     setLoading(true);
     try {
+      const { data: { user } } = await supabase.auth.getUser();
       const { error } = await supabase.from("course_applications").insert({
         full_name: form.full_name, professional_title: form.professional_title,
         email: form.email, phone: form.phone, course_name: form.course_name,
@@ -55,6 +56,7 @@ const CourseForm = ({ onSuccess }: Props) => {
         teaching_experience: form.teaching_experience || null,
         sample_link: form.sample_link || null, website: form.website || null,
         whatsapp: form.whatsapp || null,
+        user_id: user?.id ?? null,
       });
       if (error) throw error;
       onSuccess();

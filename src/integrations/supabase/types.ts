@@ -14,6 +14,98 @@ export type Database = {
   }
   public: {
     Tables: {
+      company_profiles: {
+        Row: {
+          company_name: string
+          company_size: string | null
+          contact_role: string | null
+          created_at: string
+          id: string
+          industry: string | null
+          notes: string | null
+          phone: string | null
+          updated_at: string
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          company_name: string
+          company_size?: string | null
+          contact_role?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          company_name?: string
+          company_size?: string | null
+          contact_role?: string | null
+          created_at?: string
+          id?: string
+          industry?: string | null
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      corporate_inquiries: {
+        Row: {
+          budget: string | null
+          company_id: string | null
+          company_name: string | null
+          company_size: string | null
+          created_at: string
+          expectations: string | null
+          format: string | null
+          id: string
+          needs: string[]
+          recommendation: Json | null
+          user_id: string
+        }
+        Insert: {
+          budget?: string | null
+          company_id?: string | null
+          company_name?: string | null
+          company_size?: string | null
+          created_at?: string
+          expectations?: string | null
+          format?: string | null
+          id?: string
+          needs?: string[]
+          recommendation?: Json | null
+          user_id: string
+        }
+        Update: {
+          budget?: string | null
+          company_id?: string | null
+          company_name?: string | null
+          company_size?: string | null
+          created_at?: string
+          expectations?: string | null
+          format?: string | null
+          id?: string
+          needs?: string[]
+          recommendation?: Json | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "corporate_inquiries_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "company_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       course_applications: {
         Row: {
           course_description: string | null
@@ -33,6 +125,7 @@ export type Database = {
           teaching_experience: string | null
           tools: string[] | null
           topic: string
+          user_id: string | null
           website: string | null
           whatsapp: string | null
         }
@@ -54,6 +147,7 @@ export type Database = {
           teaching_experience?: string | null
           tools?: string[] | null
           topic: string
+          user_id?: string | null
           website?: string | null
           whatsapp?: string | null
         }
@@ -75,6 +169,7 @@ export type Database = {
           teaching_experience?: string | null
           tools?: string[] | null
           topic?: string
+          user_id?: string | null
           website?: string | null
           whatsapp?: string | null
         }
@@ -98,6 +193,7 @@ export type Database = {
           profile_image_url: string | null
           service_types: string[]
           specialties: string[]
+          user_id: string | null
           website: string | null
           whatsapp: string | null
         }
@@ -118,6 +214,7 @@ export type Database = {
           profile_image_url?: string | null
           service_types?: string[]
           specialties?: string[]
+          user_id?: string | null
           website?: string | null
           whatsapp?: string | null
         }
@@ -138,8 +235,39 @@ export type Database = {
           profile_image_url?: string | null
           service_types?: string[]
           specialties?: string[]
+          user_id?: string | null
           website?: string | null
           whatsapp?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          phone: string | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          phone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          phone?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -151,6 +279,7 @@ export type Database = {
           id: string
           recommendation: Json | null
           track: string
+          user_id: string | null
         }
         Insert: {
           answers?: Json
@@ -159,6 +288,7 @@ export type Database = {
           id?: string
           recommendation?: Json | null
           track: string
+          user_id?: string | null
         }
         Update: {
           answers?: Json
@@ -167,6 +297,28 @@ export type Database = {
           id?: string
           recommendation?: Json | null
           track?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
         }
         Relationships: []
       }
@@ -175,10 +327,16 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "consumer" | "practitioner" | "company"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -305,6 +463,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["consumer", "practitioner", "company"],
+    },
   },
 } as const

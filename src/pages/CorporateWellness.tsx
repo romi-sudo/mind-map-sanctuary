@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, ArrowLeft, Check, Sparkles, Building2, Users, Target } from "lucide-react";
@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface FormData {
   companyName: string;
@@ -32,6 +33,7 @@ const fadeIn = {
 
 const CorporateWellness = () => {
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
@@ -43,6 +45,32 @@ const CorporateWellness = () => {
     budget: "",
     expectations: "",
   });
+
+  // Auth gate: companies must be logged in
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate("/signup?role=company&next=/corporate", { replace: true });
+    }
+  }, [authLoading, user, navigate]);
+
+  // Pre-fill company name from company_profiles if available
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      const { data: cp } = await supabase
+        .from("company_profiles")
+        .select("company_name, company_size")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (cp) {
+        setData((d) => ({
+          ...d,
+          companyName: d.companyName || cp.company_name || "",
+          companySize: d.companySize || cp.company_size || "",
+        }));
+      }
+    })();
+  }, [user]);
 
   const totalSteps = 5;
   const progress = (step / totalSteps) * 100;
@@ -77,18 +105,22 @@ const CorporateWellness = () => {
 
   const handleSubmit = async () => {
     setIsLoading(true);
-    
+
     setStep(5);
+    let recResult: Recommendation | null = null;
     try {
       const { data: fnData, error } = await supabase.functions.invoke("corporate-recommendation", {
         body: data,
       });
       if (error) throw error;
-      if (fnData?.recommendation) setRecommendation(fnData.recommendation);
+      if (fnData?.recommendation) {
+        recResult = fnData.recommendation;
+        setRecommendation(fnData.recommendation);
+      }
     } catch (e) {
       console.error(e);
       toast.error("אירעה שגיאה. מציג המלצות גנריות.");
-      setRecommendation({
+      recResult = {
         summary: `${data.companyName} מחפשת לחזק את ${data.needs.slice(0, 2).join(" ו")}.`,
         activities: [
           { title: "סדנת גיבוש", description: "יום חוויה בטבע לחיזוק הצוות.", format: "סדנה", duration: "6 שעות" },
@@ -96,9 +128,34 @@ const CorporateWellness = () => {
         practitioners: [
           { name: "רותם בן-דוד", title: "מנחת גיבוש", tags: ["צוות", "טבע"], matchReason: "התאמה גבוהה" },
         ],
-      });
+      };
+      setRecommendation(recResult);
     } finally {
       setIsLoading(false);
+    }
+
+    // Persist inquiry linked to user + company
+    if (user) {
+      try {
+        const { data: cp } = await supabase
+          .from("company_profiles")
+          .select("id")
+          .eq("user_id", user.id)
+          .maybeSingle();
+        await supabase.from("corporate_inquiries").insert({
+          user_id: user.id,
+          company_id: cp?.id ?? null,
+          company_name: data.companyName,
+          company_size: data.companySize,
+          needs: data.needs,
+          format: data.format,
+          budget: data.budget,
+          expectations: data.expectations,
+          recommendation: recResult as any,
+        });
+      } catch (err) {
+        console.error("Failed to save inquiry:", err);
+      }
     }
   };
 
