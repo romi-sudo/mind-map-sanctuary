@@ -28,6 +28,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
+
+      // Handle pending role from OAuth signup
+      if (session?.user) {
+        const pendingRole = sessionStorage.getItem("pending_role");
+        if (pendingRole && ["consumer", "practitioner", "company"].includes(pendingRole)) {
+          setTimeout(async () => {
+            const { data: existing } = await supabase
+              .from("user_roles")
+              .select("role")
+              .eq("user_id", session.user.id);
+            if (!existing || existing.length === 0) {
+              await supabase.from("user_roles").insert({
+                user_id: session.user.id,
+                role: pendingRole as "consumer" | "practitioner" | "company",
+              });
+            }
+            sessionStorage.removeItem("pending_role");
+          }, 0);
+        }
+      }
     });
 
     supabase.auth.getSession().then(({ data: { session } }) => {
