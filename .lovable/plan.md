@@ -1,67 +1,51 @@
 
 
-## Plan: Unified registration, Apple login, profiles & linked data
+## Root cause
 
-### 1. Database (one migration)
+The `handle_new_user()` function exists in the database, but the **trigger that calls it on `auth.users` insert is missing**. I confirmed via `information_schema.triggers` — there are zero triggers on the `auth` schema. As a result:
 
-**Enum + roles**
-- `app_role` enum: `'consumer' | 'practitioner' | 'company'`
-- `user_roles(id, user_id → auth.users ON DELETE CASCADE, role, unique(user_id, role))`
-- `has_role(_user_id, _role)` SECURITY DEFINER function
+- 3 users exist in `auth.users` (including 1 Google OAuth signup `romi@people360.co.il`)
+- Only **1** row exists in `profiles` and `user_roles`
+- Google/Apple users don't go through our Signup form (they only hit the OAuth callback), so no profile is created — only the trigger could populate it.
 
-**Profiles**
-- `profiles(id PK = auth.users.id, full_name, email, phone, avatar_url, created_at, updated_at)` — RLS owner-only
-- `company_profiles(id, user_id unique → auth.users, company_name, company_size, contact_role, website, phone, industry, notes, timestamps)` — RLS owner-only
+## Fix (one migration)
 
-**Trigger `handle_new_user()`** — on `auth.users` insert:
-- Insert into `profiles` from `raw_user_meta_data`
-- Insert role into `user_roles` (default `consumer` if missing — for OAuth)
-- If role = `company` and metadata has company fields, insert into `company_profiles`
+1. **Recreate the trigger on `auth.users`** so it fires for every new signup (email + OAuth):
+   ```sql
+   DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+   CREATE TRIGGER on_auth_user_created
+     AFTER INSERT ON auth.users
+     FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
+   ```
 
-**Link existing tables**
-- Add nullable `user_id uuid REFERENCES auth.users(id)` to `questionnaire_responses`, `practitioner_applications`, `course_applications`
-- New `corporate_inquiries(id, user_id, company_id → company_profiles, needs[], format, budget, expectations, recommendation jsonb, created_at)` — RLS owner-only
-- Tighten RLS on `questionnaire_responses`: keep anonymous insert, but SELECT only own rows when `user_id IS NOT NULL` (drop the public read-all)
+2. **Harden `handle_new_user()`** to also read OAuth-provided fields:
+   - Pull `full_name` from `raw_user_meta_data.full_name` OR `name` (Google) OR `raw_user_meta_data.user_metadata.full_name`.
+   - Pull `avatar_url` from `raw_user_meta_data.avatar_url` OR `picture` (Google).
+   - Wrap each insert in its own exception block so a failure on `company_profiles` never blocks profile creation (which is what currently kills the whole signup silently for some flows).
 
-### 2. Unified Signup (`src/pages/Signup.tsx`)
+3. **Backfill existing OAuth users** that are missing rows:
+   ```sql
+   INSERT INTO public.profiles (id, full_name, email, avatar_url)
+   SELECT u.id,
+          COALESCE(u.raw_user_meta_data->>'full_name', u.raw_user_meta_data->>'name'),
+          u.email,
+          COALESCE(u.raw_user_meta_data->>'avatar_url', u.raw_user_meta_data->>'picture')
+   FROM auth.users u
+   LEFT JOIN public.profiles p ON p.id = u.id
+   WHERE p.id IS NULL;
 
-3 tabs: **משתמש/ת | מומחה/ית | חברה/ארגון**
-- Common: full name, email, password, confirm, T&Cs
-- Practitioner: + professional title, phone
-- Company: + company name, company size (dropdown), contact role, website (optional), phone
+   INSERT INTO public.user_roles (user_id, role)
+   SELECT u.id, COALESCE((u.raw_user_meta_data->>'role')::public.app_role, 'consumer')
+   FROM auth.users u
+   LEFT JOIN public.user_roles r ON r.user_id = u.id
+   WHERE r.user_id IS NULL;
+   ```
 
-Submit → `supabase.auth.signUp` with `options.data = { full_name, role, ...extras }`. Trigger handles profiles + role + company_profiles. Redirect: consumer→`/`, practitioner→`/join-as-practitioner`, company→`/corporate`.
+## No client-side code changes needed
 
-### 3. OAuth (Google + Apple) with role prompt
+The `AuthContext` `pending_role` fallback already handles role assignment for OAuth users where the trigger defaults to `consumer`. Once the trigger is restored, every new signup — email, Google, or Apple — will get a `profiles` row + `user_roles` row automatically, and existing orphaned users will be backfilled.
 
-- Add Apple button on `Login.tsx` and `Signup.tsx` (alongside Google) using `lovable.auth.signInWithOAuth("apple", …)`
-- **On signup page**, before triggering OAuth, show a small role-picker modal ("איך תרצו להירשם?") with the 3 options. Selected role is stored in `sessionStorage` as `pending_role`.
-- After OAuth callback completes (in `AuthContext` or a small post-login hook), if `pending_role` exists and the user has no role yet, insert into `user_roles` and clear the flag.
-- On `Login.tsx`, OAuth just signs in (no prompt) — role already exists.
+## Files
 
-### 4. Companies require login on `/corporate`
-
-- `/corporate` wrapped in an auth gate: if not logged in → redirect to `/signup?role=company&next=/corporate` (signup pre-selects company tab).
-- On submit, write to new `corporate_inquiries` with `user_id` + linked `company_id` (looked up from `company_profiles`).
-
-### 5. Link existing forms to user
-
-- `Questionnaire.tsx`, `PractitionerForm`, `CourseForm` → include `user_id: user?.id ?? null` in inserts.
-
-### 6. Navbar greeting + logout
-
-- New `useProfile()` hook reads `profiles.full_name` (fallback to `user.user_metadata.full_name`).
-- When logged in, replace login/signup buttons with a pill: `שלום, {firstName}` + `יציאה`. Same in mobile menu.
-
-### Files
-
-**New:** migration; `src/hooks/useProfile.ts`; small `RolePickerModal` component for OAuth signup.
-**Modified:** `Signup.tsx`, `Login.tsx`, `Navbar.tsx`, `AuthContext.tsx` (handle pending_role after OAuth), `Questionnaire.tsx`, `CorporateWellness.tsx` (auth gate + persist), `PractitionerForm.tsx`, `CourseForm.tsx`.
-**Cloud config:** run Configure Social Login to enable Apple alongside Google.
-
-### Out of scope (can be next)
-
-- Account/settings page to view/edit profile or change role
-- Admin dashboard for reviewing applications
-- Backfilling existing anonymous rows to users
+- **New migration**: recreate trigger, harden function, backfill rows.
 
