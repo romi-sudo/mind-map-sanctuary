@@ -184,9 +184,10 @@ const Questionnaire = () => {
     if (!track) return;
     setIsLoading(true);
     try {
+      const { data: { user } } = await supabase.auth.getUser();
       const { data: inserted, error: insertError } = await supabase
         .from("questionnaire_responses")
-        .insert({ track, answers, free_text: freeText })
+        .insert({ track, answers, free_text: freeText, user_id: user?.id ?? null })
         .select("id")
         .single();
       if (insertError) throw insertError;
