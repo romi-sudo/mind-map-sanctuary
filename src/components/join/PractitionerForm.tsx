@@ -52,6 +52,7 @@ const PractitionerForm = ({ onSuccess }: Props) => {
     e.preventDefault();
     setLoading(true);
     try {
+      const { data: { user } } = await supabase.auth.getUser();
       const { error } = await supabase.from("practitioner_applications").insert({
         full_name: form.full_name, professional_title: form.professional_title,
         email: form.email, phone: form.phone, specialties: form.specialties,
@@ -60,6 +61,7 @@ const PractitionerForm = ({ onSuccess }: Props) => {
         price_per_session: form.price_per_session, area: form.area || null,
         accepting_new_clients: form.accepting_new_clients,
         bio: form.bio || null, whatsapp: form.whatsapp || null, website: form.website || null,
+        user_id: user?.id ?? null,
       });
       if (error) throw error;
       onSuccess();
