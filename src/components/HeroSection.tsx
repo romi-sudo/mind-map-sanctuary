@@ -28,7 +28,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-[2.4rem] md:text-[3.8rem] font-bold text-foreground leading-[1.1] mb-8"
+            className="font-display text-[2.4rem] md:text-[3.8rem] font-bold text-primary leading-[1.1] mb-8"
           >
             מפת הנפש שלך
           </motion.h1>
