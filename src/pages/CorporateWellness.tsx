@@ -33,6 +33,7 @@ const fadeIn = {
 
 const CorporateWellness = () => {
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
@@ -44,6 +45,32 @@ const CorporateWellness = () => {
     budget: "",
     expectations: "",
   });
+
+  // Auth gate: companies must be logged in
+  useEffect(() => {
+    if (!authLoading && !user) {
+      navigate("/signup?role=company&next=/corporate", { replace: true });
+    }
+  }, [authLoading, user, navigate]);
+
+  // Pre-fill company name from company_profiles if available
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      const { data: cp } = await supabase
+        .from("company_profiles")
+        .select("company_name, company_size")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      if (cp) {
+        setData((d) => ({
+          ...d,
+          companyName: d.companyName || cp.company_name || "",
+          companySize: d.companySize || cp.company_size || "",
+        }));
+      }
+    })();
+  }, [user]);
 
   const totalSteps = 5;
   const progress = (step / totalSteps) * 100;
