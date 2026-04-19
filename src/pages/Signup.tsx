@@ -79,12 +79,22 @@ const Signup = () => {
         if (website) meta.website = website;
       }
 
-      const { error } = await supabase.auth.signUp({
+      const { data: signUpData, error } = await supabase.auth.signUp({
         email, password,
         options: { data: meta, emailRedirectTo: window.location.origin },
       });
       if (error) throw error;
-      toast.success("נרשמתם בהצלחה! בדקו את המייל לאימות.");
+      toast.success("נרשמתם בהצלחה!");
+
+      // If no session was returned (email confirmation required), sign in immediately
+      if (!signUpData.session) {
+        const { error: signInErr } = await supabase.auth.signInWithPassword({ email, password });
+        if (signInErr) {
+          toast.info("שלחנו לכם מייל לאימות החשבון");
+          navigate("/login");
+          return;
+        }
+      }
       redirectAfterSignup(tab);
     } catch (err: any) {
       toast.error(err.message || "שגיאה בהרשמה");
