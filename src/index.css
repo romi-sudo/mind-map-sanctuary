@@ -97,34 +97,21 @@
     color: #8B6914;
   }
 
-  /* ── NATURE TEXTURE BACKGROUNDS ── */
+  /* ── NATURE TEXTURE BACKGROUNDS (flat warm tones for readability) ── */
   .bg-sand {
     background-color: #F5ECD7;
-    background-image: url("https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=1200&auto=format&fit=crop&q=60");
-    background-size: cover;
-    background-position: center;
   }
 
   .bg-leaves {
     background-color: #F0EAD6;
-    background-image: url("https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&auto=format&fit=crop&q=60");
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
   }
 
   .bg-shadow-leaves {
     background-color: #F5F0E8;
-    background-image: url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&auto=format&fit=crop&q=60");
-    background-size: cover;
-    background-position: center;
   }
 
   .bg-tropical-mist {
     background-color: #EDE0CC;
-    background-image: url("https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=1200&auto=format&fit=crop&q=60");
-    background-size: cover;
-    background-position: center;
   }
 
   /* ── NATURE OVERLAY ── */
@@ -135,7 +122,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(245, 236, 215, 0.72);
+    background: rgba(245, 236, 215, 0.92);
     pointer-events: none;
     z-index: 0;
   }

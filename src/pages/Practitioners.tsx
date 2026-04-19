@@ -163,86 +163,85 @@ const Practitioners = () => {
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-foreground text-center mb-8"
+            className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-foreground text-center mb-8 text-readable-light"
           >
             {activeTab === "practitioners" ? "מצאו את המומחה המתאים לכם" : "קורסים והכשרות"}
           </motion.h1>
 
-          {/* Tabs */}
-          <div className="flex justify-center gap-8 mb-8 border-b border-border">
-            <button
-              onClick={() => switchTab("practitioners")}
-              className={`font-body text-base pb-3 transition-colors duration-200 relative ${
-                activeTab === "practitioners"
-                  ? "text-primary font-semibold"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+          <div className="glass-card !p-5 md:!p-6 mb-10">
+            {/* Tabs */}
+            <div className="flex justify-center gap-8 mb-6 border-b border-border">
+              <button
+                onClick={() => switchTab("practitioners")}
+                className={`font-body text-base pb-3 transition-colors duration-200 relative ${
+                  activeTab === "practitioners"
+                    ? "text-primary font-semibold"
+                    : "text-foreground/70 hover:text-foreground"
+                }`}
+              >
+                מומחים וטיפול
+                {activeTab === "practitioners" && (
+                  <span className="absolute bottom-0 right-0 left-0 h-[2px] bg-primary rounded-full" />
+                )}
+              </button>
+              <button
+                onClick={() => switchTab("courses")}
+                className={`font-body text-base pb-3 transition-colors duration-200 relative ${
+                  activeTab === "courses"
+                    ? "text-primary font-semibold"
+                    : "text-foreground/70 hover:text-foreground"
+                }`}
+              >
+                קורסים והכשרות
+                {activeTab === "courses" && (
+                  <span className="absolute bottom-0 right-0 left-0 h-[2px] bg-primary rounded-full" />
+                )}
+              </button>
+            </div>
+
+            {/* Search */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="relative max-w-xl mx-auto mb-6"
             >
-              מומחים וטיפול
-              {activeTab === "practitioners" && (
-                <span className="absolute bottom-0 right-0 left-0 h-[2px] bg-primary rounded-full" />
-              )}
-            </button>
-            <button
-              onClick={() => switchTab("courses")}
-              className={`font-body text-base pb-3 transition-colors duration-200 relative ${
-                activeTab === "courses"
-                  ? "text-primary font-semibold"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
+              <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder={activeTab === "practitioners" ? "חפשו לפי נושא, שם או גישה..." : "חפשו לפי נושא, שם מרצה או כלי..."}
+                className="w-full px-6 py-3 rounded-full text-foreground placeholder:text-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm font-body bg-white border border-border shadow-sm"
+              />
+            </motion.div>
+
+            {/* Filters */}
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.25 }}
+              className="space-y-3"
             >
-              קורסים והכשרות
-              {activeTab === "courses" && (
-                <span className="absolute bottom-0 right-0 left-0 h-[2px] bg-primary rounded-full" />
-              )}
-            </button>
+              {Object.entries(currentFilters).map(([group, items]) => (
+                <div key={group} className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-body font-semibold text-foreground min-w-[60px]">{group}:</span>
+                  {items.map((item) => {
+                    const active = activeFilters.has(item);
+                    return (
+                      <button
+                        key={item}
+                        onClick={() => toggleFilter(item)}
+                        className="pill"
+                        style={active ? { background: '#C4A882', borderColor: '#B8956E' } : undefined}
+                      >
+                        {item}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </motion.div>
           </div>
-
-          {/* Search */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="relative max-w-xl mx-auto mb-8"
-          >
-            <input
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={activeTab === "practitioners" ? "חפשו לפי נושא, שם או גישה..." : "חפשו לפי נושא, שם מרצה או כלי..."}
-              className="w-full px-6 py-3 rounded-full text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm font-body bg-white border border-border shadow-sm"
-            />
-          </motion.div>
-
-          {/* Filters */}
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.25 }}
-            className="mb-12 space-y-4"
-          >
-            {Object.entries(currentFilters).map(([group, items]) => (
-              <div key={group} className="flex flex-wrap items-center gap-2">
-                <span className="text-xs font-body text-muted-foreground min-w-[50px]">{group}:</span>
-                {items.map((item) => {
-                  const active = activeFilters.has(item);
-                  return (
-                    <button
-                      key={item}
-                      onClick={() => toggleFilter(item)}
-                      className={`text-xs px-3 py-1.5 rounded-full transition-colors duration-200 font-body ${
-                        active
-                          ? "bg-primary text-white"
-                          : "border border-secondary/40 text-secondary bg-transparent hover:bg-secondary/10"
-                      }`}
-                    >
-                      {item}
-                    </button>
-                  );
-                })}
-              </div>
-            ))}
-          </motion.div>
 
           {/* Content */}
           {activeTab === "practitioners" ? (
