@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
 
@@ -15,8 +15,10 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user, signOut } = useAuth();
   const { firstName } = useProfile();
+  const location = useLocation();
   const links = Object.keys(linkMap);
   const greetName = firstName || user?.email?.split("@")[0];
+  const isActive = (link: string) => linkMap[link] === location.pathname;
 
   return (
     <nav className="fixed top-0 right-0 left-0 z-50 backdrop-blur-xl border-b border-white/10" style={{ background: 'rgba(20, 35, 20, 0.95)' }}>
@@ -29,7 +31,11 @@ const Navbar = () => {
           <ul className="flex items-center gap-8">
             {links.map((link) => (
               <li key={link}>
-                <Link to={linkMap[link]} className="font-body hover:opacity-80 transition-opacity text-sm" style={{ color: '#F5ECD7' }}>
+                <Link
+                  to={linkMap[link]}
+                  className={`font-body hover:opacity-80 transition-opacity text-sm pb-1 ${isActive(link) ? "border-b-2" : ""}`}
+                  style={{ color: '#F5ECD7', borderColor: isActive(link) ? 'rgba(245,236,215,0.6)' : 'transparent' }}
+                >
                   {link}
                 </Link>
               </li>
@@ -63,7 +69,12 @@ const Navbar = () => {
           <ul className="flex flex-col gap-3 mb-4 pt-4">
             {links.map((link) => (
               <li key={link}>
-                <Link to={linkMap[link]} onClick={() => setMobileOpen(false)} className="font-body hover:opacity-80 transition-opacity text-base" style={{ color: '#F5ECD7' }}>
+                <Link
+                  to={linkMap[link]}
+                  onClick={() => setMobileOpen(false)}
+                  className={`font-body hover:opacity-80 transition-opacity text-base inline-block pb-1 ${isActive(link) ? "border-b-2" : ""}`}
+                  style={{ color: '#F5ECD7', borderColor: isActive(link) ? 'rgba(245,236,215,0.6)' : 'transparent' }}
+                >
                   {link}
                 </Link>
               </li>
