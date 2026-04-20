@@ -10,6 +10,7 @@ export interface Practitioner {
   sessions: string;
   languages: string;
   availability: string;
+  photo?: string;
   bio: string[];
   specialties: string[];
   approaches: { name: string; description: string }[];
