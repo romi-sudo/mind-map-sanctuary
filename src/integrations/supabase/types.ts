@@ -175,6 +175,36 @@ export type Database = {
         }
         Relationships: []
       }
+      leads: {
+        Row: {
+          created_at: string
+          id: string
+          message: string | null
+          seeker_email: string
+          seeker_name: string
+          seeker_phone: string | null
+          therapist_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          seeker_email: string
+          seeker_name: string
+          seeker_phone?: string | null
+          therapist_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string | null
+          seeker_email?: string
+          seeker_name?: string
+          seeker_phone?: string | null
+          therapist_id?: string
+        }
+        Relationships: []
+      }
       practitioner_applications: {
         Row: {
           accepting_new_clients: boolean
