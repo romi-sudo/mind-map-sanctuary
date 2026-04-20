@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { practitioners } from "@/data/practitioners";
 import { ApproachTooltipButton } from "@/components/ApproachTooltip";
 import { findApproach } from "@/data/approaches";
+import { supabase } from "@/integrations/supabase/client";
 
 const PractitionerProfile = () => {
   const { id } = useParams<{ id: string }>();
   const p = practitioners.find((pr) => pr.id === id);
   const [formSent, setFormSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [showStickyBar, setShowStickyBar] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowStickyBar(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   if (!p) {
     return (
@@ -25,10 +36,28 @@ const PractitionerProfile = () => {
     );
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
+    setSubmitting(true);
+    const { error } = await supabase.from("leads").insert({
+      therapist_id: p.id,
+      seeker_name: form.name,
+      seeker_email: form.email,
+      seeker_phone: form.phone || null,
+      message: form.message || null,
+    });
+    setSubmitting(false);
+    if (error) {
+      console.error("Lead insert error:", error);
+      toast.error("אירעה שגיאה בשליחה, נסו שוב");
+      return;
+    }
     setFormSent(true);
+    toast.success("ההודעה נשלחה — ניצור איתך קשר בקרוב");
   };
+
+  const scrollToContact = () => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
 
   const fade = { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } };
   const inputClass = "w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm transition-all";
@@ -48,8 +77,12 @@ const PractitionerProfile = () => {
           </Link>
 
           <motion.div {...fade} className="text-center">
-            <div className="w-[120px] h-[120px] rounded-full flex items-center justify-center mx-auto mb-6 bg-white/20 backdrop-blur-sm">
-              <span className="font-display text-4xl font-bold text-white">{p.initials}</span>
+            <div className="w-[120px] h-[120px] rounded-full flex items-center justify-center mx-auto mb-6 bg-white/20 backdrop-blur-sm overflow-hidden">
+              {p.photo ? (
+                <img src={p.photo} alt={p.name} className="w-full h-full object-cover" />
+              ) : (
+                <span className="font-display text-4xl font-bold text-white">{p.initials}</span>
+              )}
             </div>
             <h1 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-white mb-2">{p.name}</h1>
             <p className="text-lg text-white/80 mb-5 font-body">{p.title}</p>
@@ -65,17 +98,14 @@ const PractitionerProfile = () => {
               <span>ניסיון: {p.experience}</span>
               <span>פגישות: {p.sessions}</span>
             </div>
-            <button
-              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-              className="btn-primary text-lg"
-            >
+            <button onClick={scrollToContact} className="btn-primary text-lg">
               צרו קשר
             </button>
           </motion.div>
         </div>
       </section>
 
-      <main className="px-4 sm:px-6 pb-20">
+      <main className="px-4 sm:px-6 pb-32">
         <div className="max-w-4xl mx-auto">
           <div className="section-divider my-12" />
 
@@ -132,10 +162,10 @@ const PractitionerProfile = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {p.reviews.map((r, i) => (
                 <div key={i} className="spa-card">
-                  <div className="flex gap-1 mb-3">
-                    {Array.from({ length: r.stars }).map((_, j) => (
-                      <span key={j} className="text-sm text-secondary">&#9679;</span>
-                    ))}
+                  <div className="mb-3">
+                    <span className="text-amber-500 text-sm tracking-wide" aria-label={`${r.stars} stars`}>
+                      {'★'.repeat(r.stars)}
+                    </span>
                   </div>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4 font-body">"{r.text}"</p>
                   <p className="text-foreground text-sm font-body">— {r.name}</p>
@@ -152,24 +182,47 @@ const PractitionerProfile = () => {
               ) : (
                 <form onSubmit={handleSubmit} className="max-w-lg mx-auto space-y-4">
                   {[
-                    { v: form.name, k: "name", ph: "שם מלא" },
-                    { v: form.email, k: "email", ph: "אימייל" },
-                    { v: form.phone, k: "phone", ph: "טלפון" },
+                    { v: form.name, k: "name", ph: "שם מלא", type: "text", required: true },
+                    { v: form.email, k: "email", ph: "אימייל", type: "email", required: true },
+                    { v: form.phone, k: "phone", ph: "טלפון", type: "tel", required: false },
                   ].map((f) => (
                     <div key={f.k} className="border-b border-border">
-                      <input required value={f.v} onChange={(e) => setForm({ ...form, [f.k]: e.target.value })} placeholder={f.ph} className={inputClass} />
+                      <input
+                        required={f.required}
+                        type={f.type}
+                        value={f.v}
+                        onChange={(e) => setForm({ ...form, [f.k]: e.target.value })}
+                        placeholder={f.ph}
+                        className={inputClass}
+                      />
                     </div>
                   ))}
                   <div className="border-b border-border">
                     <textarea value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} placeholder="ספרו לי במה אוכל לעזור" rows={4} className={`${inputClass} resize-none`} />
                   </div>
-                  <button type="submit" className="btn-primary w-full mt-4">שליחה</button>
+                  <button type="submit" disabled={submitting} className="btn-primary w-full mt-4 disabled:opacity-60">
+                    {submitting ? "שולח..." : "שליחה"}
+                  </button>
                 </form>
               )}
             </div>
           </motion.section>
         </div>
       </main>
+
+      {showStickyBar && !formSent && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="fixed bottom-0 left-0 right-0 z-40 backdrop-blur-md border-t border-border bg-background/90 px-4 py-3"
+        >
+          <div className="max-w-4xl mx-auto flex items-center justify-center">
+            <button onClick={scrollToContact} className="btn-primary w-full sm:w-auto">
+              צרו קשר עם {p.name}
+            </button>
+          </div>
+        </motion.div>
+      )}
 
       <Footer />
     </div>

@@ -44,41 +44,53 @@ const dummyCourses: Course[] = [
   { id: "c6", title: "יאמה ומיינדפולנס", instructor: "שירה בן דוד", level: "לכולם", format: "לייב", duration: "8 שבועות", price: "₪380", tags: ["יאמה", "מיינדפולנס", "לכולם", "לייב"] },
 ];
 
-const PractitionerCard = ({ p, index }: { p: Practitioner; index: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-    className="spa-card flex flex-col overflow-hidden !p-0"
-  >
-    <div className="p-6 flex flex-col items-center text-center flex-1">
-      <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4 bg-muted">
-        <span className="font-display text-2xl font-bold text-primary">{p.initials}</span>
-      </div>
-      <h3 className="font-display text-xl font-bold text-foreground mb-1">{p.name}</h3>
-      <p className="text-muted-foreground text-sm mb-4">{p.title}</p>
-      <div className="flex flex-wrap justify-center gap-2 mb-4">
-        {p.tags.map((tag) => (
-          <span key={tag} className="inline-flex items-center gap-1 text-xs font-body px-3 py-1 rounded-full border border-border text-primary">
-            {tag}
-            {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
-          </span>
-        ))}
-      </div>
-      <div className="w-full h-px my-2 bg-border" />
-      <div className="mt-3 text-sm text-muted-foreground space-y-1">
-        <p>{p.price}</p>
-        <p>{p.format}</p>
-      </div>
-    </div>
-    <Link
-      to={`/practitioners/${p.id}`}
-      className="w-full py-3 text-sm font-body text-center transition-colors duration-300 border-t border-border text-primary hover:bg-primary/5"
+const PractitionerCard = ({ p, index }: { p: Practitioner; index: number }) => {
+  const [imgFailed, setImgFailed] = useState(false);
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="spa-card flex flex-col overflow-hidden !p-0"
     >
-      לפרופיל המלא
-    </Link>
-  </motion.div>
-);
+      <div className="p-6 flex flex-col items-center text-center flex-1">
+        {p.photo && !imgFailed ? (
+          <img
+            src={p.photo}
+            alt={p.name}
+            onError={() => setImgFailed(true)}
+            className="w-20 h-20 rounded-full object-cover mb-4"
+          />
+        ) : (
+          <div className="w-20 h-20 rounded-full flex items-center justify-center mb-4 bg-muted">
+            <span className="font-display text-2xl font-bold text-primary">{p.initials}</span>
+          </div>
+        )}
+        <h3 className="font-display text-xl font-bold text-foreground mb-1">{p.name}</h3>
+        <p className="text-muted-foreground text-sm mb-4">{p.title}</p>
+        <div className="flex flex-wrap justify-center gap-2 mb-4">
+          {p.tags.map((tag) => (
+            <span key={tag} className="inline-flex items-center gap-1 text-xs font-body px-3 py-1 rounded-full border border-border text-primary">
+              {tag}
+              {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
+            </span>
+          ))}
+        </div>
+        <div className="w-full h-px my-2 bg-border" />
+        <div className="mt-3 text-sm text-muted-foreground space-y-1">
+          <p>{p.price}</p>
+          <p>{p.format}</p>
+        </div>
+      </div>
+      <Link
+        to={`/practitioners/${p.id}`}
+        className="w-full py-3 text-sm font-body text-center transition-colors duration-300 border-t border-border text-primary hover:bg-primary/5"
+      >
+        לפרופיל המלא
+      </Link>
+    </motion.div>
+  );
+};
 
 const CourseCard = ({ course, index }: { course: Course; index: number }) => (
   <motion.div
@@ -186,13 +198,16 @@ const Practitioners = () => {
               </button>
               <button
                 onClick={() => switchTab("courses")}
-                className={`font-body text-base pb-3 transition-colors duration-200 relative ${
+                className={`font-body text-base pb-3 transition-colors duration-200 relative inline-flex items-center gap-2 ${
                   activeTab === "courses"
                     ? "text-primary font-semibold"
-                    : "text-foreground/70 hover:text-foreground"
+                    : "text-foreground/50 hover:text-foreground/70"
                 }`}
               >
                 קורסים והכשרות
+                <span className="text-[10px] font-body px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
+                  בקרוב
+                </span>
                 {activeTab === "courses" && (
                   <span className="absolute bottom-0 right-0 left-0 h-[2px] bg-primary rounded-full" />
                 )}
@@ -258,18 +273,17 @@ const Practitioners = () => {
               )}
             </>
           ) : (
-            <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCourses.map((c, i) => (
-                  <CourseCard key={c.id} course={c} index={i} />
-                ))}
-              </div>
-              {filteredCourses.length === 0 && (
-                <p className="text-center text-muted-foreground mt-12 text-lg font-body">
-                  לא נמצאו קורסים מתאימים. נסו לשנות את החיפוש או הסינון.
-                </p>
-              )}
-            </>
+            <div className="spa-card text-center !p-10">
+              <h2 className="font-display text-2xl font-bold text-foreground mb-3">
+                קורסים ב-MapSoul — בקרוב
+              </h2>
+              <p className="text-muted-foreground font-body mb-6">
+                אנחנו אוצרים את ההכשרות הטובות בארץ. הירשמו לרשימת ההמתנה ונעדכן ראשונים.
+              </p>
+              <button onClick={() => switchTab("practitioners")} className="btn-primary">
+                נרשמים לרשימת ההמתנה ←
+              </button>
+            </div>
           )}
         </div>
       </main>

@@ -268,7 +268,7 @@ const Questionnaire = () => {
         {currentStep && !isFreeTextStep && (
           <motion.div key={`step-${stepIndex}`} {...fadeIn} transition={{ duration: 0.25 }} className="w-full max-w-3xl">
             <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-10">{currentStep.headline}</h1>
-            <div className={`grid grid-cols-1 ${currentStep.cards.length <= 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"} gap-4`}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {currentStep.cards.map((card) => (
                 <AnswerCard key={card.id} card={card} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} />
               ))}
