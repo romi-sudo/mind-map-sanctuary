@@ -61,6 +61,24 @@ const Pending = () => {
             ))}
           </div>
 
+          <div className="text-right bg-warm-gold/5 rounded-2xl p-5 mb-8 border border-warm-gold/20">
+            <h3 className="font-display text-base font-bold text-foreground mb-3">
+              לאחר האישור תקבלו:
+            </h3>
+            <ul className="space-y-2">
+              {[
+                "דשבורד אישי עם לידים שמגיעים אליך",
+                "פרופיל ציבורי בפלטפורמה",
+                "חשיפה לאנשים פרטיים ולחברות וארגונים",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2 font-body text-sm text-foreground/80">
+                  <Check className="w-4 h-4 text-warm-gold shrink-0 mt-0.5" strokeWidth={2.5} />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <p className="font-body text-sm text-muted-foreground">
             שאלות? כתבו לנו ל־
             <a href="mailto:hello@mapsoul.co" className="text-primary hover:underline">
