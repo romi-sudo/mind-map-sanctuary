@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
@@ -8,6 +8,7 @@ import { getPostAuthRoute } from "@/lib/postAuthRoute";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +21,8 @@ const Login = () => {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       toast.success("התחברתם בהצלחה!");
-      const dest = data.user ? await getPostAuthRoute(data.user.id) : "/";
+      const nextPath = searchParams.get("next");
+      const dest = nextPath || (data.user ? await getPostAuthRoute(data.user.id) : "/");
       navigate(dest);
     } catch (err: any) {
       toast.error(err.message || "שגיאה בהתחברות");
@@ -32,7 +34,8 @@ const Login = () => {
     if (result.error) toast.error(`שגיאה בהתחברות עם ${provider === "google" ? "Google" : "Apple"}`);
     if (result.redirected) return;
     const { data: { user } } = await supabase.auth.getUser();
-    const dest = user ? await getPostAuthRoute(user.id) : "/";
+    const nextPath = searchParams.get("next");
+    const dest = nextPath || (user ? await getPostAuthRoute(user.id) : "/");
     navigate(dest);
   };
 
