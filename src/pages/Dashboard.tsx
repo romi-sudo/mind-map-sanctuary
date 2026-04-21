@@ -77,8 +77,8 @@ const Dashboard = () => {
           </h1>
           <div className="flex items-center gap-3 mb-10">
             <p className="font-body text-muted-foreground">הפרופיל שלך פעיל · הלידים מגיעים אליך</p>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-700 text-xs font-body">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-warm-gold/10 text-warm-gold text-xs font-body">
+              <span className="w-1.5 h-1.5 rounded-full bg-warm-gold" />
               פעיל
             </span>
           </div>
@@ -125,7 +125,7 @@ const Dashboard = () => {
               >
                 <span
                   className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
-                    l.status === "new" ? "bg-emerald-500" : "bg-muted-foreground/40"
+                    l.status === "new" ? "bg-warm-gold" : "bg-muted-foreground/40"
                   }`}
                 />
                 <div className="flex-1 min-w-0">
