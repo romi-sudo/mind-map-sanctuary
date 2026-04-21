@@ -64,6 +64,16 @@ const Dashboard = () => {
     })();
   }, [user, status]);
 
+  const markContacted = async (leadId: string) => {
+    await supabase
+      .from("leads")
+      .update({ status: "contacted" })
+      .eq("id", leadId);
+    setLeads((prev) =>
+      prev.map((l) => (l.id === leadId ? { ...l, status: "contacted" } : l))
+    );
+  };
+
   if (authLoading || statusLoading || !user || status !== "approved") return null;
 
   const now = Date.now();
