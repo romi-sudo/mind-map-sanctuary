@@ -223,6 +223,7 @@ export type Database = {
           profile_image_url: string | null
           service_types: string[]
           specialties: string[]
+          status: string
           user_id: string | null
           website: string | null
           whatsapp: string | null
@@ -244,6 +245,7 @@ export type Database = {
           profile_image_url?: string | null
           service_types?: string[]
           specialties?: string[]
+          status?: string
           user_id?: string | null
           website?: string | null
           whatsapp?: string | null
@@ -265,6 +267,7 @@ export type Database = {
           profile_image_url?: string | null
           service_types?: string[]
           specialties?: string[]
+          status?: string
           user_id?: string | null
           website?: string | null
           whatsapp?: string | null
