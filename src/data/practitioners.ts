@@ -89,7 +89,7 @@ export const practitioners: Practitioner[] = [
     sessions: "300+",
     languages: "עברית",
     availability: "פתוח למטופלים חדשים ✓",
-    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=48",
     bio: [
       "אני מלווה זוגות ומשפחות בתהליכי שינוי וצמיחה. מאמינה שמערכות יחסים בריאות הן הבסיס לחיים מלאים ומשמעותיים.",
       "בעבודתי אני משלבת EFT עם גישות סיסטמיות ליצירת חיבור עמוק ובטוח בין בני הזוג.",
