@@ -301,9 +301,9 @@ const Questionnaire = () => {
 };
 
 const FALLBACK_PRACTITIONERS: Practitioner[] = [
-  { name: "ד״ר נועה לוי", initials: "נל", title: "פסיכולוגית קלינית", tags: ["CBT", "חרדה", "מעברי חיים"], price: "350–500 ש״ח" },
-  { name: "עמית כהן", initials: "עכ", title: "מאמן אישי ומקצועי", tags: ["NLP", "קריירה", "מנהיגות"], price: "300–450 ש״ח" },
-  { name: "מיכל אברהם", initials: "מא", title: "מטפלת בתנועה", tags: ["סומטי", "טראומה", "גוף-נפש"], price: "280–400 ש״ח" },
+  { id: "michal-levi", name: "ד״ר נועה לוי", initials: "נל", title: "פסיכולוגית קלינית", tags: ["CBT", "חרדה", "מעברי חיים"], price: "350–500 ש״ח" },
+  { id: "oren-cohen", name: "עמית כהן", initials: "עכ", title: "מאמן אישי ומקצועי", tags: ["NLP", "קריירה", "מנהיגות"], price: "300–450 ש״ח" },
+  { id: "noa-shamir", name: "מיכל אברהם", initials: "מא", title: "מטפלת בתנועה", tags: ["סומטי", "טראומה", "גוף-נפש"], price: "280–400 ש״ח" },
 ];
 
 const ResultsPage = ({
