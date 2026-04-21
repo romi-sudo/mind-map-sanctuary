@@ -30,7 +30,7 @@ export const practitioners: Practitioner[] = [
     sessions: "200+",
     languages: "עברית, אנגלית",
     availability: "פתוח למטופלים חדשים ✓",
-    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=47",
     bio: [
       "אני מאמינה שכל אדם נושא בתוכו את היכולת לצמוח, להשתנות ולמצוא את הדרך שלו. בעבודתי הקלינית אני משלבת גישות מבוססות מחקר עם הקשבה עמוקה ואמפתיה אמיתית.",
       "למדתי פסיכולוגיה קלינית באוניברסיטת תל אביב והתמחיתי בטיפול בחרדה, טראומה ומעברי חיים. במהלך השנים פיתחתי גישה אינטגרטיבית המשלבת CBT, EMDR ומיינדפולנס.",
@@ -61,7 +61,7 @@ export const practitioners: Practitioner[] = [
     sessions: "150+",
     languages: "עברית, אנגלית",
     availability: "פתוח למטופלים חדשים ✓",
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=12",
     bio: [
       "אני עוזר לאנשים למצוא את הדרך המקצועית שלהם בעולם משתנה. עם ניסיון בעולם ההייטק ואימון מוסמך, אני משלב הבנה טכנולוגית עם עבודה על זהות וערכים.",
       "מאמין שקריירה מוצלחת מתחילה בהכרות עמוקה עם עצמך.",
@@ -89,7 +89,7 @@ export const practitioners: Practitioner[] = [
     sessions: "300+",
     languages: "עברית",
     availability: "פתוח למטופלים חדשים ✓",
-    photo: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=48",
     bio: [
       "אני מלווה זוגות ומשפחות בתהליכי שינוי וצמיחה. מאמינה שמערכות יחסים בריאות הן הבסיס לחיים מלאים ומשמעותיים.",
       "בעבודתי אני משלבת EFT עם גישות סיסטמיות ליצירת חיבור עמוק ובטוח בין בני הזוג.",
@@ -117,7 +117,7 @@ export const practitioners: Practitioner[] = [
     sessions: "50+ ריטריטים",
     languages: "עברית, אנגלית",
     availability: "ריטריט הבא: אוגוסט 2026",
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=15",
     bio: [
       "אני מנחה ריטריטים של צמיחה אישית ומיינדפולנס בטבע. מאמין שחיבור לגוף, לנשימה ולטבע הוא המפתח לשינוי פנימי אמיתי.",
       "הריטריטים שלי משלבים מדיטציה, יוגה, עבודה קבוצתית ושהייה בטבע.",
@@ -145,7 +145,7 @@ export const practitioners: Practitioner[] = [
     sessions: "120+",
     languages: "עברית, אנגלית",
     availability: "פתוח למטופלים חדשים ✓",
-    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=51",
     bio: [
       "אני מאמנת נשים וגברים שרוצים לחיות חיים נועזים ומלאי משמעות. עוזרת לזהות את החוזקות, להתגבר על פחדים ולבנות ביטחון עצמי אמיתי.",
       "הדרך שלי משלבת כלים פרקטיים עם עבודה רגשית עמוקה.",
@@ -173,7 +173,7 @@ export const practitioners: Practitioner[] = [
     sessions: "500+",
     languages: "עברית, אנגלית, צרפתית",
     availability: "פתוח למטופלים חדשים ✓",
-    photo: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=53",
     bio: [
       "אני פסיכותרפיסט עם ניסיון של 15 שנה בטיפול בטראומה וחרדה. מתמחה ב-EMDR ובגישות מבוססות מחקר.",
       "מאמין שריפוי אמיתי דורש עבודה בקצב הנכון, עם רגישות ומקצועיות.",
