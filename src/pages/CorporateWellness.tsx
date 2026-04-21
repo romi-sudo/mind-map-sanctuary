@@ -170,9 +170,111 @@ const CorporateWellness = () => {
     }
   };
 
+  const scrollToForm = () =>
+    document.getElementById('corporate-form')?.scrollIntoView({ behavior: 'smooth' });
+
   return (
-    <div dir="rtl" className="relative min-h-screen overflow-x-hidden bg-leaves nature-overlay ambient-leaves ambient-mist">
+    <div dir="rtl" className="relative min-h-screen overflow-x-hidden bg-leaves">
       <Navbar />
+
+      {/* HERO */}
+      <section className="bg-shadow-leaves nature-overlay ambient-leaves ambient-mist py-28">
+        <div className="max-w-3xl mx-auto text-center px-6 relative z-10 pt-16">
+          <p className="font-body text-sm tracking-widest uppercase text-primary mb-6">
+            לחברות וארגונים
+          </p>
+          <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6">
+            חברות שמשקיעות בעובדים — MapSoul עובדת בשבילן
+          </h1>
+          <div className="gold-line mx-auto my-8" />
+          <p className="font-body text-lg text-muted-foreground max-w-xl mx-auto mb-10">
+            במקום לבזבז שעות בקבוצות פייסבוק ולעבור על המלצות פזורות — MapSoul עושה עבורכם את העבודה. התאמה מדויקת למומחה הנכון, לתקציב שלכם, לאופי הארגון.
+          </p>
+          <button onClick={scrollToForm} className="btn-primary text-lg">
+            מצאו את המומחה הבא לארגון שלכם — בחינם לחלוטין
+          </button>
+        </div>
+      </section>
+
+      {/* WHY US */}
+      <div className="section-divider" />
+      <section className="py-24 bg-sand">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="font-display text-3xl font-bold text-center text-foreground mb-12">
+            למה לבחור ב-MapSoul?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { title: "התאמה חכמה מבוססת AI", body: "המערכת מנתחת את הצרכים הספציפיים שלכם — סוג ההכשרה, הפורמט, הגישה והתקציב — ומייצרת התאמה מדויקת." },
+              { title: "מומחים נבחרים בלבד", body: "כל מומחה עובר תהליך קבלה קפדני הכולל המלצות מאומתות וראיון — כדי להבטיח איכות ואמון ללא פשרות." },
+              { title: "חינם לחלוטין לארגון", body: "השירות לחברות וארגונים הוא ללא עלות ישירה. כלי טכנולוגי מתקדם שלא פוגע בתקציב הרווחה שלכם." },
+            ].map((c) => (
+              <div key={c.title} className="spa-card text-center">
+                <h3 className="font-display text-xl font-bold text-foreground mb-3">{c.title}</h3>
+                <p className="font-body text-sm text-muted-foreground leading-relaxed">{c.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* HOW IT WORKS */}
+      <div className="section-divider" />
+      <section className="py-24">
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="font-display text-3xl font-bold text-center text-foreground mb-12">איך זה עובד?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { n: "01", t: "מגדירים צורך", b: "ממלאים שאלון AI קצר שבו אתם מגדירים מה הארגון מחפש — סדנה, הרצאה, ריטריט צוותי ועוד." },
+              { n: "02", t: "מקבלים התאמה", b: "המערכת מנתחת את הנתונים ומציגה את המומחים המתאימים ביותר מתוך קהילה אקסקלוסיבית של מומחים מאומתים." },
+              { n: "03", t: "יוצאים לדרך", b: "בוחרים מומחה, משאירים פרטים — וצוות MapSoul מתאם ביניכם. פשוט, מהיר ומקצועי." },
+            ].map((s) => (
+              <div key={s.n} className="spa-card">
+                <div className="font-display text-5xl font-bold text-primary/20 mb-4">{s.n}</div>
+                <h3 className="font-display text-lg font-bold text-foreground mb-2">{s.t}</h3>
+                <p className="font-body text-sm text-muted-foreground">{s.b}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* WHAT WE OFFER */}
+      <div className="section-divider" />
+      <section className="py-24 bg-sand">
+        <div className="max-w-3xl mx-auto px-6">
+          <h2 className="font-display text-3xl font-bold text-center text-foreground mb-10">מה תוכלו למצוא אצלנו?</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              "סדנאות והכשרות מקצועיות לעובדים ומנהלים",
+              "הרצאות בנושאי חוסן, בריאות הנפש והתפתחות אישית",
+              "ליווי מקצועי לארגונים בתהליכי שינוי",
+              "ריטריטים ופעילויות גיבוש מבוססות תוכן טיפולי וחווייתי",
+            ].map((item) => (
+              <div key={item} className="card-nature p-6 flex gap-3">
+                <span className="w-2 h-2 rounded-full bg-primary mt-1.5 flex-shrink-0" />
+                <span className="font-body text-sm text-foreground">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <div className="section-divider" />
+      <section className="py-24">
+        <div className="glass-card max-w-2xl mx-auto text-center p-12">
+          <h2 className="font-display text-3xl font-bold text-foreground mb-4">מוכנים למצוא את המומחה הנכון?</h2>
+          <p className="font-body text-muted-foreground mb-8">
+            מלאו את השאלון הקצר שלנו — ותוך דקות תקבלו המלצות מותאמות אישית לארגון שלכם.
+          </p>
+          <button onClick={scrollToForm} className="btn-primary text-lg">
+            מצאו את המומחה הבא לארגון שלכם — בחינם לחלוטין
+          </button>
+        </div>
+      </section>
+
+      <div className="section-divider" />
 
       {/* Progress bar */}
       <div className="fixed top-[68px] left-0 right-0 z-40 h-1 bg-foreground/10">
@@ -184,7 +286,7 @@ const CorporateWellness = () => {
         />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-3xl px-6 pt-32 pb-24">
+      <div id="corporate-form" className="relative z-10 mx-auto max-w-3xl px-6 pt-20 pb-24 nature-overlay ambient-leaves ambient-mist scroll-mt-24">
         {/* Header */}
         <div className="mb-10 text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-card/70 px-4 py-2 mb-4 border border-border/40">
