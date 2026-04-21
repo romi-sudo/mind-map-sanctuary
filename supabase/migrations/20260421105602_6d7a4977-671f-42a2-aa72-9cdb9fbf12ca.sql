@@ -1,0 +1,1 @@
+ALTER TABLE public.questionnaire_responses ADD COLUMN seeker_email text;
