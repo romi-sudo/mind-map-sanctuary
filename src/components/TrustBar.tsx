@@ -3,9 +3,9 @@ import { useScrollReveal } from "@/hooks/useScrollReveal";
 const TrustBar = () => {
   const { ref, isVisible } = useScrollReveal();
   const stats = [
-    { value: "+200", label: "מומחים" },
-    { value: "+5,000", label: "אנשים מצאו את דרכם" },
-    { value: "IL", label: "ישראל" },
+    { value: "6", label: "מטפלים מייסדים" },
+    { value: "AI", label: "התאמה חכמה" },
+    { value: "2025", label: "ישראל · השקה" },
   ];
 
   return (
