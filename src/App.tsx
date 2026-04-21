@@ -20,7 +20,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import Terms from "./pages/Terms.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import AmbientPlayer from "./components/AmbientPlayer";
+
 
 const queryClient = new QueryClient();
 
