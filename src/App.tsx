@@ -15,6 +15,7 @@ import ForgotPassword from "./pages/ForgotPassword.tsx";
 import ResetPassword from "./pages/ResetPassword.tsx";
 import Approaches from "./pages/Approaches.tsx";
 import CorporateWellness from "./pages/CorporateWellness.tsx";
+import Pending from "./pages/Pending.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import AmbientPlayer from "./components/AmbientPlayer";
 
@@ -39,6 +40,7 @@ const App = () => (
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/pending" element={<Pending />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
