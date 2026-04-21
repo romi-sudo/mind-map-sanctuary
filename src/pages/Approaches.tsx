@@ -108,6 +108,25 @@ const Approaches = () => {
         </div>
       </main>
       <Footer />
+
+      {showSticky && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="fixed bottom-0 inset-x-0 z-40 bg-background/95 backdrop-blur-md border-t border-border shadow-lg"
+        >
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+            <p className="font-body text-sm text-foreground">
+              לא בטוח/ה איזו גישה מתאימה לך?
+            </p>
+            <Link to="/questionnaire" className="btn-primary text-sm !py-2 !px-5 whitespace-nowrap">
+              מלא/י שאלון ←
+            </Link>
+          </div>
+        </motion.div>
+      )}
     </div>
   );
 };
