@@ -84,7 +84,7 @@ const PractitionerForm = ({ onSuccess }: Props) => {
       onSuccess();
     } catch (err) {
       console.error(err);
-      toast.error("אירעה שגיאה בהגשה, נסו שוב");
+      toast.error("אירעה שגיאה בהגשה. אנא נסו שוב או פנו אלינו ל־hello@mapsoul.co");
     } finally { setLoading(false); }
   };
 
@@ -181,7 +181,7 @@ const PractitionerForm = ({ onSuccess }: Props) => {
 
       <div className="mt-12">
         <button type="submit" disabled={loading} className="btn-primary w-full text-lg">
-          {loading ? "שולח..." : "שלחו את הפרופיל שלכם"}
+          {loading ? "שולח..." : "הגש/י מועמדות"}
         </button>
       </div>
     </form>
