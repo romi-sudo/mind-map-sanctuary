@@ -117,7 +117,7 @@ export const practitioners: Practitioner[] = [
     sessions: "50+ ריטריטים",
     languages: "עברית, אנגלית",
     availability: "ריטריט הבא: אוגוסט 2026",
-    photo: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=15",
     bio: [
       "אני מנחה ריטריטים של צמיחה אישית ומיינדפולנס בטבע. מאמין שחיבור לגוף, לנשימה ולטבע הוא המפתח לשינוי פנימי אמיתי.",
       "הריטריטים שלי משלבים מדיטציה, יוגה, עבודה קבוצתית ושהייה בטבע.",
