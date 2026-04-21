@@ -34,7 +34,8 @@ const Login = () => {
     if (result.error) toast.error(`שגיאה בהתחברות עם ${provider === "google" ? "Google" : "Apple"}`);
     if (result.redirected) return;
     const { data: { user } } = await supabase.auth.getUser();
-    const dest = user ? await getPostAuthRoute(user.id) : "/";
+    const nextPath = searchParams.get("next");
+    const dest = nextPath || (user ? await getPostAuthRoute(user.id) : "/");
     navigate(dest);
   };
 
