@@ -183,6 +183,7 @@ export type Database = {
           seeker_email: string
           seeker_name: string
           seeker_phone: string | null
+          status: string
           therapist_id: string
         }
         Insert: {
@@ -192,6 +193,7 @@ export type Database = {
           seeker_email: string
           seeker_name: string
           seeker_phone?: string | null
+          status?: string
           therapist_id: string
         }
         Update: {
@@ -201,6 +203,7 @@ export type Database = {
           seeker_email?: string
           seeker_name?: string
           seeker_phone?: string | null
+          status?: string
           therapist_id?: string
         }
         Relationships: []
