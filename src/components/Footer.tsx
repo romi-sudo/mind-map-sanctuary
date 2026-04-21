@@ -14,6 +14,11 @@ const Footer = () => {
         >
           הצטרפו כמומחים
         </Link>
+        <div className="flex justify-center gap-4 mb-4 text-xs font-body text-white/40">
+          <Link to="/terms" className="hover:text-white/70 transition-colors">תנאי שימוש</Link>
+          <span className="text-white/20">·</span>
+          <Link to="/privacy" className="hover:text-white/70 transition-colors">מדיניות פרטיות</Link>
+        </div>
         <p className="font-body text-white/25 text-xs">
           MapSoul © 2025 — כל הזכויות שמורות
         </p>

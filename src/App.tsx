@@ -17,6 +17,8 @@ import Approaches from "./pages/Approaches.tsx";
 import CorporateWellness from "./pages/CorporateWellness.tsx";
 import Pending from "./pages/Pending.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
+import Terms from "./pages/Terms.tsx";
+import Privacy from "./pages/Privacy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import AmbientPlayer from "./components/AmbientPlayer";
 
@@ -43,6 +45,8 @@ const App = () => (
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/pending" element={<Pending />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
