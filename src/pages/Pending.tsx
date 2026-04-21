@@ -15,10 +15,13 @@ const steps = [
 const Pending = () => {
   const { user, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    if (!loading && !user) navigate("/login", { replace: true });
-  }, [user, loading, navigate]);
+    if (!loading && !user) {
+      navigate(`/login?next=${encodeURIComponent(location.pathname)}`, { replace: true });
+    }
+  }, [user, loading, navigate, location.pathname]);
 
   if (loading || !user) return null;
 
