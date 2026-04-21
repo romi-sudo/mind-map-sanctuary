@@ -145,7 +145,7 @@ export const practitioners: Practitioner[] = [
     sessions: "120+",
     languages: "עברית, אנגלית",
     availability: "פתוח למטופלים חדשים ✓",
-    photo: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=51",
     bio: [
       "אני מאמנת נשים וגברים שרוצים לחיות חיים נועזים ומלאי משמעות. עוזרת לזהות את החוזקות, להתגבר על פחדים ולבנות ביטחון עצמי אמיתי.",
       "הדרך שלי משלבת כלים פרקטיים עם עבודה רגשית עמוקה.",
