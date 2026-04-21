@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const specialtyOptions = [
   "קריירה", "מערכות יחסים", "חרדה", "זהות", "טראומה", "זוגיות",
@@ -53,6 +54,22 @@ const PractitionerForm = ({ onSuccess }: Props) => {
     setLoading(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
+
+      // CHECK FOR EXISTING APPLICATION
+      if (user) {
+        const { data: existing } = await supabase
+          .from("practitioner_applications")
+          .select("id, status")
+          .eq("user_id", user.id)
+          .maybeSingle();
+
+        if (existing) {
+          toast.info("כבר הגשת מועמדות — אנחנו בבדיקה. ניצור קשר תוך 48 שעות.");
+          window.location.href = "/pending";
+          return;
+        }
+      }
+
       const { error } = await supabase.from("practitioner_applications").insert({
         full_name: form.full_name, professional_title: form.professional_title,
         email: form.email, phone: form.phone, specialties: form.specialties,
@@ -65,8 +82,10 @@ const PractitionerForm = ({ onSuccess }: Props) => {
       });
       if (error) throw error;
       onSuccess();
-    } catch (err) { console.error(err); }
-    finally { setLoading(false); }
+    } catch (err) {
+      console.error(err);
+      toast.error("אירעה שגיאה בהגשה, נסו שוב");
+    } finally { setLoading(false); }
   };
 
   const inputClass = "w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm transition-all";
