@@ -21,7 +21,8 @@ const Login = () => {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       toast.success("התחברתם בהצלחה!");
-      const dest = data.user ? await getPostAuthRoute(data.user.id) : "/";
+      const nextPath = searchParams.get("next");
+      const dest = nextPath || (data.user ? await getPostAuthRoute(data.user.id) : "/");
       navigate(dest);
     } catch (err: any) {
       toast.error(err.message || "שגיאה בהתחברות");
