@@ -70,6 +70,13 @@ const ApproachCard = ({ approach, index }: { approach: ApproachInfo; index: numb
 
 const Approaches = () => {
   const allApproaches = Object.values(approaches);
+  const [showSticky, setShowSticky] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowSticky(window.scrollY > 400);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <div className="min-h-screen font-body bg-sand nature-overlay ambient-leaves" dir="rtl">
