@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
+import { usePractitionerStatus } from "@/hooks/usePractitionerStatus";
 
-const linkMap: Record<string, string> = {
+const baseLinks: Record<string, string> = {
   "בית": "/",
   "מצא את המסלול": "/questionnaire",
   "גישות טיפוליות": "/approaches",
@@ -14,8 +15,14 @@ const linkMap: Record<string, string> = {
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user, signOut } = useAuth();
-  const { firstName } = useProfile();
+  const { firstName, role } = useProfile();
+  const { status } = usePractitionerStatus();
   const location = useLocation();
+
+  const linkMap: Record<string, string> = { ...baseLinks };
+  if (user && role === "practitioner" && status === "approved") {
+    linkMap["דשבורד"] = "/dashboard";
+  }
   const links = Object.keys(linkMap);
   const greetName = firstName || user?.email?.split("@")[0];
   const isActive = (link: string) => linkMap[link] === location.pathname;
