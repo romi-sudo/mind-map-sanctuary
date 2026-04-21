@@ -7,7 +7,6 @@ import { usePractitionerStatus } from "@/hooks/usePractitionerStatus";
 const baseLinks: Record<string, string> = {
   "בית": "/",
   "מצא את המסלול": "/questionnaire",
-  "גישות טיפוליות": "/approaches",
   "מומחים": "/practitioners",
   "לחברות": "/corporate",
 };
