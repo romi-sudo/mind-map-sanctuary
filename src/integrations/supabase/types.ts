@@ -62,12 +62,18 @@ export type Database = {
           company_id: string | null
           company_name: string | null
           company_size: string | null
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
           created_at: string
           expectations: string | null
           format: string | null
           id: string
           needs: string[]
           recommendation: Json | null
+          selected_practitioner_name: string | null
+          selected_practitioner_title: string | null
+          status: string | null
           user_id: string
         }
         Insert: {
@@ -75,12 +81,18 @@ export type Database = {
           company_id?: string | null
           company_name?: string | null
           company_size?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
           created_at?: string
           expectations?: string | null
           format?: string | null
           id?: string
           needs?: string[]
           recommendation?: Json | null
+          selected_practitioner_name?: string | null
+          selected_practitioner_title?: string | null
+          status?: string | null
           user_id: string
         }
         Update: {
@@ -88,12 +100,18 @@ export type Database = {
           company_id?: string | null
           company_name?: string | null
           company_size?: string | null
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
           created_at?: string
           expectations?: string | null
           format?: string | null
           id?: string
           needs?: string[]
           recommendation?: Json | null
+          selected_practitioner_name?: string | null
+          selected_practitioner_title?: string | null
+          status?: string | null
           user_id?: string
         }
         Relationships: [
