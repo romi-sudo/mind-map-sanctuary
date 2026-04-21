@@ -135,6 +135,7 @@ const Questionnaire = () => {
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [freeText, setFreeText] = useState("");
+  const [seekerEmail, setSeekerEmail] = useState("");
   const [direction, setDirection] = useState(1);
   const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
