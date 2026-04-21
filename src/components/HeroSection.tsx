@@ -82,9 +82,6 @@ const HeroSection = () => {
             <button onClick={() => navigate("/questionnaire")} className="btn-primary text-lg">
               התחילו את המסע
             </button>
-            <Link to="/join-as-practitioner" className="btn-secondary text-lg">
-              הצטרף/י כמטפל/ת
-            </Link>
           </motion.div>
         </div>
       </motion.div>
