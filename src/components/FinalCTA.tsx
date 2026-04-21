@@ -20,6 +20,13 @@ const FinalCTA = () => {
           >
             בואו נתחיל
           </button>
+          <p className="mt-6 font-body text-sm text-muted-foreground">
+            או{" "}
+            <Link to="/practitioners" className="text-primary hover:underline transition-colors">
+              דפדפו ישירות במומחים
+            </Link>
+            {" "}←
+          </p>
         </div>
       </div>
     </section>
