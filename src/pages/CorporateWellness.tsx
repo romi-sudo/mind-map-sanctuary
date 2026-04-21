@@ -37,6 +37,9 @@ const CorporateWellness = () => {
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
+  const [selectedPractitioner, setSelectedPractitioner] = useState<RecPractitioner | null>(null);
+  const [contactForm, setContactForm] = useState({ contactName: '', contactEmail: '', contactPhone: '' });
+  const [inquirySent, setInquirySent] = useState(false);
   const [data, setData] = useState<FormData>({
     companyName: "",
     companySize: "",
@@ -45,6 +48,32 @@ const CorporateWellness = () => {
     budget: "",
     expectations: "",
   });
+
+  const sendInquiry = async () => {
+    if (!contactForm.contactName.trim() || !contactForm.contactEmail.trim()) {
+      toast.error("אנא מלאו שם ואימייל");
+      return;
+    }
+    try {
+      if (user && selectedPractitioner) {
+        await supabase.from("corporate_inquiries").insert({
+          user_id: user.id,
+          company_name: data.companyName,
+          company_size: data.companySize,
+          needs: data.needs,
+          format: data.format,
+          budget: data.budget,
+          expectations: `${data.expectations}\n\n--- פנייה למומחה ---\nמומחה נבחר: ${selectedPractitioner.name}\nאיש קשר: ${contactForm.contactName}\nאימייל: ${contactForm.contactEmail}\nטלפון: ${contactForm.contactPhone}`,
+          recommendation: { selectedPractitioner, contactForm } as any,
+        });
+      }
+      setInquirySent(true);
+      toast.success("הפנייה נשלחה! נחזור אליכם תוך 24 שעות");
+    } catch (e) {
+      console.error(e);
+      toast.error("שגיאה בשליחת הפנייה");
+    }
+  };
 
   // Restore saved form data after login
   useEffect(() => {
@@ -494,7 +523,7 @@ const CorporateWellness = () => {
                           initial={{ opacity: 0, y: 16 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.3 + i * 0.1 }}
-                          className="card-nature rounded-2xl p-6 bg-card/80"
+                          className="card-nature rounded-2xl p-6 bg-card/80 flex flex-col"
                         >
                           <h4 className="font-display text-lg font-bold text-foreground">{p.name}</h4>
                           <p className="font-body text-sm text-primary mb-3">{p.title}</p>
@@ -503,10 +532,71 @@ const CorporateWellness = () => {
                               <span key={t} className="pill !py-1 !px-2 !text-xs">{t}</span>
                             ))}
                           </div>
-                          <p className="font-body text-xs text-muted-foreground italic">"{p.matchReason}"</p>
+                          <p className="font-body text-xs text-muted-foreground italic flex-1">"{p.matchReason}"</p>
+                          <button
+                            onClick={() => { setSelectedPractitioner(p); setInquirySent(false); }}
+                            className="btn-primary w-full mt-4 text-sm"
+                          >
+                            בחרו מומחה זה ←
+                          </button>
                         </motion.div>
                       ))}
                     </div>
+
+                    {selectedPractitioner && (
+                      <motion.div {...fadeIn} transition={{ duration: 0.3 }} className="spa-card !p-8 mt-6">
+                        {inquirySent ? (
+                          <div className="text-center py-6">
+                            <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 mb-4">
+                              <Check className="h-6 w-6 text-primary" />
+                            </div>
+                            <h4 className="font-display text-xl font-bold text-foreground mb-2">הפנייה נשלחה בהצלחה</h4>
+                            <p className="font-body text-sm text-muted-foreground">
+                              צוות MapSoul יחזור אליכם תוך 24 שעות לתיאום עם {selectedPractitioner.name}.
+                            </p>
+                          </div>
+                        ) : (
+                          <>
+                            <h4 className="font-display text-xl font-bold text-foreground mb-2">
+                              בחרתם: {selectedPractitioner.name}
+                            </h4>
+                            <p className="font-body text-sm text-muted-foreground mb-6">
+                              השאירו פרטים וצוות MapSoul יחזור אליכם תוך 24 שעות לתיאום.
+                            </p>
+                            <div className="space-y-3">
+                              <div className="rounded-2xl border border-border bg-background/70 px-5">
+                                <input
+                                  value={contactForm.contactName}
+                                  onChange={(e) => setContactForm((p) => ({ ...p, contactName: e.target.value }))}
+                                  placeholder="שם איש/ת הקשר"
+                                  className="w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm"
+                                />
+                              </div>
+                              <div className="rounded-2xl border border-border bg-background/70 px-5">
+                                <input
+                                  type="email"
+                                  value={contactForm.contactEmail}
+                                  onChange={(e) => setContactForm((p) => ({ ...p, contactEmail: e.target.value }))}
+                                  placeholder="אימייל"
+                                  className="w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm"
+                                />
+                              </div>
+                              <div className="rounded-2xl border border-border bg-background/70 px-5">
+                                <input
+                                  value={contactForm.contactPhone}
+                                  onChange={(e) => setContactForm((p) => ({ ...p, contactPhone: e.target.value }))}
+                                  placeholder="טלפון (אופציונלי)"
+                                  className="w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm"
+                                />
+                              </div>
+                            </div>
+                            <button onClick={sendInquiry} className="btn-primary w-full mt-6">
+                              שלחו פנייה ל-MapSoul
+                            </button>
+                          </>
+                        )}
+                      </motion.div>
+                    )}
                   </div>
 
                   {/* CTA */}
