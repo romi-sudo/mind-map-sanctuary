@@ -203,7 +203,9 @@ const Signup = () => {
           </div>
           <label className="flex items-center gap-3 cursor-pointer">
             <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} className="w-4 h-4 rounded" style={{ accentColor: "hsl(24 44% 50%)" }} />
-            <span className="font-body text-sm text-muted-foreground">קראתי ואני מסכים/ה לתנאי השימוש</span>
+            <span className="font-body text-sm text-muted-foreground">
+              קראתי ואני מסכים/ה ל<Link to="/terms" className="text-primary hover:underline">תנאי השימוש</Link>
+            </span>
           </label>
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? "יוצר חשבון..." : "יצירת חשבון"}
