@@ -46,19 +46,20 @@ const Dashboard = () => {
     if (!user || status !== "approved") return;
     (async () => {
       setLoading(true);
-      const { data } = await supabase
-        .from("leads")
-        .select("*")
-        .eq("therapist_id", user.id)
-        .order("created_at", { ascending: false });
-      setLeads((data as Lead[]) ?? []);
-      // Try to find a slug for the public profile (best effort)
+      // First get the practitioner's application id (slug-based id)
       const { data: app } = await supabase
         .from("practitioner_applications")
         .select("id, full_name")
         .eq("user_id", user.id)
         .maybeSingle();
       if (app) setPractitionerSlug(app.id);
+      // Then fetch leads using both possible ids
+      const { data } = await supabase
+        .from("leads")
+        .select("*")
+        .or(`therapist_id.eq.${user.id},therapist_id.eq.${app?.id ?? 'none'}`)
+        .order("created_at", { ascending: false });
+      setLeads((data as Lead[]) ?? []);
       setLoading(false);
     })();
   }, [user, status]);
