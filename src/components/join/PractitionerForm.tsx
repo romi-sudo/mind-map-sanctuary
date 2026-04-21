@@ -84,7 +84,7 @@ const PractitionerForm = ({ onSuccess }: Props) => {
       onSuccess();
     } catch (err) {
       console.error(err);
-      toast.error("אירעה שגיאה בהגשה, נסו שוב");
+      toast.error("אירעה שגיאה בהגשה. אנא נסו שוב או פנו אלינו ל־hello@mapsoul.co");
     } finally { setLoading(false); }
   };
 
