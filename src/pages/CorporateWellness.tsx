@@ -589,7 +589,7 @@ const CorporateWellness = () => {
                                 />
                               </div>
                             </div>
-                            <button onClick={sendInquiry} className="btn-primary w-full mt-6">
+                            <button onClick={handleContactSubmit} className="btn-primary w-full mt-6">
                               שלחו פנייה ל-MapSoul
                             </button>
                           </>
