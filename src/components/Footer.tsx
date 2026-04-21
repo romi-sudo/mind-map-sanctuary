@@ -4,9 +4,9 @@ const navLinks = [
   { to: "/", label: "דף הבית" },
   { to: "/questionnaire", label: "מצא את המסלול שלך" },
   { to: "/practitioners", label: "מומחים" },
-  { to: "/approaches", label: "גישות טיפוליות" },
   { to: "/corporate", label: "לחברות" },
   { to: "/join-as-practitioner", label: "הצטרף כמטפל/ת" },
+  { to: "/approaches", label: "גישות טיפוליות" },
 ];
 
 const Footer = () => {
