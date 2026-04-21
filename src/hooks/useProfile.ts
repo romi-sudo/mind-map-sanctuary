@@ -41,7 +41,13 @@ export const useProfile = () => {
           avatar_url: null,
         });
       }
-      if (roles && roles.length > 0) setRole(roles[0].role as Role);
+      if (roles && roles.length > 0) {
+        // Prefer practitioner/company over consumer when user has multiple roles
+        const priority: Role[] = ["practitioner", "company", "consumer"];
+        const userRoles = roles.map((r) => r.role as Role);
+        const best = priority.find((p) => userRoles.includes(p)) ?? userRoles[0];
+        setRole(best);
+      }
       setLoading(false);
     })();
   }, [user]);
