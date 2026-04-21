@@ -10,7 +10,7 @@ type Track = "personal" | "career" | "both";
 
 interface CardOption { id: string; title: string; subtitle: string; }
 interface StepDef { headline: string; subtext?: string; cards: CardOption[]; }
-interface Practitioner { name: string; initials: string; title: string; tags: string[]; price: string; }
+interface Practitioner { id?: string; name: string; initials: string; title: string; tags: string[]; price: string; }
 interface Recommendation { primary: { title: string; description: string }; practitioners: Practitioner[]; }
 
 const STEP1: StepDef = {
