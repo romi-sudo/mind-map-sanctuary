@@ -19,10 +19,11 @@ export const ApproachTooltipButton = ({ tag, className = "" }: ApproachTooltipBu
     <>
       <button
         onClick={(e) => { e.stopPropagation(); setOpen(true); }}
-        className={`inline-flex items-center justify-center w-4 h-4 rounded-full transition-colors text-sand/60 hover:text-cream ${className}`}
+        className={`inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary/15 hover:bg-primary/30 transition-colors border border-primary/20 ${className}`}
         aria-label={`מידע על ${tag}`}
+        title={`למד/י על ${tag}`}
       >
-        <span className="text-xs font-body">?</span>
+        <span className="text-[10px] font-body italic text-primary leading-none">i</span>
       </button>
 
       <AnimatePresence>
