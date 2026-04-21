@@ -61,7 +61,7 @@ export const practitioners: Practitioner[] = [
     sessions: "150+",
     languages: "עברית, אנגלית",
     availability: "פתוח למטופלים חדשים ✓",
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=12",
     bio: [
       "אני עוזר לאנשים למצוא את הדרך המקצועית שלהם בעולם משתנה. עם ניסיון בעולם ההייטק ואימון מוסמך, אני משלב הבנה טכנולוגית עם עבודה על זהות וערכים.",
       "מאמין שקריירה מוצלחת מתחילה בהכרות עמוקה עם עצמך.",
