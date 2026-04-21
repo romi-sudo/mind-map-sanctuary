@@ -1,5 +1,5 @@
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const FinalCTA = () => {
   const { ref, isVisible } = useScrollReveal();
@@ -20,6 +20,13 @@ const FinalCTA = () => {
           >
             בואו נתחיל
           </button>
+          <p className="mt-6 font-body text-sm text-muted-foreground">
+            או{" "}
+            <Link to="/practitioners" className="text-primary hover:underline transition-colors">
+              דפדפו ישירות במומחים
+            </Link>
+            {" "}←
+          </p>
         </div>
       </div>
     </section>
