@@ -289,6 +289,15 @@ const Questionnaire = () => {
               placeholder="לדוגמה: אני רוצה להרגיש שאני יודע/ת לאן אני הולך/ת..."
               className="w-full min-h-[160px] rounded-2xl border border-border bg-background/70 p-6 font-body text-foreground text-lg placeholder:text-muted-foreground/50 focus:outline-none resize-none"
             />
+            <div className="mt-4 border-b border-border/60">
+              <input
+                type="email"
+                value={seekerEmail}
+                onChange={(e) => setSeekerEmail(e.target.value)}
+                placeholder="אימייל לקבלת ההמלצה (אופציונלי)"
+                className="w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/40 focus:outline-none font-body text-sm"
+              />
+            </div>
             <div className="mt-8 text-center">
               <button onClick={handleSubmit} disabled={isLoading} className="btn-primary text-lg inline-flex items-center gap-3">
                 {isLoading ? "מייצר המלצה מותאמת אישית..." : "הראה לי את המסלול שלי"}
