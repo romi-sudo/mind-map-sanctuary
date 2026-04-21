@@ -325,6 +325,15 @@ const ResultsPage = ({
   return (
     <div dir="rtl" className="relative min-h-screen bg-sand nature-overlay ambient-leaves">
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-20">
+        <div className="mb-8">
+          <button
+            onClick={onRestart}
+            className="font-body text-sm text-primary hover:underline transition-colors inline-flex items-center gap-1"
+          >
+            ← חזרה לשאלון
+          </button>
+        </div>
+
         <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-12">
           {headline}
         </motion.h1>
@@ -339,25 +348,35 @@ const ResultsPage = ({
 
         <h3 className="font-display text-xl font-bold text-foreground mb-6">מומחים שמתאימים לך</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
-          {practitioners.map((p, i) => (
-            <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="card-nature p-6">
-              <div className="w-16 h-16 rounded-full flex items-center justify-center font-display text-xl font-bold mb-4 bg-muted text-primary">
-                {p.initials}
-              </div>
-              <h4 className="font-display text-lg font-bold text-foreground">{p.name}</h4>
-              <p className="font-body text-sm text-muted-foreground mb-3">{p.title}</p>
-              <div className="flex flex-wrap gap-2 mb-4">
-                {p.tags.map((tag) => (
-                  <span key={tag} className="inline-flex items-center gap-1 text-xs font-body px-3 py-1 rounded-full border border-border text-primary">
-                    {tag}
-                    {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
-                  </span>
-                ))}
-              </div>
-              <p className="font-body text-sm text-muted-foreground mb-4">{p.price}</p>
-              <button className="btn-secondary w-full !py-2 text-sm">לפנייה</button>
-            </motion.div>
-          ))}
+          {practitioners.map((p, i) => {
+            const slug = p.id ?? p.name.toLowerCase().replace(/\s+/g, "-");
+            return (
+              <motion.div key={p.name} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }}>
+                <Link
+                  to={`/practitioners/${slug}`}
+                  className="card-nature p-6 block cursor-pointer transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                >
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center font-display text-xl font-bold mb-4 bg-muted text-primary">
+                    {p.initials}
+                  </div>
+                  <h4 className="font-display text-lg font-bold text-foreground">{p.name}</h4>
+                  <p className="font-body text-sm text-muted-foreground mb-3">{p.title}</p>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {p.tags.map((tag) => (
+                      <span key={tag} className="inline-flex items-center gap-1 text-xs font-body px-3 py-1 rounded-full border border-border text-primary">
+                        {tag}
+                        {findApproach(tag) && <ApproachTooltipButton tag={tag} />}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="font-body text-sm text-muted-foreground mb-4">{p.price}</p>
+                  <div className="pt-3 border-t border-border text-center">
+                    <span className="font-body text-sm text-primary font-medium">לפרופיל המלא ←</span>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
 
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="spa-card mb-8 text-center">
