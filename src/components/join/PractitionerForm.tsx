@@ -181,7 +181,7 @@ const PractitionerForm = ({ onSuccess }: Props) => {
 
       <div className="mt-12">
         <button type="submit" disabled={loading} className="btn-primary w-full text-lg">
-          {loading ? "שולח..." : "שלחו את הפרופיל שלכם"}
+          {loading ? "שולח..." : "הגש/י מועמדות"}
         </button>
       </div>
     </form>
