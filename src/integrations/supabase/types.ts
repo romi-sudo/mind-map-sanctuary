@@ -314,6 +314,7 @@ export type Database = {
           free_text: string | null
           id: string
           recommendation: Json | null
+          seeker_email: string | null
           track: string
           user_id: string | null
         }
@@ -323,6 +324,7 @@ export type Database = {
           free_text?: string | null
           id?: string
           recommendation?: Json | null
+          seeker_email?: string | null
           track: string
           user_id?: string | null
         }
@@ -332,6 +334,7 @@ export type Database = {
           free_text?: string | null
           id?: string
           recommendation?: Json | null
+          seeker_email?: string | null
           track?: string
           user_id?: string | null
         }
