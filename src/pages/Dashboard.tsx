@@ -25,6 +25,7 @@ const formatDate = (iso: string) =>
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, loading: authLoading } = useAuth();
   const { firstName } = useProfile();
   const { status, loading: statusLoading } = usePractitionerStatus();
@@ -34,9 +35,12 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (authLoading || statusLoading) return;
-    if (!user) { navigate("/login", { replace: true }); return; }
+    if (!user) {
+      navigate(`/login?next=${encodeURIComponent(location.pathname)}`, { replace: true });
+      return;
+    }
     if (status && status !== "approved") { navigate("/pending", { replace: true }); return; }
-  }, [user, status, authLoading, statusLoading, navigate]);
+  }, [user, status, authLoading, statusLoading, navigate, location.pathname]);
 
   useEffect(() => {
     if (!user || status !== "approved") return;
