@@ -46,12 +46,18 @@ const CorporateWellness = () => {
     expectations: "",
   });
 
-  // Auth gate: companies must be logged in
+  // Restore saved form data after login
   useEffect(() => {
-    if (!authLoading && !user) {
-      navigate("/signup?role=company&next=/corporate", { replace: true });
+    const saved = sessionStorage.getItem('corporate_form_data');
+    if (saved && user) {
+      try {
+        const parsed = JSON.parse(saved);
+        setData((prev) => ({ ...prev, ...parsed }));
+        sessionStorage.removeItem('corporate_form_data');
+        setStep(5);
+      } catch (e) {}
     }
-  }, [authLoading, user, navigate]);
+  }, [user]);
 
   // Pre-fill company name from company_profiles if available
   useEffect(() => {
@@ -104,6 +110,11 @@ const CorporateWellness = () => {
   };
 
   const handleSubmit = async () => {
+    if (!user) {
+      sessionStorage.setItem('corporate_form_data', JSON.stringify(data));
+      navigate('/signup?role=company&next=/corporate');
+      return;
+    }
     setIsLoading(true);
 
     setStep(5);
