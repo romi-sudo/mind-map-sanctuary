@@ -49,29 +49,28 @@ const CorporateWellness = () => {
     expectations: "",
   });
 
-  const sendInquiry = async () => {
-    if (!contactForm.contactName.trim() || !contactForm.contactEmail.trim()) {
+  const handleContactSubmit = async () => {
+    if (!contactForm.contactName || !contactForm.contactEmail) {
       toast.error("אנא מלאו שם ואימייל");
       return;
     }
     try {
-      if (user && selectedPractitioner) {
-        await supabase.from("corporate_inquiries").insert({
-          user_id: user.id,
-          company_name: data.companyName,
-          company_size: data.companySize,
-          needs: data.needs,
-          format: data.format,
-          budget: data.budget,
-          expectations: `${data.expectations}\n\n--- פנייה למומחה ---\nמומחה נבחר: ${selectedPractitioner.name}\nאיש קשר: ${contactForm.contactName}\nאימייל: ${contactForm.contactEmail}\nטלפון: ${contactForm.contactPhone}`,
-          recommendation: { selectedPractitioner, contactForm } as any,
-        });
-      }
+      await supabase
+        .from("corporate_inquiries")
+        .update({
+          selected_practitioner_name: selectedPractitioner?.name ?? null,
+          selected_practitioner_title: selectedPractitioner?.title ?? null,
+          contact_name: contactForm.contactName,
+          contact_email: contactForm.contactEmail,
+          contact_phone: contactForm.contactPhone || null,
+          status: 'pending_mapsoul_review',
+        })
+        .eq("user_id", user?.id ?? '')
+        .order("created_at", { ascending: false })
+        .limit(1);
       setInquirySent(true);
-      toast.success("הפנייה נשלחה! נחזור אליכם תוך 24 שעות");
     } catch (e) {
-      console.error(e);
-      toast.error("שגיאה בשליחת הפנייה");
+      toast.error("אירעה שגיאה, נסו שוב");
     }
   };
 
