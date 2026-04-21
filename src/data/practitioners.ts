@@ -173,7 +173,7 @@ export const practitioners: Practitioner[] = [
     sessions: "500+",
     languages: "עברית, אנגלית, צרפתית",
     availability: "פתוח למטופלים חדשים ✓",
-    photo: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=400&q=80",
+    photo: "https://i.pravatar.cc/200?img=53",
     bio: [
       "אני פסיכותרפיסט עם ניסיון של 15 שנה בטיפול בטראומה וחרדה. מתמחה ב-EMDR ובגישות מבוססות מחקר.",
       "מאמין שריפוי אמיתי דורש עבודה בקצב הנכון, עם רגישות ומקצועיות.",
