@@ -64,6 +64,16 @@ const Dashboard = () => {
     })();
   }, [user, status]);
 
+  const markContacted = async (leadId: string) => {
+    await supabase
+      .from("leads")
+      .update({ status: "contacted" })
+      .eq("id", leadId);
+    setLeads((prev) =>
+      prev.map((l) => (l.id === leadId ? { ...l, status: "contacted" } : l))
+    );
+  };
+
   if (authLoading || statusLoading || !user || status !== "approved") return null;
 
   const now = Date.now();
@@ -142,9 +152,17 @@ const Dashboard = () => {
                 </div>
                 <div className="text-xs text-muted-foreground flex-shrink-0">{formatDate(l.created_at)}</div>
                 {l.status === "new" && (
-                  <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-body flex-shrink-0">
-                    חדש
-                  </span>
+                  <>
+                    <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-body flex-shrink-0">
+                      חדש
+                    </span>
+                    <button
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); markContacted(l.id); }}
+                      className="text-xs font-body text-muted-foreground hover:text-primary transition-colors flex-shrink-0 border border-border rounded-full px-2 py-0.5"
+                    >
+                      סמן כטופל
+                    </button>
+                  </>
                 )}
                 {l.status === "contacted" && (
                   <span className="px-2.5 py-0.5 rounded-full bg-muted text-muted-foreground text-xs font-body flex-shrink-0">
