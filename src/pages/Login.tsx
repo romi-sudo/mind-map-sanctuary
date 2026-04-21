@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
+import { getPostAuthRoute } from "@/lib/postAuthRoute";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,10 +17,11 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       toast.success("התחברתם בהצלחה!");
-      navigate("/");
+      const dest = data.user ? await getPostAuthRoute(data.user.id) : "/";
+      navigate(dest);
     } catch (err: any) {
       toast.error(err.message || "שגיאה בהתחברות");
     } finally { setLoading(false); }
@@ -29,7 +31,9 @@ const Login = () => {
     const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: window.location.origin });
     if (result.error) toast.error(`שגיאה בהתחברות עם ${provider === "google" ? "Google" : "Apple"}`);
     if (result.redirected) return;
-    navigate("/");
+    const { data: { user } } = await supabase.auth.getUser();
+    const dest = user ? await getPostAuthRoute(user.id) : "/";
+    navigate(dest);
   };
 
   const inputClass = "w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm";

@@ -5,6 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
 import RolePickerModal from "@/components/RolePickerModal";
+import { getPostAuthRoute } from "@/lib/postAuthRoute";
 
 type Tab = "consumer" | "practitioner" | "company";
 
@@ -45,10 +46,14 @@ const Signup = () => {
     }
   }, [initialRole]);
 
-  const redirectAfterSignup = (role: Tab) => {
+  const redirectAfterSignup = async (role: Tab, userId?: string) => {
     if (nextPath) { navigate(nextPath); return; }
-    if (role === "practitioner") navigate("/join-as-practitioner");
-    else if (role === "company") navigate("/corporate");
+    if (role === "practitioner" && userId) {
+      const dest = await getPostAuthRoute(userId, role);
+      navigate(dest);
+      return;
+    }
+    if (role === "company") navigate("/corporate");
     else navigate("/");
   };
 
@@ -95,7 +100,8 @@ const Signup = () => {
           return;
         }
       }
-      redirectAfterSignup(tab);
+      const { data: { user } } = await supabase.auth.getUser();
+      await redirectAfterSignup(tab, user?.id);
     } catch (err: any) {
       toast.error(err.message || "שגיאה בהרשמה");
     } finally { setLoading(false); }
@@ -116,7 +122,8 @@ const Signup = () => {
       toast.error(`שגיאה בהרשמה עם ${pendingProvider === "google" ? "Google" : "Apple"}`);
     }
     if (result.redirected) return;
-    redirectAfterSignup(role);
+    const { data: { user } } = await supabase.auth.getUser();
+    await redirectAfterSignup(role, user?.id);
   };
 
   const inputClass = "w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm";
