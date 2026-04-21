@@ -267,9 +267,17 @@ const Practitioners = () => {
                 ))}
               </div>
               {filteredPractitioners.length === 0 && (
-                <p className="text-center text-muted-foreground mt-12 text-lg font-body">
-                  לא נמצאו מומחים מתאימים. נסו לשנות את החיפוש או הסינון.
-                </p>
+                <div className="text-center mt-12 space-y-4">
+                  <p className="text-muted-foreground text-lg font-body">
+                    לא נמצאו מומחים מתאימים.
+                  </p>
+                  <button
+                    onClick={() => { setActiveFilters(new Set()); setSearch(""); }}
+                    className="btn-secondary text-sm"
+                  >
+                    נקה פילטרים וחפש מחדש
+                  </button>
+                </div>
               )}
             </>
           ) : (
