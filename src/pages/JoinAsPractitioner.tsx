@@ -254,6 +254,27 @@ const JoinAsPractitioner = () => {
       </main>
 
       <Footer />
+
+      {/* ===== MOBILE STICKY CTA ===== */}
+      <AnimatePresence>
+        {showStickyCta && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 28 }}
+            className="md:hidden fixed bottom-0 right-0 left-0 z-40 px-4 pb-4 pt-3 bg-sand/80 backdrop-blur-md border-t border-border"
+            style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
+          >
+            <button
+              onClick={scrollToForm}
+              className="btn-primary w-full text-base shadow-lg shadow-primary/30"
+            >
+              הגישו מועמדות ←
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
