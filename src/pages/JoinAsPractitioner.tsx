@@ -116,6 +116,66 @@ const JoinAsPractitioner = () => {
           </p>
         </section>
 
+        {/* ===== SECTION 3.5 — TESTIMONIALS ===== */}
+        <section className="py-20 px-6 bg-sand">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="font-display text-3xl font-bold text-center mb-4 text-foreground">
+              מה מטפלים אומרים?
+            </h2>
+            <p className="font-body text-muted-foreground text-center mb-14 max-w-xl mx-auto">
+              חברי הקהילה של MapSoul מספרים מה השתנה מאז שהצטרפו
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[
+                {
+                  name: "מיכל לוי",
+                  title: "פסיכולוגית קלינית, CBT",
+                  photo: "https://i.pravatar.cc/80?img=47",
+                  quote: "תוך חודש קיבלתי 4 לידים איכותיים — אנשים שבדיוק התאימו לתחום המומחיות שלי. עד כה לא הייתי צריכה להשקיע כסף בפרסום.",
+                },
+                {
+                  name: "אורן כהן",
+                  title: "מאמן אישי וזוגי",
+                  photo: "https://i.pravatar.cc/80?img=12",
+                  quote: "הדשבורד נותן לי תמונת מצב ברורה — איפה אני מקבל הכי הרבה תשומת לב ואילו שירותים מבוקשים. עזר לי לכוון את המיקוד המקצועי שלי.",
+                },
+                {
+                  name: "נועה שמיר",
+                  title: "מטפלת ב-EMDR, סומטית",
+                  photo: "https://i.pravatar.cc/80?img=48",
+                  quote: "התהליך היה קל ואנושי. לא הרגשתי כמו עוד מספר — קיבלתי ליווי אמיתי. הלקוחות שמגיעים דרך MapSoul כבר מגיעים מוכנים וממוקדים.",
+                },
+              ].map((t, i) => (
+                <motion.div
+                  key={t.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ delay: i * 0.15, duration: 0.5 }}
+                  className="spa-card !p-8 flex flex-col"
+                >
+                  <div className="flex items-center gap-4 mb-5">
+                    <img
+                      src={t.photo}
+                      alt={t.name}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-primary/20"
+                      loading="lazy"
+                    />
+                    <div>
+                      <div className="font-display text-sm font-bold text-foreground">{t.name}</div>
+                      <div className="font-body text-xs text-muted-foreground">{t.title}</div>
+                    </div>
+                  </div>
+                  <blockquote className="font-body text-sm text-muted-foreground leading-relaxed flex-1 relative">
+                    <span className="absolute -top-2 -right-1 text-4xl text-primary/10 font-display leading-none">"</span>
+                    {t.quote}
+                  </blockquote>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ===== SECTION 4 — CTA BEFORE FORM ===== */}
         <section className="py-16 px-6 text-center bg-sand">
           <div className="glass-card max-w-2xl mx-auto !p-10">
