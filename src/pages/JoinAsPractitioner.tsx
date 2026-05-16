@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PractitionerForm from "@/components/join/PractitionerForm";
@@ -9,10 +9,25 @@ const JoinAsPractitioner = () => {
   const [activeTab, setActiveTab] = useState<"practitioner" | "course">("practitioner");
   const [submitted, setSubmitted] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
+  const [showStickyCta, setShowStickyCta] = useState(false);
 
   const fade = { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } };
 
   const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Show sticky CTA on mobile after user scrolls past hero, hide when form is in view
+  useEffect(() => {
+    const onScroll = () => {
+      if (!formRef.current) return;
+      const rect = formRef.current.getBoundingClientRect();
+      const scrolledPastHero = window.scrollY > 400;
+      const formInView = rect.top < window.innerHeight - 80 && rect.bottom > 0;
+      setShowStickyCta(scrolledPastHero && !formInView && !submitted);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [submitted]);
 
   const switchTab = (tab: "practitioner" | "course") => {
     if (tab !== activeTab) {
@@ -239,6 +254,27 @@ const JoinAsPractitioner = () => {
       </main>
 
       <Footer />
+
+      {/* ===== MOBILE STICKY CTA ===== */}
+      <AnimatePresence>
+        {showStickyCta && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 28 }}
+            className="md:hidden fixed bottom-0 right-0 left-0 z-40 px-4 pb-4 pt-3 bg-sand/80 backdrop-blur-md border-t border-border"
+            style={{ paddingBottom: "max(1rem, env(safe-area-inset-bottom))" }}
+          >
+            <button
+              onClick={scrollToForm}
+              className="btn-primary w-full text-base shadow-lg shadow-primary/30"
+            >
+              הגישו מועמדות ←
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
