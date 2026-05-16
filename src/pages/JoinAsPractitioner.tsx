@@ -9,10 +9,25 @@ const JoinAsPractitioner = () => {
   const [activeTab, setActiveTab] = useState<"practitioner" | "course">("practitioner");
   const [submitted, setSubmitted] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
+  const [showStickyCta, setShowStickyCta] = useState(false);
 
   const fade = { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } };
 
   const scrollToForm = () => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // Show sticky CTA on mobile after user scrolls past hero, hide when form is in view
+  useEffect(() => {
+    const onScroll = () => {
+      if (!formRef.current) return;
+      const rect = formRef.current.getBoundingClientRect();
+      const scrolledPastHero = window.scrollY > 400;
+      const formInView = rect.top < window.innerHeight - 80 && rect.bottom > 0;
+      setShowStickyCta(scrolledPastHero && !formInView && !submitted);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [submitted]);
 
   const switchTab = (tab: "practitioner" | "course") => {
     if (tab !== activeTab) {
