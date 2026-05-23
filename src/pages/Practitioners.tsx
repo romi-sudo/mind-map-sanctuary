@@ -1,28 +1,30 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { practitioners, type Practitioner } from "@/data/practitioners";
 import { ApproachTooltipButton } from "@/components/ApproachTooltip";
 import { findApproach } from "@/data/approaches";
 
-const practitionerFilterGroups = {
-  נושא: ["קריירה", "מערכות יחסים", "חרדה", "זהות", "טראומה", "זוגיות", "AI וקריירה"],
-  סוג: ["טיפול אישי", "אימון", "קורס", "ריטריט", "סדנה"],
-  גישה: ["CBT", "EMDR", "EFT", "IFS", "סומטי", "מיינדפולנס", "ACT"],
-  מחיר: ["עד 300", "300-800", "מעל 800"],
-  פורמט: ["אונליין", "פרונטלי"],
+const practitionerFilterGroups: Record<string, string[]> = {
+  topic: ["קריירה", "מערכות יחסים", "חרדה", "זהות", "טראומה", "זוגיות", "AI וקריירה"],
+  kind: ["טיפול אישי", "אימון", "קורס", "ריטריט", "סדנה"],
+  approach: ["CBT", "EMDR", "EFT", "IFS", "סומטי", "מיינדפולנס", "ACT"],
+  price: ["עד 300", "300-800", "מעל 800"],
+  format: ["אונליין", "פרונטלי"],
 };
 
-const courseFilterGroups = {
-  נושא: ["AI וטכנולוגיה", "נומרולוגיה", "אסטרולוגיה", "קבלה", "תניא", "יאמה", "טארוט", "רפואה אינטגרטיבית", "מיינדפולנס"],
-  רמה: ["מתחילים", "מתקדמים", "מקצועי", "לכולם"],
-  "סוג כלים": ["ChatGPT", "Midjourney", "Canva AI", "כלים לשיווק", "אוטומציה"],
-  פורמט: ["לייב", "מוקלט", "היברידי", "קבוצתי"],
-  משך: ["שיעור בודד", "קורס קצר", "קורס מלא"],
-  מחיר: ["חינמי", "עד 200", "200-500", "מעל 500"],
+const courseFilterGroups: Record<string, string[]> = {
+  topic: ["AI וטכנולוגיה", "נומרולוגיה", "אסטרולוגיה", "קבלה", "תניא", "יאמה", "טארוט", "רפואה אינטגרטיבית", "מיינדפולנס"],
+  level: ["מתחילים", "מתקדמים", "מקצועי", "לכולם"],
+  tools: ["ChatGPT", "Midjourney", "Canva AI", "כלים לשיווק", "אוטומציה"],
+  format: ["לייב", "מוקלט", "היברידי", "קבוצתי"],
+  duration: ["שיעור בודד", "קורס קצר", "קורס מלא"],
+  price: ["חינמי", "עד 200", "200-500", "מעל 500"],
 };
+
 
 type Course = {
   id: string;
