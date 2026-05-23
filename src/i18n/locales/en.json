@@ -13,6 +13,9 @@
     "close": "Close",
     "language": "עב"
   },
+  "common": {
+    "backHome": "Back to home"
+  },
   "hero": {
     "eyebrow": "Your inner journey starts here",
     "title": "Your Soul Map",
@@ -69,6 +72,114 @@
       "corporate": "For companies",
       "join": "Join as a practitioner",
       "approaches": "Therapeutic approaches"
+    }
+  },
+  "auth": {
+    "show": "Show",
+    "hide": "Hide",
+    "or": "or",
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Continue your journey",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log in",
+      "submitting": "Logging in...",
+      "google": "Continue with Google",
+      "apple": "Continue with Apple",
+      "noAccount": "Don't have an account?",
+      "signupHere": "Sign up here",
+      "forgot": "Forgot password?",
+      "success": "Logged in successfully!",
+      "error": "Login error",
+      "oauthError": "Error signing in with"
+    },
+    "signup": {
+      "title": "Create an account",
+      "subtitle": "Start your journey with MapSoul",
+      "tabConsumer": "Individual",
+      "tabPractitioner": "Practitioner",
+      "tabCompany": "Company / Org",
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "profTitle": "Professional title (e.g., Clinical Psychologist)",
+      "companyName": "Company name",
+      "companySize": "Company size",
+      "companySizes": ["Up to 10 employees", "10-50 employees", "50-200 employees", "200+ employees"],
+      "contactRole": "Contact role (HR, CEO...)",
+      "website": "Company website (optional)",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "agree": "I have read and agree to the ",
+      "termsLink": "Terms of Use",
+      "submit": "Create account",
+      "submitting": "Creating account...",
+      "google": "Sign up with Google",
+      "apple": "Sign up with Apple",
+      "hasAccount": "Already have an account?",
+      "loginHere": "Log in here",
+      "success": "Signed up successfully!",
+      "errorPwMismatch": "Passwords don't match",
+      "errorTerms": "You must agree to the Terms of Use",
+      "errorCompanyName": "Please enter a company name",
+      "errorCompanySize": "Please select a company size",
+      "errorProfTitle": "Please enter a professional title",
+      "errorGeneric": "Signup error",
+      "verifyEmail": "We've sent you a verification email"
+    },
+    "forgot": {
+      "title": "Reset password",
+      "subtitle": "We'll send you a reset link by email",
+      "email": "Email",
+      "submit": "Send reset link",
+      "submitting": "Sending...",
+      "sentTitle": "Sent!",
+      "sentBody": "Check your inbox",
+      "backToLogin": "Back to login",
+      "error": "Error sending email"
+    },
+    "reset": {
+      "title": "New password",
+      "subtitle": "Enter a new password for your account",
+      "newPw": "New password",
+      "confirmPw": "Confirm new password",
+      "submit": "Update password",
+      "submitting": "Updating...",
+      "success": "Password updated successfully!",
+      "errorMismatch": "Passwords don't match",
+      "error": "Error updating password",
+      "backToLogin": "Back to login"
+    },
+    "rolePicker": {
+      "title": "How would you like to sign up?",
+      "subtitle": "Choose your account type before continuing",
+      "consumerTitle": "I'm looking for a path",
+      "consumerDesc": "Personal access to recommendations and guidance",
+      "practitionerTitle": "I'm a practitioner",
+      "practitionerDesc": "Join as a therapist or coach",
+      "companyTitle": "Company / Organization",
+      "companyDesc": "Wellness solutions for employees"
+    }
+  },
+  "legal": {
+    "updated": "Last updated: January 2025",
+    "terms": {
+      "title": "Terms of Use",
+      "sections": [
+        { "t": "Using the platform", "b": "MapSoul is a platform connecting seekers with therapists and experts. Use of the platform is subject to these terms." },
+        { "t": "Liability", "b": "MapSoul is not responsible for content provided by practitioners, and is not a direct party to the therapeutic relationship." },
+        { "t": "Privacy", "b": "We respect your privacy. For more information see our Privacy Policy." },
+        { "t": "Contact", "b": "For any question: hello@mapsoul.co" }
+      ]
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "sections": [
+        { "t": "Information we collect", "b": "We collect information you provide during signup and use of the platform, including name, email and questionnaire responses." },
+        { "t": "Use of information", "b": "Information is used to improve user experience, tailor recommendations, and contact you regarding platform services." },
+        { "t": "Security", "b": "We use secure infrastructure to store all data." }
+      ]
     }
   }
 }
