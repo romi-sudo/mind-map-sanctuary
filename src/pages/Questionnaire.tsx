@@ -1,6 +1,7 @@
 import { forwardRef, useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ApproachTooltipButton } from "@/components/ApproachTooltip";
@@ -13,91 +14,6 @@ interface StepDef { headline: string; subtext?: string; cards: CardOption[]; }
 interface Practitioner { id?: string; name: string; initials: string; title: string; tags: string[]; price: string; }
 interface Recommendation { primary: { title: string; description: string }; practitioners: Practitioner[]; }
 
-const STEP1: StepDef = {
-  headline: "מה מביא אותך לכאן היום?",
-  subtext: "אין תשובה נכונה או לא נכונה",
-  cards: [
-    { id: "personal", title: "משהו אישי", subtitle: "זוגיות, זהות, מערכות יחסים" },
-    { id: "career", title: "משהו מקצועי", subtitle: "קריירה, שינוי, חרדת AI" },
-    { id: "both", title: "שניהם שזורים יחד", subtitle: "הפנימי והחיצוני קשורים" },
-    { id: "unsure", title: "אני לא בטוח/ת", subtitle: "פשוט יודע/ת שמשהו לא עובד" },
-  ],
-};
-
-const PERSONAL_STEPS: StepDef[] = [
-  {
-    headline: "מה הכי מדויק לתאר את מה שאת/ה מרגיש/ה?",
-    cards: [
-      { id: "stuck", title: "תקוע/ה", subtitle: "יודע/ת שמשהו לא עובד אבל לא יודע/ת מה" },
-      { id: "transition", title: "בתקופת מעבר", subtitle: "סיום, התחלה, שינוי גדול" },
-      { id: "relationship", title: "קושי במערכת יחסים", subtitle: "עם בן/בת זוג, משפחה, עצמי" },
-      { id: "identity", title: "מחפש/ת זהות וייעוד", subtitle: "מי אני, לאן אני הולך/ת" },
-    ],
-  },
-  {
-    headline: "כשקשה לך — מה עוזר לך יותר?",
-    cards: [
-      { id: "talk", title: "לדבר עם מישהו שמקשיב", subtitle: "להרגיש מובן/ת" },
-      { id: "tools", title: "לקבל כלים ולעבוד לבד", subtitle: "בקצב שלי" },
-      { id: "body", title: "לעשות משהו — תנועה, טבע, חוויה", subtitle: "עם הגוף" },
-      { id: "learn", title: "ללמוד ולהבין מה קורה לי", subtitle: "ידע נותן שליטה" },
-    ],
-  },
-  {
-    headline: "מה מרגיש לך יותר נכון?",
-    cards: [
-      { id: "individual", title: "עבודה אישית", subtitle: "רק אני ואיש המקצוע" },
-      { id: "group", title: "קבוצה", subtitle: "לשמוע אחרים, לא להיות לבד" },
-      { id: "intensive", title: "חוויה מרוכזת", subtitle: "ריטריט או סדנה אינטנסיבית" },
-    ],
-  },
-  {
-    headline: "מה טווח ההשקעה שנוח לך?",
-    cards: [
-      { id: "low", title: "עד 300 ש״ח לחודש", subtitle: "" },
-      { id: "mid", title: "300–800 ש״ח לחודש", subtitle: "" },
-      { id: "high", title: "מעל 800 ש״ח — אם זה הדבר הנכון", subtitle: "" },
-    ],
-  },
-];
-
-const CAREER_STEPS: StepDef[] = [
-  {
-    headline: "איך תגדיר/י את המצב שלך?",
-    cards: [
-      { id: "ai-change", title: "AI משנה את המקצוע שלי", subtitle: "צריך/ה להסתגל מהר" },
-      { id: "career-change", title: "רוצה לשנות קריירה", subtitle: "AI הוא רק הזרז" },
-      { id: "fired", title: "פיטורים או חוסר כיוון", subtitle: "מחפש/ת נחיתה רכה" },
-      { id: "meaning", title: "עובד/ת אבל חסר/ת משמעות", subtitle: "הכל בסדר על הנייר" },
-    ],
-  },
-  {
-    headline: "מה יותר דחוף עבורך עכשיו?",
-    cards: [
-      { id: "identity", title: "להבין מי אני מחוץ לתפקיד שלי", subtitle: "זהות עמוקה" },
-      { id: "strategy", title: "כלים מעשיים לשוק העבודה החדש", subtitle: "אסטרטגיה" },
-      { id: "both", title: "שניהם — הפנימי והחיצוני קשורים", subtitle: "גישה מלאה" },
-    ],
-  },
-  {
-    headline: "איך את/ה מעדיפ/ה לעבוד על זה?",
-    cards: [
-      { id: "coach", title: "אחד על אחד עם מאמן/ת", subtitle: "אישי ומעמיק" },
-      { id: "peer", title: "קבוצת עמיתים", subtitle: "אנשים שעוברים אותו דבר" },
-      { id: "course", title: "קורס עצמאי", subtitle: "בקצב שלי" },
-      { id: "combo", title: "שילוב של עבודה פנימית ואסטרטגיה", subtitle: "הכל" },
-    ],
-  },
-  {
-    headline: "מה טווח ההשקעה שנוח לך?",
-    cards: [
-      { id: "low", title: "עד 300 ש״ח לחודש", subtitle: "" },
-      { id: "mid", title: "300–800 ש״ח לחודש", subtitle: "" },
-      { id: "high", title: "מעל 800 ש״ח — אם זה הדבר הנכון", subtitle: "" },
-    ],
-  },
-];
-
 const fadeIn = {
   initial: { opacity: 0, y: 8 },
   animate: { opacity: 1, y: 0 },
@@ -107,16 +23,19 @@ interface AnswerCardProps {
   card: CardOption;
   selected: boolean;
   onSelect: () => void;
+  align: "right" | "left";
 }
 
-const AnswerCard = forwardRef<HTMLButtonElement, AnswerCardProps>(({ card, selected, onSelect }, ref) => (
+const AnswerCard = forwardRef<HTMLButtonElement, AnswerCardProps>(({ card, selected, onSelect, align }, ref) => (
   <motion.button
     ref={ref}
     type="button"
     onClick={onSelect}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
-    className={`card-nature w-full cursor-pointer overflow-hidden rounded-2xl p-6 text-right transition-all duration-300 ${
+    className={`card-nature w-full cursor-pointer overflow-hidden rounded-2xl p-6 transition-all duration-300 ${
+      align === "right" ? "text-right" : "text-left"
+    } ${
       selected
         ? "border-primary bg-card shadow-lg"
         : "bg-card/80 hover:border-primary/30 hover:shadow-lg"
@@ -131,12 +50,21 @@ AnswerCard.displayName = "AnswerCard";
 
 const Questionnaire = () => {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "he";
+  const dir = isRtl ? "rtl" : "ltr";
+  const align = isRtl ? "right" : "left";
+  const backArrow = isRtl ? "←" : "→";
+
+  const STEP1 = t("questionnaire.gate", { returnObjects: true }) as StepDef;
+  const PERSONAL_STEPS = t("questionnaire.personalSteps", { returnObjects: true }) as StepDef[];
+  const CAREER_STEPS = t("questionnaire.careerSteps", { returnObjects: true }) as StepDef[];
+
   const [track, setTrack] = useState<Track | null>(null);
   const [stepIndex, setStepIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [freeText, setFreeText] = useState("");
   const [seekerEmail, setSeekerEmail] = useState("");
-  const [direction, setDirection] = useState(1);
   const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
@@ -145,7 +73,7 @@ const Questionnaire = () => {
     if (!track) return [];
     if (track === "both") return [...PERSONAL_STEPS, ...CAREER_STEPS];
     return track === "personal" ? PERSONAL_STEPS : CAREER_STEPS;
-  }, [track]);
+  }, [track, PERSONAL_STEPS, CAREER_STEPS]);
 
   const totalSteps = 1 + (track ? getTrackSteps().length : 0) + (track ? 1 : 0);
   const progress = track ? ((stepIndex + 1) / totalSteps) * 100 : 0;
@@ -155,14 +83,12 @@ const Questionnaire = () => {
     if (id === "career") setTrack("career");
     else if (id === "both") setTrack("both");
     else setTrack("personal");
-    setDirection(1);
     setStepIndex(1);
   };
 
   const handleCardSelect = (id: string) => {
     setAnswers((prev) => ({ ...prev, [stepIndex]: id }));
     setTimeout(() => {
-      setDirection(1);
       const trackSteps = getTrackSteps();
       if (stepIndex - 1 < trackSteps.length - 1) {
         setStepIndex((s) => s + 1);
@@ -194,13 +120,13 @@ const Questionnaire = () => {
       if (insertError) throw insertError;
       const { data: fnData, error: fnError } = await supabase.functions.invoke(
         "generate-recommendation",
-        { body: { responseId: inserted.id, track, answers, freeText } }
+        { body: { responseId: inserted.id, track, answers, freeText, language: i18n.language } }
       );
       if (fnError) throw fnError;
       if (fnData?.recommendation) setRecommendation(fnData.recommendation);
     } catch (error) {
       console.error("Error submitting questionnaire:", error);
-      toast.error("אירעה שגיאה, מציג המלצות ברירת מחדל");
+      toast.error(t("questionnaire.errorSubmit"));
       setRecommendation(null);
     } finally {
       setIsLoading(false);
@@ -230,11 +156,11 @@ const Questionnaire = () => {
   }
 
   return (
-    <div dir="rtl" className="relative min-h-screen overflow-x-hidden bg-leaves nature-overlay ambient-leaves ambient-mist">
+    <div dir={dir} className="relative min-h-screen overflow-x-hidden bg-leaves nature-overlay ambient-leaves ambient-mist">
       {track && (
         <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-foreground/10">
           <motion.div
-            className="h-full rounded-l-full bg-primary"
+            className={`h-full bg-primary ${isRtl ? "rounded-l-full" : "rounded-r-full"}`}
             initial={{ width: 0 }}
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.4, ease: "easeOut" }}
@@ -242,14 +168,14 @@ const Questionnaire = () => {
         </div>
       )}
 
-      <div className="fixed top-6 right-6 z-[60] flex items-center gap-3 pointer-events-auto">
+      <div className={`fixed top-6 ${isRtl ? "right-6" : "left-6"} z-[60] flex items-center gap-3 pointer-events-auto`}>
         {stepIndex > 0 && (
           <button type="button" onClick={goBack} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors cursor-pointer">
-            חזרה
+            {t("questionnaire.back")}
           </button>
         )}
         <button type="button" onClick={() => navigate("/")} className="glass-card-light !rounded-full !px-4 !py-2 font-body text-sm text-foreground hover:text-primary transition-colors cursor-pointer">
-          דף הבית
+          {t("questionnaire.home")}
         </button>
       </div>
 
@@ -260,7 +186,7 @@ const Questionnaire = () => {
             <p className="font-body text-muted-foreground text-center mb-12">{STEP1.subtext}</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {STEP1.cards.map((card) => (
-                <AnswerCard key={card.id} card={card} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} />
+                <AnswerCard key={card.id} card={card} align={align} selected={answers[0] === card.id} onSelect={() => handleGateSelect(card.id)} />
               ))}
             </div>
           </motion.div>
@@ -271,7 +197,7 @@ const Questionnaire = () => {
             <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-10">{currentStep.headline}</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {currentStep.cards.map((card) => (
-                <AnswerCard key={card.id} card={card} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} />
+                <AnswerCard key={card.id} card={card} align={align} selected={answers[stepIndex] === card.id} onSelect={() => handleCardSelect(card.id)} />
               ))}
             </div>
           </motion.div>
@@ -280,13 +206,13 @@ const Questionnaire = () => {
         {isFreeTextStep && (
           <motion.div key="freetext" {...fadeIn} transition={{ duration: 0.25 }} className="w-full max-w-2xl spa-card !p-8 md:!p-10">
             <h1 className="font-display text-[1.8rem] md:text-[2.5rem] font-bold text-foreground text-center mb-3">
-              במשפט אחד — מה את/ה מחפש/ת?
+              {t("questionnaire.freeText.headline")}
             </h1>
-            <p className="font-body text-muted-foreground text-center mb-10">זה עוזר לנו לדייק את ההמלצה שלך</p>
+            <p className="font-body text-muted-foreground text-center mb-10">{t("questionnaire.freeText.subtext")}</p>
             <textarea
               value={freeText}
               onChange={(e) => setFreeText(e.target.value)}
-              placeholder="לדוגמה: אני רוצה להרגיש שאני יודע/ת לאן אני הולך/ת..."
+              placeholder={t("questionnaire.freeText.placeholder")}
               className="w-full min-h-[160px] rounded-2xl border border-border bg-background/70 p-6 font-body text-foreground text-lg placeholder:text-muted-foreground/50 focus:outline-none resize-none"
             />
             <div className="mt-4 border-b border-border/60">
@@ -294,13 +220,13 @@ const Questionnaire = () => {
                 type="email"
                 value={seekerEmail}
                 onChange={(e) => setSeekerEmail(e.target.value)}
-                placeholder="אימייל לקבלת ההמלצה (אופציונלי)"
+                placeholder={t("questionnaire.freeText.emailPlaceholder")}
                 className="w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/40 focus:outline-none font-body text-sm"
               />
             </div>
             <div className="mt-8 text-center">
               <button onClick={handleSubmit} disabled={isLoading} className="btn-primary text-lg inline-flex items-center gap-3">
-                {isLoading ? "מייצר המלצה מותאמת אישית..." : "הראה לי את המסלול שלי"}
+                {isLoading ? t("questionnaire.freeText.submitting") : t("questionnaire.freeText.submit")}
               </button>
             </div>
           </motion.div>
@@ -310,37 +236,36 @@ const Questionnaire = () => {
   );
 };
 
-const FALLBACK_PRACTITIONERS: Practitioner[] = [
-  { id: "michal-levi", name: "ד״ר נועה לוי", initials: "נל", title: "פסיכולוגית קלינית", tags: ["CBT", "חרדה", "מעברי חיים"], price: "350–500 ש״ח" },
-  { id: "oren-cohen", name: "עמית כהן", initials: "עכ", title: "מאמן אישי ומקצועי", tags: ["NLP", "קריירה", "מנהיגות"], price: "300–450 ש״ח" },
-  { id: "noa-shamir", name: "מיכל אברהם", initials: "מא", title: "מטפלת בתנועה", tags: ["סומטי", "טראומה", "גוף-נפש"], price: "280–400 ש״ח" },
-];
-
 const ResultsPage = ({
   track, recommendation, onRestart,
 }: { track: Track; recommendation: Recommendation | null; onRestart: () => void; }) => {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "he";
+  const dir = isRtl ? "rtl" : "ltr";
+  const backArrow = isRtl ? "←" : "→";
+  const fwdArrow = isRtl ? "←" : "→";
+
   const headline = track === "career"
-    ? "את/ה בצומת מקצועית — הנה הכיוון שלך:"
-    : "לפי מה שסיפרת — המסלול שמתאים לך:";
+    ? t("questionnaire.results.headlineCareer")
+    : t("questionnaire.results.headlineDefault");
 
   const primary = recommendation?.primary ?? {
-    title: track === "career" ? "אימון קריירה + עבודה פנימית" : "טיפול פסיכולוגי אינטגרטיבי",
-    description: track === "career"
-      ? "שילוב של מיפוי מקצועי עם עבודה על זהות — כדי שהצעד הבא יהיה גם חכם וגם נכון."
-      : "גישה שמשלבת הקשבה עמוקה עם כלים מעשיים — כדי שתרגיש/י שינוי אמיתי כבר מהפגישה הראשונה.",
+    title: track === "career" ? t("questionnaire.results.primaryCareerTitle") : t("questionnaire.results.primaryDefaultTitle"),
+    description: track === "career" ? t("questionnaire.results.primaryCareerDesc") : t("questionnaire.results.primaryDefaultDesc"),
   };
 
-  const practitioners = recommendation?.practitioners ?? FALLBACK_PRACTITIONERS;
+  const fallbackPractitioners = t("questionnaire.results.fallback", { returnObjects: true }) as Practitioner[];
+  const practitioners = recommendation?.practitioners ?? fallbackPractitioners;
 
   return (
-    <div dir="rtl" className="relative min-h-screen bg-sand nature-overlay ambient-leaves">
+    <div dir={dir} className="relative min-h-screen bg-sand nature-overlay ambient-leaves">
       <div className="relative z-10 max-w-4xl mx-auto px-6 py-20">
         <div className="mb-8">
           <button
             onClick={onRestart}
             className="font-body text-sm text-primary hover:underline transition-colors inline-flex items-center gap-1"
           >
-            ← חזרה לשאלון
+            {backArrow} {t("questionnaire.results.back")}
           </button>
         </div>
 
@@ -356,7 +281,7 @@ const ResultsPage = ({
           <p className="font-body text-muted-foreground leading-relaxed">{primary.description}</p>
         </motion.div>
 
-        <h3 className="font-display text-xl font-bold text-foreground mb-6">מומחים שמתאימים לך</h3>
+        <h3 className="font-display text-xl font-bold text-foreground mb-6">{t("questionnaire.results.expertsTitle")}</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
           {practitioners.map((p, i) => {
             const slug = p.id ?? p.name.toLowerCase().replace(/\s+/g, "-");
@@ -381,7 +306,7 @@ const ResultsPage = ({
                   </div>
                   <p className="font-body text-sm text-muted-foreground mb-4">{p.price}</p>
                   <div className="pt-3 border-t border-border text-center">
-                    <span className="font-body text-sm text-primary font-medium">לפרופיל המלא ←</span>
+                    <span className="font-body text-sm text-primary font-medium">{t("questionnaire.results.fullProfile")} {fwdArrow}</span>
                   </div>
                 </Link>
               </motion.div>
@@ -391,13 +316,13 @@ const ResultsPage = ({
 
         <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="spa-card mb-8 text-center">
           <p className="font-body text-muted-foreground text-sm leading-relaxed">
-            רוצים להבין יותר על הגישות השונות? לחצו על סימן ה-? ליד כל גישה בקטלוג המומחים
+            {t("questionnaire.results.tooltipHint")}
           </p>
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="mb-12">
-          <h3 className="font-display text-xl font-bold text-foreground mb-2 text-center">קורס שיכול לעזור לך</h3>
-          <p className="font-body text-muted-foreground text-sm text-center mb-6">למידה עצמית שמשלימה את המסלול שלך</p>
+          <h3 className="font-display text-xl font-bold text-foreground mb-2 text-center">{t("questionnaire.results.courseTitle")}</h3>
+          <p className="font-body text-muted-foreground text-sm text-center mb-6">{t("questionnaire.results.courseSubtitle")}</p>
 
           <div className="card-nature overflow-hidden max-w-sm mx-auto">
             <div className="h-36 relative overflow-hidden rounded-t-2xl bg-secondary/25">
@@ -406,32 +331,32 @@ const ResultsPage = ({
               </div>
             </div>
             <div className="p-6">
-              <h4 className="font-display text-lg font-bold text-foreground mb-1">AI לצמיחה אישית — כלים לחיים</h4>
-              <p className="text-muted-foreground text-sm mb-4">רותם לוי</p>
+              <h4 className="font-display text-lg font-bold text-foreground mb-1">{t("questionnaire.results.courseName")}</h4>
+              <p className="text-muted-foreground text-sm mb-4">{t("questionnaire.results.courseAuthor")}</p>
               <div className="flex flex-wrap gap-2 mb-4">
-                <span className="text-xs font-body px-3 py-1 rounded-full bg-primary text-primary-foreground">לכולם</span>
-                <span className="text-xs font-body px-3 py-1 rounded-full border border-border text-primary">מוקלט</span>
+                <span className="text-xs font-body px-3 py-1 rounded-full bg-primary text-primary-foreground">{t("questionnaire.results.courseAudience")}</span>
+                <span className="text-xs font-body px-3 py-1 rounded-full border border-border text-primary">{t("questionnaire.results.courseFormat")}</span>
               </div>
               <div className="pt-3 border-t border-border flex items-center justify-between text-sm text-muted-foreground">
-                <span>6 שבועות</span>
+                <span>{t("questionnaire.results.courseDuration")}</span>
                 <span className="font-display font-bold text-foreground">₪350</span>
               </div>
             </div>
             <button className="w-full border-t border-border px-4 py-3 text-sm font-body text-center text-primary transition-colors duration-300 hover:bg-primary/5">
-              לפרטים והרשמה
+              {t("questionnaire.results.courseDetails")}
             </button>
           </div>
 
           <p className="text-center mt-4">
             <Link to="/practitioners?tab=courses" className="font-body text-sm text-primary hover:underline transition-colors">
-              לכל הקורסים וההכשרות ←
+              {t("questionnaire.results.allCourses")} {fwdArrow}
             </Link>
           </p>
         </motion.div>
 
         <div className="text-center">
           <button onClick={onRestart} className="font-body text-muted-foreground hover:text-foreground transition-colors text-sm">
-            רוצה לנסות מסלול אחר? חזור לשאלון
+            {t("questionnaire.results.tryAnother")}
           </button>
         </div>
       </div>
