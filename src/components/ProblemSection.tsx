@@ -1,26 +1,22 @@
+import { useTranslation } from "react-i18next";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const cards = [
-  { title: "עומס של אפשרויות", body: "מאות מומחים, שיטות וגישות — בלי לדעת מה באמת מתאים." },
-  { title: "חוסר כיוון", body: "מרגישים שמשהו צריך להשתנות, אבל לא יודעים מאיפה להתחיל." },
-  { title: "ניסוי וטעייה", body: "בזבוז זמן וכסף על טיפולים וקורסים שלא מתאימים." },
-  { title: "חוסר אמון", body: 'קשה לדעת למי לסמוך ומי באמת "מומחה".' },
-];
 
 const ProblemSection = () => {
   const { ref, isVisible } = useScrollReveal();
+  const { t } = useTranslation();
+  const cards = t("problem.cards", { returnObjects: true }) as { title: string; body: string }[];
 
   return (
     <section className="py-24 md:py-32 bg-sand nature-overlay ambient-leaves">
       <div className="container mx-auto px-6 relative z-10">
         <div ref={ref} className={`text-center mb-16 reveal ${isVisible ? "visible" : ""}`}>
-          <p className="font-body text-sm tracking-[0.25em] uppercase text-primary mb-4">רוב האנשים שואלים</p>
+          <p className="font-body text-sm tracking-[0.25em] uppercase text-primary mb-4">{t("problem.eyebrow")}</p>
           <h2 className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-foreground mb-4">
-            לא יודעים מאיפה להתחיל?
+            {t("problem.title")}
           </h2>
           <div className="gold-line mb-6" />
           <p className="font-body text-muted-foreground text-lg max-w-lg mx-auto">
-            אתם לא לבד — ולזה בדיוק יצרנו את MapSoul.
+            {t("problem.subtitle")}
           </p>
         </div>
 

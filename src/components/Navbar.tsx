@@ -1,15 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
 import { usePractitionerStatus } from "@/hooks/usePractitionerStatus";
-
-const baseLinks: Record<string, string> = {
-  "בית": "/",
-  "מצא את המסלול": "/questionnaire",
-  "מומחים": "/practitioners",
-  "לחברות": "/corporate",
-};
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -17,71 +12,81 @@ const Navbar = () => {
   const { firstName, role } = useProfile();
   const { status } = usePractitionerStatus();
   const location = useLocation();
+  const { t, i18n } = useTranslation();
 
-  const linkMap: Record<string, string> = { ...baseLinks };
+  const baseLinks: { key: string; to: string }[] = [
+    { key: "home", to: "/" },
+    { key: "questionnaire", to: "/questionnaire" },
+    { key: "practitioners", to: "/practitioners" },
+    { key: "corporate", to: "/corporate" },
+  ];
   if (user && role === "practitioner" && status === "approved") {
-    linkMap["דשבורד"] = "/dashboard";
+    baseLinks.push({ key: "dashboard", to: "/dashboard" });
   }
-  const links = Object.keys(linkMap);
   const greetName = firstName || user?.email?.split("@")[0];
-  const isActive = (link: string) => linkMap[link] === location.pathname;
+  const isActive = (to: string) => to === location.pathname;
+  const rowDir = i18n.language === "he" ? "flex-row-reverse" : "flex-row";
 
   return (
     <nav className="fixed top-0 right-0 left-0 z-50 backdrop-blur-xl border-b border-white/10" style={{ background: 'rgba(20, 35, 20, 0.95)' }}>
-      <div className="container mx-auto px-6 py-4 flex flex-row-reverse items-center justify-between">
+      <div className={`container mx-auto px-6 py-4 flex ${rowDir} items-center justify-between`}>
         <Link to="/" className="font-display text-xl font-bold tracking-wide" style={{ color: '#F5ECD7' }}>
           MapSoul
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
           <ul className="flex items-center gap-8">
-            {links.map((link) => (
-              <li key={link}>
+            {baseLinks.map((link) => (
+              <li key={link.to}>
                 <Link
-                  to={linkMap[link]}
-                  className={`font-body hover:opacity-80 transition-opacity text-sm pb-1 ${isActive(link) ? "border-b-2" : ""}`}
-                  style={{ color: '#F5ECD7', borderColor: isActive(link) ? 'rgba(245,236,215,0.6)' : 'transparent' }}
+                  to={link.to}
+                  className={`font-body hover:opacity-80 transition-opacity text-sm pb-1 ${isActive(link.to) ? "border-b-2" : ""}`}
+                  style={{ color: '#F5ECD7', borderColor: isActive(link.to) ? 'rgba(245,236,215,0.6)' : 'transparent' }}
                 >
-                  {link}
+                  {t(`nav.${link.key}`)}
                 </Link>
               </li>
             ))}
           </ul>
 
           <div className="flex items-center gap-3 mr-2">
+            <LanguageSwitcher style={{ color: '#F5ECD7', borderColor: 'rgba(245,236,215,0.3)' }} />
             {user ? (
               <>
                 <span className="font-body text-sm px-3 py-1.5 rounded-full" style={{ color: '#F5ECD7', background: 'rgba(245, 236, 215, 0.12)' }}>
-                  שלום, {greetName}
+                  {t("nav.hello")}, {greetName}
                 </span>
-                <button onClick={signOut} className="btn-secondary text-sm !py-2 !px-5">יציאה</button>
+                <button onClick={signOut} className="btn-secondary text-sm !py-2 !px-5">{t("nav.logout")}</button>
               </>
             ) : (
               <>
-                <Link to="/login" className="btn-secondary text-sm !py-2 !px-5">כניסה</Link>
-                <Link to="/signup" className="btn-primary text-sm !py-2 !px-5">הרשמה</Link>
+                <Link to="/login" className="btn-secondary text-sm !py-2 !px-5">{t("nav.login")}</Link>
+                <Link to="/signup" className="btn-primary text-sm !py-2 !px-5">{t("nav.signup")}</Link>
               </>
             )}
           </div>
         </div>
 
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="md:hidden" style={{ color: '#F5ECD7' }} aria-label="תפריט">
-          <span className="font-body text-sm">{mobileOpen ? "סגור" : "תפריט"}</span>
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <LanguageSwitcher style={{ color: '#F5ECD7', borderColor: 'rgba(245,236,215,0.3)' }} />
+          <button onClick={() => setMobileOpen(!mobileOpen)} style={{ color: '#F5ECD7' }} aria-label={t("nav.menu")}>
+            <span className="font-body text-sm">{mobileOpen ? t("nav.close") : t("nav.menu")}</span>
+          </button>
+        </div>
       </div>
 
       {mobileOpen && (
         <div className="md:hidden px-6 pb-5 border-t border-white/10 backdrop-blur-xl" style={{ background: 'rgba(20, 35, 20, 0.95)' }}>
           <ul className="flex flex-col gap-3 mb-4 pt-4">
-            {links.map((link) => (
-              <li key={link}>
+            {baseLinks.map((link) => (
+              <li key={link.to}>
                 <Link
-                  to={linkMap[link]}
+                  to={link.to}
                   onClick={() => setMobileOpen(false)}
-                  className={`font-body hover:opacity-80 transition-opacity text-base inline-block pb-1 ${isActive(link) ? "border-b-2" : ""}`}
-                  style={{ color: '#F5ECD7', borderColor: isActive(link) ? 'rgba(245,236,215,0.6)' : 'transparent' }}
+                  className={`font-body hover:opacity-80 transition-opacity text-base inline-block pb-1 ${isActive(link.to) ? "border-b-2" : ""}`}
+                  style={{ color: '#F5ECD7', borderColor: isActive(link.to) ? 'rgba(245,236,215,0.6)' : 'transparent' }}
                 >
-                  {link}
+                  {t(`nav.${link.key}`)}
                 </Link>
               </li>
             ))}
@@ -89,14 +94,14 @@ const Navbar = () => {
           {user ? (
             <div className="flex flex-col gap-2">
               <span className="font-body text-sm text-center py-2 rounded-full" style={{ color: '#F5ECD7', background: 'rgba(245, 236, 215, 0.12)' }}>
-                שלום, {greetName}
+                {t("nav.hello")}, {greetName}
               </span>
-              <button onClick={() => { signOut(); setMobileOpen(false); }} className="btn-secondary w-full text-sm !py-2">יציאה</button>
+              <button onClick={() => { signOut(); setMobileOpen(false); }} className="btn-secondary w-full text-sm !py-2">{t("nav.logout")}</button>
             </div>
           ) : (
             <div className="flex gap-2">
-              <Link to="/login" onClick={() => setMobileOpen(false)} className="btn-secondary flex-1 text-sm !py-2 text-center">כניסה</Link>
-              <Link to="/signup" onClick={() => setMobileOpen(false)} className="btn-primary flex-1 text-sm !py-2 text-center">הרשמה</Link>
+              <Link to="/login" onClick={() => setMobileOpen(false)} className="btn-secondary flex-1 text-sm !py-2 text-center">{t("nav.login")}</Link>
+              <Link to="/signup" onClick={() => setMobileOpen(false)} className="btn-primary flex-1 text-sm !py-2 text-center">{t("nav.signup")}</Link>
             </div>
           )}
         </div>

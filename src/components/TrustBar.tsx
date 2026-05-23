@@ -1,12 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const TrustBar = () => {
   const { ref, isVisible } = useScrollReveal();
-  const stats = [
-    { value: "6", label: "מטפלים מייסדים" },
-    { value: "AI", label: "התאמה חכמה" },
-    { value: "2025", label: "ישראל · השקה" },
-  ];
+  const { t } = useTranslation();
+  const stats = t("trust.stats", { returnObjects: true }) as { value: string; label: string }[];
 
   return (
     <section className="relative py-20 md:py-28 bg-secondary/20 overflow-hidden">
