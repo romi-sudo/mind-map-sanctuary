@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { toast } from "sonner";
@@ -9,6 +10,10 @@ import { getPostAuthRoute } from "@/lib/postAuthRoute";
 const Login = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { t, i18n } = useTranslation();
+  const dir = i18n.language === "he" ? "rtl" : "ltr";
+  const arrow = i18n.language === "he" ? "←" : "→";
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -20,18 +25,18 @@ const Login = () => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
-      toast.success("התחברתם בהצלחה!");
+      toast.success(t("auth.login.success"));
       const nextPath = searchParams.get("next");
       const dest = nextPath || (data.user ? await getPostAuthRoute(data.user.id) : "/");
       navigate(dest);
     } catch (err: any) {
-      toast.error(err.message || "שגיאה בהתחברות");
+      toast.error(err.message || t("auth.login.error"));
     } finally { setLoading(false); }
   };
 
   const handleOAuth = async (provider: "google" | "apple") => {
     const result = await lovable.auth.signInWithOAuth(provider, { redirect_uri: window.location.origin });
-    if (result.error) toast.error(`שגיאה בהתחברות עם ${provider === "google" ? "Google" : "Apple"}`);
+    if (result.error) toast.error(`${t("auth.login.oauthError")} ${provider === "google" ? "Google" : "Apple"}`);
     if (result.redirected) return;
     const { data: { user } } = await supabase.auth.getUser();
     const nextPath = searchParams.get("next");
@@ -42,42 +47,37 @@ const Login = () => {
   const inputClass = "w-full py-3 bg-transparent text-foreground placeholder:text-muted-foreground/50 focus:outline-none font-body text-sm";
 
   return (
-    <div dir="rtl" className="min-h-screen flex items-center justify-center px-4 py-12 bg-shadow-leaves nature-overlay ambient-leaves ambient-mist">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="spa-card w-full max-w-md"
-      >
+    <div dir={dir} className="min-h-screen flex items-center justify-center px-4 py-12 bg-shadow-leaves nature-overlay ambient-leaves ambient-mist">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="spa-card w-full max-w-md">
         <div className="mb-5">
           <Link to="/" className="font-body text-sm text-muted-foreground hover:text-foreground transition-colors">
-            ← חזרה לדף הבית
+            {arrow} {t("common.backHome")}
           </Link>
         </div>
 
         <Link to="/" className="font-display text-2xl font-bold block text-center mb-6 text-foreground">MapSoul</Link>
 
-        <h1 className="font-display text-3xl font-bold text-foreground text-center mb-2">ברוכים השבים</h1>
-        <p className="font-body text-muted-foreground text-center mb-8">המשיכו את המסע שלכם</p>
+        <h1 className="font-display text-3xl font-bold text-foreground text-center mb-2">{t("auth.login.title")}</h1>
+        <p className="font-body text-muted-foreground text-center mb-8">{t("auth.login.subtitle")}</p>
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div className="border-b border-border">
-            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="אימייל" className={inputClass} />
+            <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t("auth.login.email")} className={inputClass} />
           </div>
           <div className="relative border-b border-border">
-            <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder="סיסמה" className={inputClass} />
-            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute left-0 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors font-body text-xs">
-              {showPassword ? "הסתר" : "הצג"}
+            <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t("auth.login.password")} className={inputClass} />
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className={`absolute ${dir === "rtl" ? "left-0" : "right-0"} top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors font-body text-xs`}>
+              {showPassword ? t("auth.hide") : t("auth.show")}
             </button>
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full mt-2">
-            {loading ? "מתחבר..." : "כניסה"}
+            {loading ? t("auth.login.submitting") : t("auth.login.submit")}
           </button>
         </form>
 
         <div className="flex items-center gap-4 my-6">
           <div className="flex-1 h-px bg-border" />
-          <span className="font-body text-sm text-muted-foreground">או</span>
+          <span className="font-body text-sm text-muted-foreground">{t("auth.or")}</span>
           <div className="flex-1 h-px bg-border" />
         </div>
 
@@ -89,23 +89,23 @@ const Login = () => {
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
               <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
             </svg>
-            המשיכו עם Google
+            {t("auth.login.google")}
           </button>
 
           <button onClick={() => handleOAuth("apple")} className="btn-secondary w-full flex items-center justify-center gap-3 !py-3">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
             </svg>
-            המשיכו עם Apple
+            {t("auth.login.apple")}
           </button>
         </div>
 
         <div className="mt-8 text-center space-y-2">
           <p className="font-body text-sm text-muted-foreground">
-            עוד אין לכם חשבון?{" "}
-            <Link to="/signup" className="hover:underline text-primary">הרשמו כאן</Link>
+            {t("auth.login.noAccount")}{" "}
+            <Link to="/signup" className="hover:underline text-primary">{t("auth.login.signupHere")}</Link>
           </p>
-          <Link to="/forgot-password" className="font-body text-sm hover:underline text-primary">שכחתם סיסמה?</Link>
+          <Link to="/forgot-password" className="font-body text-sm hover:underline text-primary">{t("auth.login.forgot")}</Link>
         </div>
       </motion.div>
     </div>
