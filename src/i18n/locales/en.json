@@ -181,5 +181,139 @@
         { "t": "Security", "b": "We use secure infrastructure to store all data." }
       ]
     }
+  },
+  "questionnaire": {
+    "back": "Back",
+    "home": "Home",
+    "gate": {
+      "headline": "What brings you here today?",
+      "subtext": "There's no right or wrong answer",
+      "cards": [
+        { "id": "personal", "title": "Something personal", "subtitle": "Relationships, identity, connections" },
+        { "id": "career", "title": "Something professional", "subtitle": "Career, change, AI anxiety" },
+        { "id": "both", "title": "Both, intertwined", "subtitle": "Inner and outer are connected" },
+        { "id": "unsure", "title": "I'm not sure", "subtitle": "I just know something isn't working" }
+      ]
+    },
+    "personalSteps": [
+      {
+        "headline": "What most accurately describes how you feel?",
+        "cards": [
+          { "id": "stuck", "title": "Stuck", "subtitle": "I know something isn't working but can't pin it down" },
+          { "id": "transition", "title": "In transition", "subtitle": "An ending, a beginning, a big change" },
+          { "id": "relationship", "title": "Difficulty in a relationship", "subtitle": "With a partner, family, or myself" },
+          { "id": "identity", "title": "Searching for identity and purpose", "subtitle": "Who am I, where am I going" }
+        ]
+      },
+      {
+        "headline": "When things get hard — what helps you more?",
+        "cards": [
+          { "id": "talk", "title": "Talking to someone who listens", "subtitle": "Feeling understood" },
+          { "id": "tools", "title": "Getting tools and working on my own", "subtitle": "At my own pace" },
+          { "id": "body", "title": "Doing something — movement, nature, experience", "subtitle": "Through the body" },
+          { "id": "learn", "title": "Learning and understanding what's happening", "subtitle": "Knowledge gives control" }
+        ]
+      },
+      {
+        "headline": "What feels more right for you?",
+        "cards": [
+          { "id": "individual", "title": "One-on-one work", "subtitle": "Just me and the practitioner" },
+          { "id": "group", "title": "A group", "subtitle": "Hearing others, not being alone" },
+          { "id": "intensive", "title": "An immersive experience", "subtitle": "A retreat or intensive workshop" }
+        ]
+      },
+      {
+        "headline": "What investment range works for you?",
+        "cards": [
+          { "id": "low", "title": "Up to ₪300 / month", "subtitle": "" },
+          { "id": "mid", "title": "₪300–800 / month", "subtitle": "" },
+          { "id": "high", "title": "Over ₪800 — if it's the right thing", "subtitle": "" }
+        ]
+      }
+    ],
+    "careerSteps": [
+      {
+        "headline": "How would you describe your situation?",
+        "cards": [
+          { "id": "ai-change", "title": "AI is changing my profession", "subtitle": "I need to adapt quickly" },
+          { "id": "career-change", "title": "I want a career change", "subtitle": "AI is just the trigger" },
+          { "id": "fired", "title": "Layoff or lack of direction", "subtitle": "Looking for a soft landing" },
+          { "id": "meaning", "title": "Working but feeling no meaning", "subtitle": "All fine on paper" }
+        ]
+      },
+      {
+        "headline": "What's more urgent for you right now?",
+        "cards": [
+          { "id": "identity", "title": "Understanding who I am beyond my role", "subtitle": "Deep identity" },
+          { "id": "strategy", "title": "Practical tools for the new job market", "subtitle": "Strategy" },
+          { "id": "both", "title": "Both — inner and outer are connected", "subtitle": "A full approach" }
+        ]
+      },
+      {
+        "headline": "How do you prefer to work on this?",
+        "cards": [
+          { "id": "coach", "title": "One-on-one with a coach", "subtitle": "Personal and deep" },
+          { "id": "peer", "title": "Peer group", "subtitle": "People going through the same thing" },
+          { "id": "course", "title": "Self-paced course", "subtitle": "At my own pace" },
+          { "id": "combo", "title": "Inner work combined with strategy", "subtitle": "Everything" }
+        ]
+      },
+      {
+        "headline": "What investment range works for you?",
+        "cards": [
+          { "id": "low", "title": "Up to ₪300 / month", "subtitle": "" },
+          { "id": "mid", "title": "₪300–800 / month", "subtitle": "" },
+          { "id": "high", "title": "Over ₪800 — if it's the right thing", "subtitle": "" }
+        ]
+      }
+    ],
+    "freeText": {
+      "headline": "In one sentence — what are you looking for?",
+      "subtext": "This helps us fine-tune your recommendation",
+      "placeholder": "For example: I want to feel that I know where I'm going...",
+      "emailPlaceholder": "Email to receive the recommendation (optional)",
+      "submit": "Show me my path",
+      "submitting": "Generating a personalized recommendation..."
+    },
+    "errorSubmit": "Something went wrong, showing default recommendations",
+    "results": {
+      "back": "Back to the questionnaire",
+      "headlineCareer": "You're at a career crossroads — here's your direction:",
+      "headlineDefault": "Based on what you shared — the path that fits you:",
+      "primaryCareerTitle": "Career coaching + inner work",
+      "primaryCareerDesc": "A blend of professional mapping with identity work — so your next step is both smart and right.",
+      "primaryDefaultTitle": "Integrative psychological therapy",
+      "primaryDefaultDesc": "An approach that combines deep listening with practical tools — so you feel real change from the first session.",
+      "expertsTitle": "Practitioners that fit you",
+      "fullProfile": "View full profile",
+      "tooltipHint": "Want to learn more about each approach? Tap the ? mark next to each approach in the practitioners catalog",
+      "courseTitle": "A course that may help",
+      "courseSubtitle": "Self-paced learning that complements your path",
+      "courseName": "AI for personal growth — tools for life",
+      "courseAuthor": "Rotem Levi",
+      "courseAudience": "For everyone",
+      "courseFormat": "Recorded",
+      "courseDuration": "6 weeks",
+      "courseDetails": "Details & enrollment",
+      "allCourses": "All courses and trainings",
+      "tryAnother": "Want to try a different path? Restart the questionnaire",
+      "fallback": [
+        { "id": "michal-levi", "name": "Dr. Noa Levi", "initials": "NL", "title": "Clinical Psychologist", "tags": ["CBT", "Anxiety", "Life transitions"], "price": "₪350–500" },
+        { "id": "oren-cohen", "name": "Amit Cohen", "initials": "AC", "title": "Personal & professional coach", "tags": ["NLP", "Career", "Leadership"], "price": "₪300–450" },
+        { "id": "noa-shamir", "name": "Michal Avraham", "initials": "MA", "title": "Movement therapist", "tags": ["Somatic", "Trauma", "Body-mind"], "price": "₪280–400" }
+      ]
+    }
+  },
+  "pending": {
+    "title": "Your request has been received",
+    "body": "We're reading it carefully. We'll reach out within 48 hours for a short call — then your profile goes live.",
+    "steps": ["We've read your request", "A short call with you", "Your profile goes live"],
+    "afterTitle": "Once approved you'll get:",
+    "afterItems": [
+      "A personal dashboard with leads coming to you",
+      "A public profile on the platform",
+      "Exposure to individuals and to companies & organizations"
+    ],
+    "contact": "Questions? Write to us at "
   }
 }
