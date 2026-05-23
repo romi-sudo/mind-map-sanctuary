@@ -1,28 +1,30 @@
 import { useState, useMemo, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { practitioners, type Practitioner } from "@/data/practitioners";
 import { ApproachTooltipButton } from "@/components/ApproachTooltip";
 import { findApproach } from "@/data/approaches";
 
-const practitionerFilterGroups = {
-  נושא: ["קריירה", "מערכות יחסים", "חרדה", "זהות", "טראומה", "זוגיות", "AI וקריירה"],
-  סוג: ["טיפול אישי", "אימון", "קורס", "ריטריט", "סדנה"],
-  גישה: ["CBT", "EMDR", "EFT", "IFS", "סומטי", "מיינדפולנס", "ACT"],
-  מחיר: ["עד 300", "300-800", "מעל 800"],
-  פורמט: ["אונליין", "פרונטלי"],
+const practitionerFilterGroups: Record<string, string[]> = {
+  topic: ["קריירה", "מערכות יחסים", "חרדה", "זהות", "טראומה", "זוגיות", "AI וקריירה"],
+  kind: ["טיפול אישי", "אימון", "קורס", "ריטריט", "סדנה"],
+  approach: ["CBT", "EMDR", "EFT", "IFS", "סומטי", "מיינדפולנס", "ACT"],
+  price: ["עד 300", "300-800", "מעל 800"],
+  format: ["אונליין", "פרונטלי"],
 };
 
-const courseFilterGroups = {
-  נושא: ["AI וטכנולוגיה", "נומרולוגיה", "אסטרולוגיה", "קבלה", "תניא", "יאמה", "טארוט", "רפואה אינטגרטיבית", "מיינדפולנס"],
-  רמה: ["מתחילים", "מתקדמים", "מקצועי", "לכולם"],
-  "סוג כלים": ["ChatGPT", "Midjourney", "Canva AI", "כלים לשיווק", "אוטומציה"],
-  פורמט: ["לייב", "מוקלט", "היברידי", "קבוצתי"],
-  משך: ["שיעור בודד", "קורס קצר", "קורס מלא"],
-  מחיר: ["חינמי", "עד 200", "200-500", "מעל 500"],
+const courseFilterGroups: Record<string, string[]> = {
+  topic: ["AI וטכנולוגיה", "נומרולוגיה", "אסטרולוגיה", "קבלה", "תניא", "יאמה", "טארוט", "רפואה אינטגרטיבית", "מיינדפולנס"],
+  level: ["מתחילים", "מתקדמים", "מקצועי", "לכולם"],
+  tools: ["ChatGPT", "Midjourney", "Canva AI", "כלים לשיווק", "אוטומציה"],
+  format: ["לייב", "מוקלט", "היברידי", "קבוצתי"],
+  duration: ["שיעור בודד", "קורס קצר", "קורס מלא"],
+  price: ["חינמי", "עד 200", "200-500", "מעל 500"],
 };
+
 
 type Course = {
   id: string;
@@ -46,6 +48,7 @@ const dummyCourses: Course[] = [
 
 const PractitionerCard = ({ p, index }: { p: Practitioner; index: number }) => {
   const [imgFailed, setImgFailed] = useState(false);
+  const { t } = useTranslation();
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -86,13 +89,16 @@ const PractitionerCard = ({ p, index }: { p: Practitioner; index: number }) => {
         to={`/practitioners/${p.id}`}
         className="w-full py-3 text-sm font-body text-center transition-colors duration-300 border-t border-border text-primary hover:bg-primary/5"
       >
-        לפרופיל המלא
+        {t("practitioners.fullProfile")}
       </Link>
     </motion.div>
   );
 };
 
-const CourseCard = ({ course, index }: { course: Course; index: number }) => (
+
+const CourseCard = ({ course, index }: { course: Course; index: number }) => {
+  const { t } = useTranslation();
+  return (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
     animate={{ opacity: 1, y: 0 }}
@@ -117,13 +123,18 @@ const CourseCard = ({ course, index }: { course: Course; index: number }) => (
       </div>
     </div>
     <button className="w-full py-3 text-sm font-body text-center transition-colors duration-300 border-t border-border text-primary hover:bg-primary/5">
-      לפרטים והרשמה
+      {t("practitioners.courseDetails")}
     </button>
   </motion.div>
-);
+  );
+};
+
 
 const Practitioners = () => {
   const [searchParams] = useSearchParams();
+  const { t, i18n } = useTranslation();
+  const dir = i18n.language === "he" ? "rtl" : "ltr";
+  const arrow = i18n.language === "he" ? "←" : "→";
   const [activeTab, setActiveTab] = useState<"practitioners" | "courses">(
     searchParams.get("tab") === "courses" ? "courses" : "practitioners"
   );
@@ -149,9 +160,9 @@ const Practitioners = () => {
   const filteredPractitioners = useMemo(() => {
     return practitioners.filter((p) => {
       const q = search.trim();
-      if (q && ![p.name, p.title, ...p.tags].some((t) => t.includes(q))) return false;
+      if (q && ![p.name, p.title, ...p.tags].some((tag) => tag.includes(q))) return false;
       if (activeFilters.size === 0) return true;
-      return p.tags.some((t) => activeFilters.has(t)) ||
+      return p.tags.some((tag) => activeFilters.has(tag)) ||
         activeFilters.has(p.format) ||
         (activeFilters.has("אונליין") && p.format.includes("אונליין")) ||
         (activeFilters.has("פרונטלי") && p.format.includes("פרונטלי"));
@@ -161,14 +172,14 @@ const Practitioners = () => {
   const filteredCourses = useMemo(() => {
     return dummyCourses.filter((c) => {
       const q = search.trim();
-      if (q && ![c.title, c.instructor, ...c.tags].some((t) => t.includes(q))) return false;
+      if (q && ![c.title, c.instructor, ...c.tags].some((tag) => tag.includes(q))) return false;
       if (activeFilters.size === 0) return true;
-      return c.tags.some((t) => activeFilters.has(t));
+      return c.tags.some((tag) => activeFilters.has(tag));
     });
   }, [search, activeFilters]);
 
   return (
-    <div className="min-h-screen font-body bg-sand nature-overlay ambient-leaves" dir="rtl">
+    <div className="min-h-screen font-body bg-sand nature-overlay ambient-leaves" dir={dir}>
       <Navbar />
       <main className="pt-28 pb-20 px-4 sm:px-6">
         <div className="max-w-6xl mx-auto">
@@ -177,7 +188,7 @@ const Practitioners = () => {
             animate={{ opacity: 1, y: 0 }}
             className="font-display text-[2.2rem] md:text-[3.5rem] font-bold text-foreground text-center mb-8 text-readable-light"
           >
-            {activeTab === "practitioners" ? "מצאו את המומחה המתאים לכם" : "קורסים והכשרות"}
+            {activeTab === "practitioners" ? t("practitioners.titleExperts") : t("practitioners.titleCourses")}
           </motion.h1>
 
           <div className="glass-card !p-5 md:!p-6 mb-10">
@@ -191,7 +202,7 @@ const Practitioners = () => {
                     : "text-foreground/70 hover:text-foreground"
                 }`}
               >
-                מומחים וטיפול
+                {t("practitioners.tabExperts")}
                 {activeTab === "practitioners" && (
                   <span className="absolute bottom-0 right-0 left-0 h-[2px] bg-primary rounded-full" />
                 )}
@@ -204,9 +215,9 @@ const Practitioners = () => {
                     : "text-foreground/50 hover:text-foreground/70"
                 }`}
               >
-                קורסים והכשרות
+                {t("practitioners.tabCourses")}
                 <span className="text-[10px] font-body px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">
-                  בקרוב
+                  {t("practitioners.comingSoon")}
                 </span>
                 {activeTab === "courses" && (
                   <span className="absolute bottom-0 right-0 left-0 h-[2px] bg-primary rounded-full" />
@@ -224,7 +235,7 @@ const Practitioners = () => {
               <input
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder={activeTab === "practitioners" ? "חפשו לפי נושא, שם או גישה..." : "חפשו לפי נושא, שם מרצה או כלי..."}
+                placeholder={activeTab === "practitioners" ? t("practitioners.searchExperts") : t("practitioners.searchCourses")}
                 className="w-full px-6 py-3 rounded-full text-foreground placeholder:text-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary/30 text-sm font-body bg-white border border-border shadow-sm"
               />
             </motion.div>
@@ -239,7 +250,7 @@ const Practitioners = () => {
             >
               {Object.entries(currentFilters).map(([group, items]) => (
                 <div key={group} className="flex flex-wrap items-center gap-2">
-                  <span className="text-xs font-body font-semibold text-foreground min-w-[60px]">{group}:</span>
+                  <span className="text-xs font-body font-semibold text-foreground min-w-[60px]">{t(`practitioners.filterGroups.${group}`)}:</span>
                   {items.map((item) => {
                     const active = activeFilters.has(item);
                     return (
@@ -269,13 +280,13 @@ const Practitioners = () => {
               {filteredPractitioners.length === 0 && (
                 <div className="text-center mt-12 space-y-4">
                   <p className="text-muted-foreground text-lg font-body">
-                    לא נמצאו מומחים מתאימים.
+                    {t("practitioners.noResults")}
                   </p>
                   <button
                     onClick={() => { setActiveFilters(new Set()); setSearch(""); }}
                     className="btn-secondary text-sm"
                   >
-                    נקה פילטרים וחפש מחדש
+                    {t("practitioners.clearFilters")}
                   </button>
                 </div>
               )}
@@ -283,13 +294,13 @@ const Practitioners = () => {
           ) : (
             <div className="spa-card text-center !p-10">
               <h2 className="font-display text-2xl font-bold text-foreground mb-3">
-                קורסים ב-MapSoul — בקרוב
+                {t("practitioners.coursesSoonTitle")}
               </h2>
               <p className="text-muted-foreground font-body mb-6">
-                אנחנו אוצרים את ההכשרות הטובות בארץ. הירשמו לרשימת ההמתנה ונעדכן ראשונים.
+                {t("practitioners.coursesSoonBody")}
               </p>
               <button onClick={() => switchTab("practitioners")} className="btn-primary">
-                נרשמים לרשימת ההמתנה ←
+                {t("practitioners.waitlist")} {arrow}
               </button>
             </div>
           )}
@@ -301,3 +312,4 @@ const Practitioners = () => {
 };
 
 export default Practitioners;
+
