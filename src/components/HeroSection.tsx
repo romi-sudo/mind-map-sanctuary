@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import heroNature from "@/assets/hero-nature.jpg";
 
 const HeroSection = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <section
@@ -36,7 +38,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="font-body text-sm tracking-[0.3em] uppercase mb-6 text-white/80"
           >
-            מסע פנימי מתחיל כאן
+            {t("hero.eyebrow")}
           </motion.p>
 
           <motion.h1
@@ -45,7 +47,7 @@ const HeroSection = () => {
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-[2.4rem] md:text-[3.8rem] font-bold text-white leading-[1.1] mb-6"
           >
-            מפת הנפש שלך
+            {t("hero.title")}
           </motion.h1>
 
           <motion.p
@@ -54,7 +56,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.35 }}
             className="font-body text-lg text-white/75 max-w-xl mx-auto mb-8"
           >
-            פלטפורמת AI שמחברת אותך למטפל המדויק — בלי חיפוש מתיש
+            {t("hero.subtitle")}
           </motion.p>
 
           <motion.div
@@ -70,7 +72,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.45 }}
             className="font-body text-base md:text-lg leading-relaxed max-w-xl mx-auto mb-12 text-white/80"
           >
-            MapSoul מנווטת אותך למסלול שמתאים לך בדיוק — טיפול, אימון, ריטריט או קורס
+            {t("hero.description")}
           </motion.p>
 
           <motion.div
@@ -80,7 +82,7 @@ const HeroSection = () => {
             className="flex flex-wrap items-center justify-center gap-4"
           >
             <button onClick={() => navigate("/questionnaire")} className="btn-primary text-lg">
-              התחילו את המסע
+              {t("hero.cta")}
             </button>
           </motion.div>
         </div>

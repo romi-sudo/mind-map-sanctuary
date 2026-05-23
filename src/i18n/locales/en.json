@@ -1,0 +1,74 @@
+{
+  "nav": {
+    "home": "Home",
+    "questionnaire": "Find Your Path",
+    "practitioners": "Practitioners",
+    "corporate": "For Companies",
+    "dashboard": "Dashboard",
+    "login": "Log In",
+    "signup": "Sign Up",
+    "logout": "Log Out",
+    "hello": "Hi",
+    "menu": "Menu",
+    "close": "Close",
+    "language": "עב"
+  },
+  "hero": {
+    "eyebrow": "Your inner journey starts here",
+    "title": "Your Soul Map",
+    "subtitle": "An AI platform that connects you to the right practitioner — no exhausting search",
+    "description": "MapSoul guides you to the path that fits you exactly — therapy, coaching, retreat or course",
+    "cta": "Start your journey"
+  },
+  "problem": {
+    "eyebrow": "Most people ask",
+    "title": "Don't know where to start?",
+    "subtitle": "You're not alone — that's exactly why we built MapSoul.",
+    "cards": [
+      { "title": "Too many options", "body": "Hundreds of experts, methods and approaches — without knowing what truly fits." },
+      { "title": "Lack of direction", "body": "You feel something needs to change, but don't know where to begin." },
+      { "title": "Trial and error", "body": "Wasting time and money on treatments and courses that don't fit." },
+      { "title": "Lack of trust", "body": "Hard to know who to trust and who is really an \"expert\"." }
+    ]
+  },
+  "how": {
+    "eyebrow": "Three steps",
+    "title": "How it works",
+    "steps": [
+      { "title": "Tell us what you're going through", "desc": "A short, smart questionnaire that understands your needs." },
+      { "title": "We map the exact path", "desc": "The system builds a personalized plan for you." },
+      { "title": "Connect with the right expert", "desc": "Direct connection to vetted experts who fit precisely." }
+    ]
+  },
+  "trust": {
+    "stats": [
+      { "value": "6", "label": "Founding practitioners" },
+      { "value": "AI", "label": "Smart matching" },
+      { "value": "2025", "label": "Israel · Launch" }
+    ]
+  },
+  "finalCta": {
+    "eyebrow": "Your next step",
+    "title": "Ready to find your path?",
+    "cta": "Let's begin",
+    "or": "or",
+    "browse": "browse the practitioners directly"
+  },
+  "footer": {
+    "tagline": "A precise path to real growth",
+    "navTitle": "Navigation",
+    "contactTitle": "Contact",
+    "terms": "Terms of Use",
+    "privacy": "Privacy Policy",
+    "rights": "© 2025 MapSoul. All rights reserved.",
+    "builtIn": "Built with ❤️ in Israel",
+    "links": {
+      "home": "Home",
+      "questionnaire": "Find your path",
+      "practitioners": "Practitioners",
+      "corporate": "For companies",
+      "join": "Join as a practitioner",
+      "approaches": "Therapeutic approaches"
+    }
+  }
+}
