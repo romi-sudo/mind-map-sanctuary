@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
 import { usePractitionerStatus } from "@/hooks/usePractitionerStatus";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import EventsDropdown from "@/components/events/EventsDropdown";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -47,6 +48,9 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            <li>
+              <EventsDropdown label={t("nav.events")} triggerStyle={{ color: '#F5ECD7' }} />
+            </li>
           </ul>
 
           <div className="flex items-center gap-3 mr-2">
@@ -90,6 +94,16 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                to="/events"
+                onClick={() => setMobileOpen(false)}
+                className={`font-body hover:opacity-80 transition-opacity text-base inline-block pb-1 ${isActive("/events") ? "border-b-2" : ""}`}
+                style={{ color: '#F5ECD7', borderColor: isActive("/events") ? 'rgba(245,236,215,0.6)' : 'transparent' }}
+              >
+                {t("nav.events")}
+              </Link>
+            </li>
           </ul>
           {user ? (
             <div className="flex flex-col gap-2">
