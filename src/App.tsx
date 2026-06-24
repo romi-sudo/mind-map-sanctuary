@@ -20,6 +20,7 @@ import Dashboard from "./pages/Dashboard.tsx";
 import Terms from "./pages/Terms.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Events from "./pages/Events.tsx";
 
 
 const queryClient = new QueryClient();
