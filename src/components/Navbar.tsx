@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
 import { usePractitionerStatus } from "@/hooks/usePractitionerStatus";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import EventsDropdown from "@/components/events/EventsDropdown";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
