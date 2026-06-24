@@ -193,6 +193,57 @@ export type Database = {
         }
         Relationships: []
       }
+      events: {
+        Row: {
+          category: Database["public"]["Enums"]["event_category"]
+          created_at: string
+          created_by: string | null
+          description: string | null
+          end_date: string | null
+          event_date: string
+          id: string
+          image_url: string | null
+          is_free: boolean
+          location: string | null
+          price: number | null
+          source: Database["public"]["Enums"]["event_source"]
+          title: string
+          visibility: Database["public"]["Enums"]["event_visibility"]
+        }
+        Insert: {
+          category: Database["public"]["Enums"]["event_category"]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          end_date?: string | null
+          event_date: string
+          id?: string
+          image_url?: string | null
+          is_free?: boolean
+          location?: string | null
+          price?: number | null
+          source?: Database["public"]["Enums"]["event_source"]
+          title: string
+          visibility?: Database["public"]["Enums"]["event_visibility"]
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["event_category"]
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          end_date?: string | null
+          event_date?: string
+          id?: string
+          image_url?: string | null
+          is_free?: boolean
+          location?: string | null
+          price?: number | null
+          source?: Database["public"]["Enums"]["event_source"]
+          title?: string
+          visibility?: Database["public"]["Enums"]["event_visibility"]
+        }
+        Relationships: []
+      }
       leads: {
         Row: {
           created_at: string
@@ -394,6 +445,14 @@ export type Database = {
     }
     Enums: {
       app_role: "consumer" | "practitioner" | "company"
+      event_category:
+        | "festival"
+        | "lecture"
+        | "enrichment"
+        | "team_building"
+        | "personal"
+      event_source: "manual" | "scraped"
+      event_visibility: "public" | "members_only"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -522,6 +581,15 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["consumer", "practitioner", "company"],
+      event_category: [
+        "festival",
+        "lecture",
+        "enrichment",
+        "team_building",
+        "personal",
+      ],
+      event_source: ["manual", "scraped"],
+      event_visibility: ["public", "members_only"],
     },
   },
 } as const
