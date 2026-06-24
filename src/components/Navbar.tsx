@@ -48,6 +48,9 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            <li>
+              <EventsDropdown label={t("nav.events")} triggerStyle={{ color: '#F5ECD7' }} />
+            </li>
           </ul>
 
           <div className="flex items-center gap-3 mr-2">
