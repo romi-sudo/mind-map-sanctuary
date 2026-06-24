@@ -94,6 +94,16 @@ const Navbar = () => {
                 </Link>
               </li>
             ))}
+            <li>
+              <Link
+                to="/events"
+                onClick={() => setMobileOpen(false)}
+                className={`font-body hover:opacity-80 transition-opacity text-base inline-block pb-1 ${isActive("/events") ? "border-b-2" : ""}`}
+                style={{ color: '#F5ECD7', borderColor: isActive("/events") ? 'rgba(245,236,215,0.6)' : 'transparent' }}
+              >
+                {t("nav.events")}
+              </Link>
+            </li>
           </ul>
           {user ? (
             <div className="flex flex-col gap-2">
