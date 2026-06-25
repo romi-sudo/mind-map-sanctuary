@@ -181,16 +181,27 @@ const Dashboard = () => {
         <div className="spa-card !p-6 mb-10">
           <div className="w-full h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+              <AreaChart data={chartData} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="gradNew" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(var(--warm-gold))" stopOpacity={0.55} />
+                    <stop offset="100%" stopColor="hsl(var(--warm-gold))" stopOpacity={0.05} />
+                  </linearGradient>
+                  <linearGradient id="gradContacted" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(var(--terracotta))" stopOpacity={0.55} />
+                    <stop offset="100%" stopColor="hsl(var(--terracotta))" stopOpacity={0.05} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
                 <XAxis dataKey="label" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} interval={4} />
                 <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} />
                 <Tooltip
                   cursor={{ fill: "hsl(var(--muted) / 0.4)" }}
                   contentStyle={{ background: "hsl(var(--background))", border: "1px solid hsl(var(--border))", borderRadius: 12, fontFamily: "inherit" }}
                 />
-                <Bar dataKey="new" stackId="a" fill="hsl(var(--warm-gold))" name="חדש" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="contacted" stackId="a" fill="hsl(var(--terracotta))" name="בטיפול" radius={[4, 4, 0, 0]} />
-              </BarChart>
+                <Area type="monotone" dataKey="new" stackId="1" stroke="hsl(var(--warm-gold))" strokeWidth={2} fill="url(#gradNew)" name="חדש" />
+                <Area type="monotone" dataKey="contacted" stackId="1" stroke="hsl(var(--terracotta))" strokeWidth={2} fill="url(#gradContacted)" name="בטיפול" />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
           <div className="flex justify-center gap-5 mt-3 text-xs font-body text-muted-foreground">
