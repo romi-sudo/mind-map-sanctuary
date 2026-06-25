@@ -34,7 +34,20 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [practitionerSlug, setPractitionerSlug] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'month'>('all');
+  const [demoBannerDismissed, setDemoBannerDismissed] = useState(false);
   const leadsListRef = useRef<HTMLDivElement | null>(null);
+
+  // TODO: set DEMO_MODE to false before going live with real practitioners
+  const DEMO_MODE = true;
+  const demoLeads: Lead[] = DEMO_MODE ? [
+    { id: 'demo-1', seeker_name: 'נועה כהן', seeker_email: 'noa@example.com', seeker_phone: null, message: 'מעוניינת בטיפול CBT לחרדה', status: 'new', created_at: new Date(Date.now() - 1*86400000).toISOString(), therapist_id: 'demo' },
+    { id: 'demo-2', seeker_name: 'איתי לוי', seeker_email: 'itai@example.com', seeker_phone: null, message: 'מחפש מטפל זוגי', status: 'contacted', created_at: new Date(Date.now() - 3*86400000).toISOString(), therapist_id: 'demo' },
+    { id: 'demo-3', seeker_name: 'מיכל בר', seeker_email: 'michal@example.com', seeker_phone: null, message: 'התאמה לטיפול בהפרעות אכילה', status: 'new', created_at: new Date(Date.now() - 5*86400000).toISOString(), therapist_id: 'demo' },
+    { id: 'demo-4', seeker_name: 'יוסי אברהם', seeker_email: 'yossi@example.com', seeker_phone: null, message: 'מעוניין בליווי בתהליך שינוי קריירה', status: 'contacted', created_at: new Date(Date.now() - 8*86400000).toISOString(), therapist_id: 'demo' },
+    { id: 'demo-5', seeker_name: 'דנה שרון', seeker_email: 'dana@example.com', seeker_phone: null, message: 'מחפשת תמיכה בהתמודדות עם אבל', status: 'new', created_at: new Date(Date.now() - 12*86400000).toISOString(), therapist_id: 'demo' },
+  ] : [];
+  const isShowingDemo = DEMO_MODE && leads.length === 0;
+  const displayLeads = leads.length > 0 ? leads : demoLeads;
 
   const scrollToLeads = (f: 'all' | 'pending' | 'month') => {
     setActiveFilter(f);
