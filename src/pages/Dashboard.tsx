@@ -214,6 +214,22 @@ const Dashboard = () => {
           })()}
         </div>
 
+        {/* Payments — coming soon */}
+        <h2 className="font-display text-xl mb-4 text-foreground">תשלומים וסליקה</h2>
+        <div className="spa-card text-center !p-10 mb-8">
+          <div className="flex justify-center mb-4">
+            <div className="w-16 h-16 rounded-full bg-warm-gold/15 flex items-center justify-center text-3xl">
+              💳
+            </div>
+          </div>
+          <h3 className="font-display text-lg text-foreground mb-2">מערכת סליקה בדרך</h3>
+          <p className="font-body text-muted-foreground max-w-md mx-auto mb-4">
+            בקרוב תוכלו לקבל תשלומים ישירות בפלטפורמה, לראות היסטוריית עסקאות ולנהל את החיוב החודשי שלכם — הכל במקום אחד.
+          </p>
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warm-gold/10 text-warm-gold text-xs font-body">
+            בקרוב
+          </span>
+        </div>
 
         {/* Quick links */}
         <div className="flex flex-col sm:flex-row gap-3">
