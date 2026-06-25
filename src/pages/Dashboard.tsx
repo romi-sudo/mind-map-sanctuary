@@ -163,7 +163,7 @@ const Dashboard = () => {
           {[
             { n: leadsThisMonth, label: "לידים החודש", f: 'month' as const },
             { n: newLeads, label: "טרם טופלו", f: 'pending' as const },
-            { n: leads.length, label: "סה״כ פניות", f: 'all' as const },
+            { n: displayLeads.length, label: "סה״כ פניות", f: 'all' as const },
           ].map((s, i) => (
             <button
               key={i}
