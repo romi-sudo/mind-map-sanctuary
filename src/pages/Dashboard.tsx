@@ -32,6 +32,13 @@ const Dashboard = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [practitionerSlug, setPractitionerSlug] = useState<string | null>(null);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'month'>('all');
+  const leadsListRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollToLeads = (f: 'all' | 'pending' | 'month') => {
+    setActiveFilter(f);
+    setTimeout(() => leadsListRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  };
 
   useEffect(() => {
     if (authLoading || statusLoading) return;
