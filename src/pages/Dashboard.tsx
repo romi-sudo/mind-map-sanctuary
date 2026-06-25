@@ -82,6 +82,28 @@ const Dashboard = () => {
     );
   };
 
+  const chartData = useMemo(() => {
+    const days = Array.from({ length: 30 }, (_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - (29 - i));
+      return {
+        date: d.toISOString().split('T')[0],
+        label: d.toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit' }),
+        new: 0,
+        contacted: 0,
+      };
+    });
+    leads.forEach((lead) => {
+      const leadDate = lead.created_at?.split('T')[0];
+      const day = days.find((d) => d.date === leadDate);
+      if (day) {
+        if (lead.status === 'new') day.new += 1;
+        else day.contacted += 1;
+      }
+    });
+    return days;
+  }, [leads]);
+
   if (authLoading || statusLoading || !user || status !== "approved") return null;
 
   const now = Date.now();
