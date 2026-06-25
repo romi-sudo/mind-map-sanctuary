@@ -106,7 +106,7 @@ const Dashboard = () => {
         contacted: 0,
       };
     });
-    leads.forEach((lead) => {
+    displayLeads.forEach((lead) => {
       const leadDate = lead.created_at?.split('T')[0];
       const day = days.find((d) => d.date === leadDate);
       if (day) {
@@ -115,7 +115,7 @@ const Dashboard = () => {
       }
     });
     return days;
-  }, [leads]);
+  }, [displayLeads]);
 
   if (authLoading || statusLoading || !user || status !== "approved") return null;
 
