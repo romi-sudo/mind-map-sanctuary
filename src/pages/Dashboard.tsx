@@ -309,19 +309,35 @@ const Dashboard = () => {
 
         {/* Payments — coming soon */}
         <h2 className="font-display text-xl mb-4 text-foreground">תשלומים וסליקה</h2>
-        <div className="spa-card text-center !p-10 mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 rounded-full bg-warm-gold/15 flex items-center justify-center text-3xl">
-              💳
+        <div className="spa-card !p-8 mb-8">
+          <div className="text-center mb-6">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-warm-gold/15 flex items-center justify-center text-3xl">
+                💳
+              </div>
             </div>
+            <h3 className="font-display text-lg text-foreground mb-2">מערכת סליקה בדרך</h3>
+            <p className="font-body text-muted-foreground max-w-md mx-auto">
+              בקרוב תוכלו לקבל תשלומים ישירות בפלטפורמה
+            </p>
           </div>
-          <h3 className="font-display text-lg text-foreground mb-2">מערכת סליקה בדרך</h3>
-          <p className="font-body text-muted-foreground max-w-md mx-auto mb-4">
-            בקרוב תוכלו לקבל תשלומים ישירות בפלטפורמה, לראות היסטוריית עסקאות ולנהל את החיוב החודשי שלכם — הכל במקום אחד.
-          </p>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warm-gold/10 text-warm-gold text-xs font-body">
-            בקרוב
-          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            {[
+              { icon: '🔒', label: 'תשלומים מאובטחים' },
+              { icon: '🔄', label: 'חיוב אוטומטי חודשי' },
+              { icon: '📋', label: 'היסטוריית עסקאות' },
+            ].map((p) => (
+              <div key={p.label} className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-4 py-2">
+                <span className="text-lg">{p.icon}</span>
+                <span className="font-body text-sm text-foreground">{p.label}</span>
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warm-gold/10 text-warm-gold text-xs font-body">
+              בקרוב
+            </span>
+          </div>
         </div>
 
         {/* Quick links */}
