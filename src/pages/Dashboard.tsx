@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Inbox } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
@@ -81,6 +82,28 @@ const Dashboard = () => {
     );
   };
 
+  const chartData = useMemo(() => {
+    const days = Array.from({ length: 30 }, (_, i) => {
+      const d = new Date();
+      d.setDate(d.getDate() - (29 - i));
+      return {
+        date: d.toISOString().split('T')[0],
+        label: d.toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit' }),
+        new: 0,
+        contacted: 0,
+      };
+    });
+    leads.forEach((lead) => {
+      const leadDate = lead.created_at?.split('T')[0];
+      const day = days.find((d) => d.date === leadDate);
+      if (day) {
+        if (lead.status === 'new') day.new += 1;
+        else day.contacted += 1;
+      }
+    });
+    return days;
+  }, [leads]);
+
   if (authLoading || statusLoading || !user || status !== "approved") return null;
 
   const now = Date.now();
@@ -123,6 +146,36 @@ const Dashboard = () => {
             </button>
           ))}
         </div>
+
+        {/* Chart */}
+        <h2 className="font-display text-xl mb-4 text-foreground">פניות ב-30 הימים האחרונים</h2>
+        <div className="spa-card !p-6 mb-10">
+          <div className="w-full h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+                <XAxis dataKey="label" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} interval={4} />
+                <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} />
+                <Tooltip
+                  cursor={{ fill: "hsl(var(--muted) / 0.4)" }}
+                  contentStyle={{ background: "hsl(var(--background))", border: "1px solid hsl(var(--border))", borderRadius: 12, fontFamily: "inherit" }}
+                />
+                <Bar dataKey="new" stackId="a" fill="hsl(var(--warm-gold))" name="חדש" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="contacted" stackId="a" fill="hsl(var(--terracotta))" name="בטיפול" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex justify-center gap-5 mt-3 text-xs font-body text-muted-foreground">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: "hsl(var(--warm-gold))" }} />
+              חדש
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: "hsl(var(--terracotta))" }} />
+              בטיפול
+            </span>
+          </div>
+        </div>
+
 
         {/* Leads */}
         <div ref={leadsListRef} className="scroll-mt-28">
