@@ -256,7 +256,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <p className="font-body text-muted-foreground">
-                    {leads.length === 0 ? 'עדיין לא הגיעו פניות. הפרופיל שלך פעיל ופועל.' : 'אין פניות תואמות לסינון הנוכחי.'}
+                    {displayLeads.length === 0 ? 'עדיין לא הגיעו פניות. הפרופיל שלך פעיל ופועל.' : 'אין פניות תואמות לסינון הנוכחי.'}
                   </p>
                 </div>
               );
