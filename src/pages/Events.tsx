@@ -147,32 +147,26 @@ const Events = () => {
           <h2 className="font-display text-2xl font-bold mb-6" style={{ color: "#2C1A0E" }}>
             קרוב אליך
           </h2>
-          {loading ? (
-            <p className="opacity-60">טוען...</p>
-          ) : upcoming.length === 0 ? (
-            <p className="opacity-60">אין אירועים להצגה כרגע.</p>
-          ) : (
-            <div className="flex gap-5 overflow-x-auto pb-4 -mx-2 px-2 snap-x snap-mandatory">
-              {upcoming.map((ev) => (
-                <EventCard key={ev.id} event={ev} loggedIn={!!user} />
-              ))}
-            </div>
-          )}
+          <div className="flex gap-5 overflow-x-auto pb-4 -mx-2 px-2 snap-x snap-mandatory">
+            {nearby.map((ev) => (
+              <EventCard key={ev.id} event={ev} />
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Upcoming list */}
       <section className="py-12 px-6" style={{ background: "rgba(235, 221, 194, 0.3)" }}>
-        <div className="container mx-auto max-w-4xl">
+        <div className="container mx-auto max-w-6xl">
           <h2 className="font-display text-2xl font-bold mb-6" style={{ color: "#2C1A0E" }}>
             האירועים הבאים
           </h2>
-          {filtered.length === 0 ? (
-            <p className="opacity-60">אין תוצאות מתאימות לחיפוש שלך.</p>
+          {mockFiltered.length === 0 ? (
+            <p className="opacity-60">אין תוצאות מתאימות לסינון שלך.</p>
           ) : (
-            <div className="flex flex-col gap-3">
-              {filtered.map((ev) => (
-                <EventRowItem key={ev.id} event={ev} loggedIn={!!user} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {mockFiltered.map((ev) => (
+                <EventCard key={ev.id} event={ev} />
               ))}
             </div>
           )}
