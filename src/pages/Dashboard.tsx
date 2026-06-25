@@ -109,77 +109,111 @@ const Dashboard = () => {
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
           {[
-            { n: leadsThisMonth, label: "לידים החודש" },
-            { n: newLeads, label: "טרם טופלו" },
-            { n: leads.length, label: "סה״כ פניות" },
+            { n: leadsThisMonth, label: "לידים החודש", f: 'month' as const },
+            { n: newLeads, label: "טרם טופלו", f: 'pending' as const },
+            { n: leads.length, label: "סה״כ פניות", f: 'all' as const },
           ].map((s, i) => (
-            <div key={i} className="spa-card text-center !p-6">
+            <button
+              key={i}
+              onClick={() => scrollToLeads(s.f)}
+              className={`spa-card text-center !p-6 cursor-pointer hover:shadow-md transition-shadow ${activeFilter === s.f ? 'ring-2 ring-primary/40' : ''}`}
+            >
               <div className="font-display text-4xl text-primary mb-1">{loading ? "—" : s.n}</div>
               <div className="font-body text-sm text-muted-foreground">{s.label}</div>
-            </div>
+            </button>
           ))}
         </div>
 
         {/* Leads */}
-        <h2 className="font-display text-xl mb-4 text-foreground">פניות אחרונות</h2>
-        {loading ? (
-          <div className="spa-card text-center !p-10 mb-8">
-            <p className="font-body text-muted-foreground">טוען פניות…</p>
-          </div>
-        ) : leads.length === 0 ? (
-          <div className="spa-card text-center !p-10 mb-8">
-            <div className="flex justify-center mb-4">
-              <div className="w-14 h-14 rounded-full bg-warm-gold/15 flex items-center justify-center">
-                <Inbox className="w-7 h-7 text-warm-gold" />
-              </div>
-            </div>
-            <p className="font-body text-muted-foreground">
-              עדיין לא הגיעו פניות. הפרופיל שלך פעיל ופועל.
-            </p>
-          </div>
-        ) : (
-          <div className="mb-8">
-            {leads.map((l) => (
-              <a
-                key={l.id}
-                href={`mailto:${l.seeker_email}`}
-                className="spa-card !p-4 mb-3 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer"
+        <div ref={leadsListRef} className="scroll-mt-28">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-display text-xl text-foreground">
+              {activeFilter === 'pending' ? 'פניות שטרם טופלו' : activeFilter === 'month' ? 'לידים מהחודש האחרון' : 'פניות אחרונות'}
+            </h2>
+            {activeFilter !== 'all' && (
+              <button
+                onClick={() => setActiveFilter('all')}
+                className="text-sm font-body text-primary hover:underline"
               >
-                <span
-                  className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
-                    l.status === "new" ? "bg-warm-gold" : "bg-muted-foreground/40"
-                  }`}
-                />
-                <div className="flex-1 min-w-0">
-                  <div className="font-body font-medium text-foreground truncate">{l.seeker_name}</div>
-                  <div className="font-body text-sm text-muted-foreground truncate">
-                    {l.seeker_email}
-                    {l.message ? ` · ${l.message.slice(0, 60)}${l.message.length > 60 ? "…" : ""}` : ""}
-                  </div>
-                </div>
-                <div className="text-xs text-muted-foreground flex-shrink-0">{formatDate(l.created_at)}</div>
-                {l.status === "new" && (
-                  <>
-                    <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-body flex-shrink-0">
-                      חדש
-                    </span>
-                    <button
-                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); markContacted(l.id); }}
-                      className="text-xs font-body text-muted-foreground hover:text-primary transition-colors flex-shrink-0 border border-border rounded-full px-2 py-0.5"
-                    >
-                      סמן כטופל
-                    </button>
-                  </>
-                )}
-                {l.status === "contacted" && (
-                  <span className="px-2.5 py-0.5 rounded-full bg-muted text-muted-foreground text-xs font-body flex-shrink-0">
-                    בטיפול
-                  </span>
-                )}
-              </a>
-            ))}
+                הצג הכל
+              </button>
+            )}
           </div>
-        )}
+          {(() => {
+            const now = Date.now();
+            const monthMs = 30 * 24 * 60 * 60 * 1000;
+            const visibleLeads = leads.filter((l) => {
+              if (activeFilter === 'pending') return l.status === 'new';
+              if (activeFilter === 'month') return now - new Date(l.created_at).getTime() < monthMs;
+              return true;
+            });
+            if (loading) {
+              return (
+                <div className="spa-card text-center !p-10 mb-8">
+                  <p className="font-body text-muted-foreground">טוען פניות…</p>
+                </div>
+              );
+            }
+            if (visibleLeads.length === 0) {
+              return (
+                <div className="spa-card text-center !p-10 mb-8">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-14 h-14 rounded-full bg-warm-gold/15 flex items-center justify-center">
+                      <Inbox className="w-7 h-7 text-warm-gold" />
+                    </div>
+                  </div>
+                  <p className="font-body text-muted-foreground">
+                    {leads.length === 0 ? 'עדיין לא הגיעו פניות. הפרופיל שלך פעיל ופועל.' : 'אין פניות תואמות לסינון הנוכחי.'}
+                  </p>
+                </div>
+              );
+            }
+            return (
+              <div className="mb-8">
+                {visibleLeads.map((l) => (
+                  <a
+                    key={l.id}
+                    href={`mailto:${l.seeker_email}`}
+                    className="spa-card !p-4 mb-3 flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer"
+                  >
+                    <span
+                      className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
+                        l.status === "new" ? "bg-warm-gold" : "bg-muted-foreground/40"
+                      }`}
+                    />
+                    <div className="flex-1 min-w-0">
+                      <div className="font-body font-medium text-foreground truncate">{l.seeker_name}</div>
+                      <div className="font-body text-sm text-muted-foreground truncate">
+                        {l.seeker_email}
+                        {l.message ? ` · ${l.message.slice(0, 60)}${l.message.length > 60 ? "…" : ""}` : ""}
+                      </div>
+                    </div>
+                    <div className="text-xs text-muted-foreground flex-shrink-0">{formatDate(l.created_at)}</div>
+                    {l.status === "new" && (
+                      <>
+                        <span className="px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-body flex-shrink-0">
+                          חדש
+                        </span>
+                        <button
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); markContacted(l.id); }}
+                          className="text-xs font-body text-muted-foreground hover:text-primary transition-colors flex-shrink-0 border border-border rounded-full px-2 py-0.5"
+                        >
+                          סמן כטופל
+                        </button>
+                      </>
+                    )}
+                    {l.status === "contacted" && (
+                      <span className="px-2.5 py-0.5 rounded-full bg-muted text-muted-foreground text-xs font-body flex-shrink-0">
+                        בטיפול
+                      </span>
+                    )}
+                  </a>
+                ))}
+              </div>
+            );
+          })()}
+        </div>
+
 
         {/* Quick links */}
         <div className="flex flex-col sm:flex-row gap-3">
