@@ -142,6 +142,22 @@ const Dashboard = () => {
           </div>
         </motion.div>
 
+        {/* Demo banner */}
+        {isShowingDemo && !demoBannerDismissed && (
+          <div className="mb-6 flex items-center justify-between gap-3 rounded-2xl border border-warm-gold/30 bg-warm-gold/10 px-4 py-3">
+            <p className="font-body text-sm text-foreground">
+              📊 זו תצוגת הדגמה עם נתונים דמיוניים — הלידים האמיתיים שלך יופיעו כאן
+            </p>
+            <button
+              onClick={() => setDemoBannerDismissed(true)}
+              className="font-body text-xs text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+              aria-label="סגור"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
           {[
