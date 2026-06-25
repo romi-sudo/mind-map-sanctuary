@@ -121,8 +121,8 @@ const Dashboard = () => {
 
   const now = Date.now();
   const monthMs = 30 * 24 * 60 * 60 * 1000;
-  const leadsThisMonth = leads.filter((l) => now - new Date(l.created_at).getTime() < monthMs).length;
-  const newLeads = leads.filter((l) => l.status === "new").length;
+  const leadsThisMonth = displayLeads.filter((l) => now - new Date(l.created_at).getTime() < monthMs).length;
+  const newLeads = displayLeads.filter((l) => l.status === "new").length;
 
   return (
     <div className="min-h-screen bg-sand flex flex-col" dir="rtl">
