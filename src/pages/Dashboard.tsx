@@ -125,6 +125,36 @@ const Dashboard = () => {
           ))}
         </div>
 
+        {/* Chart */}
+        <h2 className="font-display text-xl mb-4 text-foreground">פניות ב-30 הימים האחרונים</h2>
+        <div className="spa-card !p-6 mb-10">
+          <div className="w-full h-64">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+                <XAxis dataKey="label" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} interval={4} />
+                <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} />
+                <Tooltip
+                  cursor={{ fill: "hsl(var(--muted) / 0.4)" }}
+                  contentStyle={{ background: "hsl(var(--background))", border: "1px solid hsl(var(--border))", borderRadius: 12, fontFamily: "inherit" }}
+                />
+                <Bar dataKey="new" stackId="a" fill="hsl(var(--warm-gold))" name="חדש" radius={[0, 0, 0, 0]} />
+                <Bar dataKey="contacted" stackId="a" fill="hsl(var(--terracotta))" name="בטיפול" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <div className="flex justify-center gap-5 mt-3 text-xs font-body text-muted-foreground">
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: "hsl(var(--warm-gold))" }} />
+              חדש
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: "hsl(var(--terracotta))" }} />
+              בטיפול
+            </span>
+          </div>
+        </div>
+
+
         {/* Leads */}
         <div ref={leadsListRef} className="scroll-mt-28">
           <div className="flex items-center justify-between mb-4">
