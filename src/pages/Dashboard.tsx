@@ -235,7 +235,7 @@ const Dashboard = () => {
           {(() => {
             const now = Date.now();
             const monthMs = 30 * 24 * 60 * 60 * 1000;
-            const visibleLeads = leads.filter((l) => {
+            const visibleLeads = displayLeads.filter((l) => {
               if (activeFilter === 'pending') return l.status === 'new';
               if (activeFilter === 'month') return now - new Date(l.created_at).getTime() < monthMs;
               return true;
