@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Lock, Search, Plus, MapPin, Calendar, X } from "lucide-react";
 import { toast } from "sonner";
@@ -7,6 +7,8 @@ import Footer from "@/components/Footer";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
+import EventCard from "@/components/events/EventCard";
+import { MOCK_EVENTS, type MockEventCategory } from "@/data/events";
 
 type Category = "festival" | "lecture" | "enrichment" | "team_building" | "personal";
 
