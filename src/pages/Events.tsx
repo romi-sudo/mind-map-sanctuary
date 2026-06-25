@@ -79,6 +79,30 @@ const Events = () => {
 
   const upcoming = filtered.slice(0, 8);
 
+  // Map Category enum -> Hebrew label used in mock data
+  const CAT_TO_HE: Record<Category, MockEventCategory> = {
+    festival: "פסטיבלים",
+    lecture: "הרצאות",
+    enrichment: "העשרה",
+    team_building: "ימי גיבוש",
+    personal: "אישי",
+  };
+
+  const mockFiltered = useMemo(() => {
+    const heCat = activeCat === "all" ? null : CAT_TO_HE[activeCat];
+    return MOCK_EVENTS.filter((ev) => {
+      if (heCat && ev.category !== heCat) return false;
+      if (query) {
+        const q = query.toLowerCase();
+        const hay = `${ev.title} ${ev.shortDescription} ${ev.location}`.toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+      return true;
+    }).sort((a, b) => a.sortDate.localeCompare(b.sortDate));
+  }, [activeCat, query]);
+
+  const nearby = mockFiltered.slice(0, 3);
+
   return (
     <div className="min-h-screen" dir="rtl">
       <Navbar />
