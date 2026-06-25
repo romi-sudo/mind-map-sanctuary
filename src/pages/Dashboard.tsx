@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Inbox } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useProfile } from "@/hooks/useProfile";
@@ -34,7 +34,20 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [practitionerSlug, setPractitionerSlug] = useState<string | null>(null);
   const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'month'>('all');
+  const [demoBannerDismissed, setDemoBannerDismissed] = useState(false);
   const leadsListRef = useRef<HTMLDivElement | null>(null);
+
+  // TODO: set DEMO_MODE to false before going live with real practitioners
+  const DEMO_MODE = true;
+  const demoLeads: Lead[] = DEMO_MODE ? [
+    { id: 'demo-1', seeker_name: 'נועה כהן', seeker_email: 'noa@example.com', seeker_phone: null, message: 'מעוניינת בטיפול CBT לחרדה', status: 'new', created_at: new Date(Date.now() - 1*86400000).toISOString(), therapist_id: 'demo' },
+    { id: 'demo-2', seeker_name: 'איתי לוי', seeker_email: 'itai@example.com', seeker_phone: null, message: 'מחפש מטפל זוגי', status: 'contacted', created_at: new Date(Date.now() - 3*86400000).toISOString(), therapist_id: 'demo' },
+    { id: 'demo-3', seeker_name: 'מיכל בר', seeker_email: 'michal@example.com', seeker_phone: null, message: 'התאמה לטיפול בהפרעות אכילה', status: 'new', created_at: new Date(Date.now() - 5*86400000).toISOString(), therapist_id: 'demo' },
+    { id: 'demo-4', seeker_name: 'יוסי אברהם', seeker_email: 'yossi@example.com', seeker_phone: null, message: 'מעוניין בליווי בתהליך שינוי קריירה', status: 'contacted', created_at: new Date(Date.now() - 8*86400000).toISOString(), therapist_id: 'demo' },
+    { id: 'demo-5', seeker_name: 'דנה שרון', seeker_email: 'dana@example.com', seeker_phone: null, message: 'מחפשת תמיכה בהתמודדות עם אבל', status: 'new', created_at: new Date(Date.now() - 12*86400000).toISOString(), therapist_id: 'demo' },
+  ] : [];
+  const isShowingDemo = DEMO_MODE && leads.length === 0;
+  const displayLeads = leads.length > 0 ? leads : demoLeads;
 
   const scrollToLeads = (f: 'all' | 'pending' | 'month') => {
     setActiveFilter(f);
@@ -93,7 +106,7 @@ const Dashboard = () => {
         contacted: 0,
       };
     });
-    leads.forEach((lead) => {
+    displayLeads.forEach((lead) => {
       const leadDate = lead.created_at?.split('T')[0];
       const day = days.find((d) => d.date === leadDate);
       if (day) {
@@ -102,14 +115,14 @@ const Dashboard = () => {
       }
     });
     return days;
-  }, [leads]);
+  }, [displayLeads]);
 
   if (authLoading || statusLoading || !user || status !== "approved") return null;
 
   const now = Date.now();
   const monthMs = 30 * 24 * 60 * 60 * 1000;
-  const leadsThisMonth = leads.filter((l) => now - new Date(l.created_at).getTime() < monthMs).length;
-  const newLeads = leads.filter((l) => l.status === "new").length;
+  const leadsThisMonth = displayLeads.filter((l) => now - new Date(l.created_at).getTime() < monthMs).length;
+  const newLeads = displayLeads.filter((l) => l.status === "new").length;
 
   return (
     <div className="min-h-screen bg-sand flex flex-col" dir="rtl">
@@ -129,12 +142,28 @@ const Dashboard = () => {
           </div>
         </motion.div>
 
+        {/* Demo banner */}
+        {isShowingDemo && !demoBannerDismissed && (
+          <div className="mb-6 flex items-center justify-between gap-3 rounded-2xl border border-warm-gold/30 bg-warm-gold/10 px-4 py-3">
+            <p className="font-body text-sm text-foreground">
+              📊 זו תצוגת הדגמה עם נתונים דמיוניים — הלידים האמיתיים שלך יופיעו כאן
+            </p>
+            <button
+              onClick={() => setDemoBannerDismissed(true)}
+              className="font-body text-xs text-muted-foreground hover:text-foreground transition-colors flex-shrink-0"
+              aria-label="סגור"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         {/* Stats */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
           {[
             { n: leadsThisMonth, label: "לידים החודש", f: 'month' as const },
             { n: newLeads, label: "טרם טופלו", f: 'pending' as const },
-            { n: leads.length, label: "סה״כ פניות", f: 'all' as const },
+            { n: displayLeads.length, label: "סה״כ פניות", f: 'all' as const },
           ].map((s, i) => (
             <button
               key={i}
@@ -152,16 +181,27 @@ const Dashboard = () => {
         <div className="spa-card !p-6 mb-10">
           <div className="w-full h-64">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+              <AreaChart data={chartData} margin={{ top: 8, right: 8, left: -16, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="gradNew" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(var(--warm-gold))" stopOpacity={0.55} />
+                    <stop offset="100%" stopColor="hsl(var(--warm-gold))" stopOpacity={0.05} />
+                  </linearGradient>
+                  <linearGradient id="gradContacted" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(var(--terracotta))" stopOpacity={0.55} />
+                    <stop offset="100%" stopColor="hsl(var(--terracotta))" stopOpacity={0.05} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
                 <XAxis dataKey="label" tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} interval={4} />
                 <YAxis tick={{ fontSize: 11, fill: "hsl(var(--muted-foreground))" }} allowDecimals={false} />
                 <Tooltip
                   cursor={{ fill: "hsl(var(--muted) / 0.4)" }}
                   contentStyle={{ background: "hsl(var(--background))", border: "1px solid hsl(var(--border))", borderRadius: 12, fontFamily: "inherit" }}
                 />
-                <Bar dataKey="new" stackId="a" fill="hsl(var(--warm-gold))" name="חדש" radius={[0, 0, 0, 0]} />
-                <Bar dataKey="contacted" stackId="a" fill="hsl(var(--terracotta))" name="בטיפול" radius={[4, 4, 0, 0]} />
-              </BarChart>
+                <Area type="monotone" dataKey="new" stackId="1" stroke="hsl(var(--warm-gold))" strokeWidth={2} fill="url(#gradNew)" name="חדש" />
+                <Area type="monotone" dataKey="contacted" stackId="1" stroke="hsl(var(--terracotta))" strokeWidth={2} fill="url(#gradContacted)" name="בטיפול" />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
           <div className="flex justify-center gap-5 mt-3 text-xs font-body text-muted-foreground">
@@ -195,7 +235,7 @@ const Dashboard = () => {
           {(() => {
             const now = Date.now();
             const monthMs = 30 * 24 * 60 * 60 * 1000;
-            const visibleLeads = leads.filter((l) => {
+            const visibleLeads = displayLeads.filter((l) => {
               if (activeFilter === 'pending') return l.status === 'new';
               if (activeFilter === 'month') return now - new Date(l.created_at).getTime() < monthMs;
               return true;
@@ -216,7 +256,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <p className="font-body text-muted-foreground">
-                    {leads.length === 0 ? 'עדיין לא הגיעו פניות. הפרופיל שלך פעיל ופועל.' : 'אין פניות תואמות לסינון הנוכחי.'}
+                    {displayLeads.length === 0 ? 'עדיין לא הגיעו פניות. הפרופיל שלך פעיל ופועל.' : 'אין פניות תואמות לסינון הנוכחי.'}
                   </p>
                 </div>
               );
@@ -269,19 +309,35 @@ const Dashboard = () => {
 
         {/* Payments — coming soon */}
         <h2 className="font-display text-xl mb-4 text-foreground">תשלומים וסליקה</h2>
-        <div className="spa-card text-center !p-10 mb-8">
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 rounded-full bg-warm-gold/15 flex items-center justify-center text-3xl">
-              💳
+        <div className="spa-card !p-8 mb-8">
+          <div className="text-center mb-6">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 rounded-full bg-warm-gold/15 flex items-center justify-center text-3xl">
+                💳
+              </div>
             </div>
+            <h3 className="font-display text-lg text-foreground mb-2">מערכת סליקה בדרך</h3>
+            <p className="font-body text-muted-foreground max-w-md mx-auto">
+              בקרוב תוכלו לקבל תשלומים ישירות בפלטפורמה
+            </p>
           </div>
-          <h3 className="font-display text-lg text-foreground mb-2">מערכת סליקה בדרך</h3>
-          <p className="font-body text-muted-foreground max-w-md mx-auto mb-4">
-            בקרוב תוכלו לקבל תשלומים ישירות בפלטפורמה, לראות היסטוריית עסקאות ולנהל את החיוב החודשי שלכם — הכל במקום אחד.
-          </p>
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warm-gold/10 text-warm-gold text-xs font-body">
-            בקרוב
-          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
+            {[
+              { icon: '🔒', label: 'תשלומים מאובטחים' },
+              { icon: '🔄', label: 'חיוב אוטומטי חודשי' },
+              { icon: '📋', label: 'היסטוריית עסקאות' },
+            ].map((p) => (
+              <div key={p.label} className="flex items-center gap-2 rounded-full border border-border bg-background/60 px-4 py-2">
+                <span className="text-lg">{p.icon}</span>
+                <span className="font-body text-sm text-foreground">{p.label}</span>
+              </div>
+            ))}
+          </div>
+          <div className="text-center">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warm-gold/10 text-warm-gold text-xs font-body">
+              בקרוב
+            </span>
+          </div>
         </div>
 
         {/* Quick links */}
