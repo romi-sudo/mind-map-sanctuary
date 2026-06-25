@@ -194,7 +194,7 @@ const Events = () => {
   );
 };
 
-const EventCard = ({ event, loggedIn }: { event: EventRow; loggedIn: boolean }) => {
+const DbEventCard = ({ event, loggedIn }: { event: EventRow; loggedIn: boolean }) => {
   const meta = catMeta(event.category);
   const locked = event.visibility === "members_only" && !loggedIn;
 
