@@ -21,9 +21,7 @@ const Navbar = () => {
     { key: "practitioners", to: "/practitioners" },
     { key: "corporate", to: "/corporate" },
   ];
-  if (user && role === "practitioner" && status === "approved") {
-    baseLinks.push({ key: "dashboard", to: "/dashboard" });
-  }
+  baseLinks.push({ key: "dashboard", to: "/dashboard" });
   const greetName = firstName || user?.email?.split("@")[0];
   const isActive = (to: string) => to === location.pathname;
   const rowDir = i18n.language === "he" ? "flex-row-reverse" : "flex-row";
