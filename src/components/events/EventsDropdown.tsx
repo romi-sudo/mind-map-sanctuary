@@ -70,7 +70,7 @@ const EventsDropdown = ({ label, triggerStyle }: Props) => {
           className="absolute top-full mt-3 w-72 rounded-2xl shadow-xl border overflow-hidden z-50"
           style={{
             right: 0,
-            background: "#FBF5E9",
+            background: "#F2EBE2",
             borderColor: "rgba(120, 80, 40, 0.15)",
           }}
         >

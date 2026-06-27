@@ -108,7 +108,7 @@ const Events = () => {
       <Navbar />
 
       {/* Hero */}
-      <section className="pt-32 pb-12 px-6" style={{ background: "linear-gradient(180deg, #F5ECD7 0%, #EBDDC2 100%)" }}>
+      <section className="pt-32 pb-12 px-6" style={{ background: "linear-gradient(180deg, #F2EBE2 0%, #E9E1D4 100%)" }}>
         <div className="container mx-auto max-w-5xl text-center">
           <p className="font-body text-sm mb-3" style={{ color: "hsl(var(--terracotta))" }}>
             MapSoul Events
@@ -127,14 +127,14 @@ const Events = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="w-full pr-12 pl-4 py-4 rounded-full border-2 font-body text-base shadow-sm focus:outline-none focus:border-current"
-              style={{ background: "#FBF5E9", borderColor: "rgba(120,80,40,0.15)", color: "#2C1A0E" }}
+              style={{ background: "#F2EBE2", borderColor: "rgba(120,80,40,0.15)", color: "#2C1A0E" }}
             />
           </div>
         </div>
       </section>
 
       {/* Categories */}
-      <section className="py-6 px-6 sticky top-[72px] z-40 backdrop-blur-md" style={{ background: "rgba(245,236,215,0.85)" }}>
+      <section className="py-6 px-6 sticky top-[72px] z-40 backdrop-blur-md" style={{ background: "rgba(242,235,226,0.85)" }}>
         <div className="container mx-auto flex flex-wrap gap-2 justify-center items-center">
           <button
             onClick={() => setActiveCat("all")}
@@ -180,7 +180,7 @@ const Events = () => {
       </section>
 
       {/* Upcoming list */}
-      <section className="py-12 px-6" style={{ background: "rgba(235, 221, 194, 0.3)" }}>
+      <section className="py-12 px-6" style={{ background: "rgba(233, 225, 212, 0.3)" }}>
         <div className="container mx-auto max-w-6xl">
           <h2 className="font-display text-2xl font-bold mb-6" style={{ color: "#2C1A0E" }}>
             האירועים הבאים
@@ -219,7 +219,7 @@ const DbEventCard = ({ event, loggedIn }: { event: EventRow; loggedIn: boolean }
   return (
     <div
       className="snap-start shrink-0 w-80 rounded-3xl overflow-hidden shadow-md border flex flex-col"
-      style={{ background: "#FBF5E9", borderColor: "rgba(120,80,40,0.12)" }}
+      style={{ background: "#F2EBE2", borderColor: "rgba(120,80,40,0.12)" }}
     >
       <div className="h-40 relative" style={{ background: meta.gradient }}>
         {event.image_url && !locked && (
@@ -272,7 +272,7 @@ const EventRowItem = ({ event, loggedIn }: { event: EventRow; loggedIn: boolean 
   return (
     <div
       className="rounded-2xl border p-4 flex items-center gap-4 shadow-sm"
-      style={{ background: "#FBF5E9", borderColor: "rgba(120,80,40,0.12)" }}
+      style={{ background: "#F2EBE2", borderColor: "rgba(120,80,40,0.12)" }}
     >
       <div
         className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl shrink-0"
@@ -352,7 +352,7 @@ const CreateEventModal = ({ onClose, onCreated }: { onClose: () => void; onCreat
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ background: "rgba(44,26,14,0.6)" }} onClick={onClose} dir="rtl">
       <div
         className="rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl"
-        style={{ background: "#FBF5E9" }}
+        style={{ background: "#F2EBE2" }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between p-5 border-b" style={{ borderColor: "rgba(120,80,40,0.1)" }}>
