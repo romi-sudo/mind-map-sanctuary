@@ -4,13 +4,13 @@ description: Photo-driven nature design with warm earthy fonts and real nature i
 type: design
 ---
 ## Color Palette — Warm Earth Nature
-- Background: #F6F1EA (warm linen) — `--background: 35 35% 96%`
-- Card: #F0E8DA (warm sand) — `--card: 30 40% 93%`
+- Background: #F2EBE2 (neutral warm beige) — `--background: 34 38% 92%`
+- Card/section: #E9E1D4 (darker warm beige) — `--card: 37 32% 87%`
 - Primary: #A66830 (burnt sienna) — `--primary: 22 55% 42%`
 - Secondary: #5E9968 (forest green) — `--secondary: 145 22% 48%`
-- Dark text: #372315 (deep earth) — `--foreground: 20 45% 15%`
+- Dark text: #372315 (deep earth) — `--foreground: 20 30% 14%`
 - Medium text: #6B5544 (warm brown) — `--muted-foreground: 20 22% 40%`
-- Borders: #D6C9B8 (warm sand border) — `--border: 28 30% 82%`
+- Borders: #D6C9B8 (warm sand border) — `--border: 37 20% 82%`
 
 ## Typography
 - Headlines: Cormorant Garamond (warm elegant serif)
