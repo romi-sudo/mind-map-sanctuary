@@ -346,6 +346,7 @@
   },
   "profile": {
     "notFound": "המומחה לא נמצא",
+    "back": "חזרה",
     "backToCatalog": "חזרה לקטלוג",
     "backToAll": "חזרה לכל המומחים",
     "experience": "ניסיון",
