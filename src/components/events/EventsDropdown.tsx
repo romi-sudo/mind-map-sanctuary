@@ -60,7 +60,7 @@ const EventsDropdown = ({ label, triggerStyle }: Props) => {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="font-body hover:opacity-80 transition-opacity text-sm pb-1"
+        className="font-body whitespace-nowrap hover:opacity-80 transition-opacity text-xs xl:text-sm pb-1"
         style={triggerStyle}
       >
         {label} <span className="text-xs opacity-70">▾</span>
