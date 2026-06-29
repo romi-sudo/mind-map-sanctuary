@@ -7,6 +7,8 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 
 const ADMIN_EMAIL = "romi@people360.co.il";
+const isAdminEmail = (email?: string | null) =>
+  !!email && email.trim().toLowerCase() === ADMIN_EMAIL;
 
 const ROLE_LABEL: Record<string, string> = {
   practitioner: "מטפל/ת",
