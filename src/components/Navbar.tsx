@@ -27,19 +27,19 @@ const Navbar = () => {
   const rowDir = i18n.language === "he" ? "flex-row-reverse" : "flex-row";
 
   return (
-    <nav className="fixed top-0 right-0 left-0 z-50 backdrop-blur-xl border-b border-white/10" style={{ background: 'rgba(20, 35, 20, 0.95)' }}>
-      <div className={`container mx-auto px-6 py-4 flex ${rowDir} items-center justify-between`}>
+    <nav className="fixed top-0 right-0 left-0 z-50 border-b border-white/10" style={{ background: 'rgb(20, 35, 20)' }}>
+      <div className={`container mx-auto px-6 py-4 flex ${rowDir} items-center justify-between gap-4`}>
         <Link to="/" className="font-display text-xl font-bold tracking-wide" style={{ color: '#F5ECD7' }}>
           MapSoul
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
-          <ul className="flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6">
+          <ul className="flex items-center gap-6">
             {baseLinks.map((link) => (
               <li key={link.to}>
                 <Link
                   to={link.to}
-                  className={`font-body hover:opacity-80 transition-opacity text-sm pb-1 ${isActive(link.to) ? "border-b-2" : ""}`}
+                  className={`font-body whitespace-nowrap hover:opacity-80 transition-opacity text-sm pb-1 ${isActive(link.to) ? "border-b-2" : ""}`}
                   style={{ color: '#F5ECD7', borderColor: isActive(link.to) ? 'rgba(245,236,215,0.6)' : 'transparent' }}
                 >
                   {t(`nav.${link.key}`)}
@@ -55,7 +55,7 @@ const Navbar = () => {
             <LanguageSwitcher style={{ color: '#F5ECD7', borderColor: 'rgba(245,236,215,0.3)' }} />
             {user ? (
               <>
-                <span className="font-body text-sm px-3 py-1.5 rounded-full" style={{ color: '#F5ECD7', background: 'rgba(245, 236, 215, 0.12)' }}>
+                <span className="font-body text-sm px-3 py-1.5 rounded-full whitespace-nowrap" style={{ color: '#F5ECD7', background: 'rgba(245, 236, 215, 0.12)' }}>
                   {t("nav.hello")}, {greetName}
                 </span>
                 <button onClick={signOut} className="btn-secondary text-sm !py-2 !px-5">{t("nav.logout")}</button>
@@ -69,7 +69,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="md:hidden flex items-center gap-2">
+        <div className="lg:hidden flex items-center gap-2">
           <LanguageSwitcher style={{ color: '#F5ECD7', borderColor: 'rgba(245,236,215,0.3)' }} />
           <button onClick={() => setMobileOpen(!mobileOpen)} style={{ color: '#F5ECD7' }} aria-label={t("nav.menu")}>
             <span className="font-body text-sm">{mobileOpen ? t("nav.close") : t("nav.menu")}</span>
@@ -78,7 +78,7 @@ const Navbar = () => {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden px-6 pb-5 border-t border-white/10 backdrop-blur-xl" style={{ background: 'rgba(20, 35, 20, 0.95)' }}>
+        <div className="lg:hidden px-6 pb-5 border-t border-white/10" style={{ background: 'rgb(20, 35, 20)' }}>
           <ul className="flex flex-col gap-3 mb-4 pt-4">
             {baseLinks.map((link) => (
               <li key={link.to}>
