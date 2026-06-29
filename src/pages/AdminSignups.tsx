@@ -41,7 +41,7 @@ const AdminSignups = () => {
   }, [user, authLoading, navigate]);
 
   useEffect(() => {
-    if (!user || user.email !== ADMIN_EMAIL) return;
+    if (!user || !isAdminEmail(user.email)) return;
     (async () => {
       setLoading(true);
       const { data, error } = await supabase
