@@ -69,7 +69,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="md:hidden flex items-center gap-2">
+        <div className="lg:hidden flex items-center gap-2">
           <LanguageSwitcher style={{ color: '#F5ECD7', borderColor: 'rgba(245,236,215,0.3)' }} />
           <button onClick={() => setMobileOpen(!mobileOpen)} style={{ color: '#F5ECD7' }} aria-label={t("nav.menu")}>
             <span className="font-body text-sm">{mobileOpen ? t("nav.close") : t("nav.menu")}</span>
