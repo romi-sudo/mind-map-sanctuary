@@ -35,10 +35,6 @@ const AdminSignups = () => {
     if (authLoading) return;
     if (!user) {
       navigate("/login?next=/admin/signups", { replace: true });
-      return;
-    }
-    if (user.email !== ADMIN_EMAIL) {
-      navigate("/", { replace: true });
     }
   }, [user, authLoading, navigate]);
 
@@ -85,8 +81,31 @@ const AdminSignups = () => {
     URL.revokeObjectURL(url);
   };
 
-  if (!user || user.email !== ADMIN_EMAIL) {
+  if (authLoading || !user) {
     return <div className="min-h-screen bg-background" />;
+  }
+
+  if (user.email !== ADMIN_EMAIL) {
+    return (
+      <div dir="rtl" className="min-h-screen bg-background flex flex-col">
+        <Navbar />
+        <main className="flex-1 max-w-2xl mx-auto w-full px-4 pt-28 pb-16 text-center">
+          <div className="spa-card !p-10">
+            <h1 className="font-display text-2xl mb-3">אין הרשאה</h1>
+            <p className="text-muted-foreground mb-2">
+              העמוד הזה מיועד למנהלת בלבד.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              מחובר/ת כעת בתור: <span className="font-medium">{user.email}</span>
+            </p>
+            <p className="text-sm text-muted-foreground mt-4">
+              יש להתחבר עם החשבון <span className="font-medium">{ADMIN_EMAIL}</span>
+            </p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   return (
