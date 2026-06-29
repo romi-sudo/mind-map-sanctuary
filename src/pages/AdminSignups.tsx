@@ -35,10 +35,6 @@ const AdminSignups = () => {
     if (authLoading) return;
     if (!user) {
       navigate("/login?next=/admin/signups", { replace: true });
-      return;
-    }
-    if (user.email !== ADMIN_EMAIL) {
-      navigate("/", { replace: true });
     }
   }, [user, authLoading, navigate]);
 
