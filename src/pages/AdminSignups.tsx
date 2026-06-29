@@ -93,7 +93,6 @@ const AdminSignups = () => {
     return <div className="min-h-screen bg-background" />;
   }
 
-
   return (
     <div dir="rtl" className="min-h-screen bg-background flex flex-col">
       <Navbar />
