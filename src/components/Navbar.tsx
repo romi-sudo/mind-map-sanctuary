@@ -19,6 +19,7 @@ const Navbar = () => {
     { key: "home", to: "/" },
     { key: "questionnaire", to: "/questionnaire" },
     { key: "practitioners", to: "/practitioners" },
+    { key: "investorDemo", to: "/investor-demo" },
     { key: "corporate", to: "/corporate" },
   ];
   baseLinks.push({ key: "dashboard", to: "/dashboard" });
