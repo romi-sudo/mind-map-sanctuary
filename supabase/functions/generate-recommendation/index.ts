@@ -7,6 +7,21 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const REAL_PRACTITIONERS = [
+  { id: "michal-levi", name: 'ד"ר מיכל לוי', title: "פסיכולוגית קלינית", tags: ["חרדה", "טראומה", "מעברי חיים"], price: "400-600 ש\"ח" },
+  { id: "oren-cohen", name: "אורן כהן", title: "מאמן קריירה וחיים", tags: ["קריירה", "AI וקריירה", "זהות"], price: "300-500 ש\"ח" },
+  { id: "noa-shamir", name: "נועה שמיר", title: "מטפלת זוגית ומשפחתית", tags: ["זוגיות", "מערכות יחסים", "גבולות"], price: "500-700 ש\"ח" },
+  { id: "yoav-barak", name: "יואב ברק", title: "מנחה ריטריטים", tags: ["זהות", "מיינדפולנס", "גוף ונפש"], price: "ריטריטים" },
+  { id: "shira-adler", name: "שירה אדלר", title: "מאמנת צמיחה אישית", tags: ["ביטחון עצמי", "זהות", "קריירה"], price: "250-400 ש\"ח" },
+  { id: "ran-mizrachi", name: 'ד"ר רן מזרחי', title: "פסיכותרפיסט", tags: ["טראומה", "EMDR", "חרדה"], price: "500-800 ש\"ח" },
+  { id: "tamar-golan", name: "תמר גולן", title: "מטפלת באמנות", tags: ["טראומה", "ביטחון עצמי", "ילדים ונוער"], price: "280-400 ש\"ח" },
+  { id: "daniel-shapira", name: "דניאל שפירא", title: "מטפל סומטי ועיסוי טיפולי", tags: ["גוף-נפש", "סומטי", "ניהול סטרס"], price: "320-450 ש\"ח" },
+  { id: "liat-ben-ami", name: "ליאת בן עמי", title: "מנחת סדנאות והכשרות ארגוניות", tags: ["ימי גיבוש", "תקשורת", "מנהיגות"], price: "1,500-3,000 ש\"ח לסדנה" },
+  { id: "yael-friedman", name: "יעל פרידמן", title: "מאמנת NLP וזוגיות", tags: ["זוגיות", "NLP", "תקשורת בין-אישית"], price: "350-500 ש\"ח" },
+  { id: "amit-rosen", name: "עמית רוזן", title: "מורה למיינדפולנס ומדיטציה", tags: ["מיינדפולנס", "חרדה", "איזון נפשי"], price: "200-350 ש\"ח" },
+  { id: "noa-eckstein", name: 'ד"ר נועה אקשטיין', title: "פסיכולוגית ארגונית ומאמנת מנהלים", tags: ["מנהיגות", "AI וקריירה", "פיתוח ארגוני"], price: "500-800 ש\"ח" },
+];
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
