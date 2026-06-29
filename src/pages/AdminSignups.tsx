@@ -37,6 +37,8 @@ const AdminSignups = () => {
     if (authLoading) return;
     if (!user) {
       navigate("/login?next=/admin/signups", { replace: true });
+    } else if (!isAdminEmail(user.email)) {
+      navigate("/", { replace: true });
     }
   }, [user, authLoading, navigate]);
 
@@ -52,6 +54,7 @@ const AdminSignups = () => {
       setLoading(false);
     })();
   }, [user]);
+
 
   const stats = useMemo(() => ({
     total: rows.length,
