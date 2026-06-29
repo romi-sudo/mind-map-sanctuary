@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 
 const PractitionerProfile = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const dir = i18n.language === "he" ? "rtl" : "ltr";
   const p = practitioners.find((pr) => pr.id === id);
@@ -19,6 +20,14 @@ const PractitionerProfile = () => {
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [showStickyBar, setShowStickyBar] = useState(false);
+
+  const goBack = () => {
+    if (window.history.length > 2) {
+      navigate(-1);
+    } else {
+      navigate("/practitioners");
+    }
+  };
 
   useEffect(() => {
     const onScroll = () => setShowStickyBar(window.scrollY > 300);
@@ -75,9 +84,12 @@ const PractitionerProfile = () => {
           <div className="photo-overlay" />
         </div>
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 py-20">
-          <Link to="/practitioners" className="inline-block mb-8 text-sm text-white/70 hover:text-white transition-colors font-body">
-            {t("profile.backToAll")}
-          </Link>
+          <button
+            onClick={goBack}
+            className="inline-block mb-8 text-sm text-white/70 hover:text-white transition-colors font-body"
+          >
+            {t("profile.back")}
+          </button>
 
           <motion.div {...fade} className="text-center">
             <div className="w-[120px] h-[120px] rounded-full flex items-center justify-center mx-auto mb-6 bg-white/20 backdrop-blur-sm overflow-hidden">

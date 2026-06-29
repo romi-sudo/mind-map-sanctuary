@@ -346,6 +346,7 @@
   },
   "profile": {
     "notFound": "Practitioner not found",
+    "back": "Back",
     "backToCatalog": "Back to catalog",
     "backToAll": "Back to all practitioners",
     "experience": "Experience",
