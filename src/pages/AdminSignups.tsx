@@ -87,7 +87,7 @@ const AdminSignups = () => {
     return <div className="min-h-screen bg-background" />;
   }
 
-  if (user.email !== ADMIN_EMAIL) {
+  if (!isAdminEmail(user.email)) {
     return (
       <div dir="rtl" className="min-h-screen bg-background flex flex-col">
         <Navbar />
