@@ -55,7 +55,6 @@ const AdminSignups = () => {
     })();
   }, [user]);
 
-
   const stats = useMemo(() => ({
     total: rows.length,
     practitioners: rows.filter((r) => r.role === "practitioner").length,
