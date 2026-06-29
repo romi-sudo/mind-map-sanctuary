@@ -39,7 +39,7 @@ const Navbar = () => {
               <li key={link.to}>
                 <Link
                   to={link.to}
-                  className={`font-body hover:opacity-80 transition-opacity text-sm pb-1 ${isActive(link.to) ? "border-b-2" : ""}`}
+                  className={`font-body whitespace-nowrap hover:opacity-80 transition-opacity text-sm pb-1 ${isActive(link.to) ? "border-b-2" : ""}`}
                   style={{ color: '#F5ECD7', borderColor: isActive(link.to) ? 'rgba(245,236,215,0.6)' : 'transparent' }}
                 >
                   {t(`nav.${link.key}`)}
