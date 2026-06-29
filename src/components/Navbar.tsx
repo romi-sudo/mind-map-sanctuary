@@ -55,7 +55,7 @@ const Navbar = () => {
             <LanguageSwitcher style={{ color: '#F5ECD7', borderColor: 'rgba(245,236,215,0.3)' }} />
             {user ? (
               <>
-                <span className="font-body text-sm px-3 py-1.5 rounded-full" style={{ color: '#F5ECD7', background: 'rgba(245, 236, 215, 0.12)' }}>
+                <span className="font-body text-sm px-3 py-1.5 rounded-full whitespace-nowrap" style={{ color: '#F5ECD7', background: 'rgba(245, 236, 215, 0.12)' }}>
                   {t("nav.hello")}, {greetName}
                 </span>
                 <button onClick={signOut} className="btn-secondary text-sm !py-2 !px-5">{t("nav.logout")}</button>
