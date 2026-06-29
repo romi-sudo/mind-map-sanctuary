@@ -33,8 +33,8 @@ const Navbar = () => {
           MapSoul
         </Link>
 
-        <div className="hidden md:flex items-center gap-8">
-          <ul className="flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6">
+          <ul className="flex items-center gap-6">
             {baseLinks.map((link) => (
               <li key={link.to}>
                 <Link
