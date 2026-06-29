@@ -27,8 +27,8 @@ const Navbar = () => {
   const rowDir = i18n.language === "he" ? "flex-row-reverse" : "flex-row";
 
   return (
-    <nav className="fixed top-0 right-0 left-0 z-50 backdrop-blur-xl border-b border-white/10" style={{ background: 'rgba(20, 35, 20, 0.95)' }}>
-      <div className={`container mx-auto px-6 py-4 flex ${rowDir} items-center justify-between`}>
+    <nav className="fixed top-0 right-0 left-0 z-50 border-b border-white/10" style={{ background: 'rgb(20, 35, 20)' }}>
+      <div className={`container mx-auto px-6 py-4 flex ${rowDir} items-center justify-between gap-4`}>
         <Link to="/" className="font-display text-xl font-bold tracking-wide" style={{ color: '#F5ECD7' }}>
           MapSoul
         </Link>
