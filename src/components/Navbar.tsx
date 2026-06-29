@@ -78,7 +78,7 @@ const Navbar = () => {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden px-6 pb-5 border-t border-white/10 backdrop-blur-xl" style={{ background: 'rgba(20, 35, 20, 0.95)' }}>
+        <div className="lg:hidden px-6 pb-5 border-t border-white/10" style={{ background: 'rgb(20, 35, 20)' }}>
           <ul className="flex flex-col gap-3 mb-4 pt-4">
             {baseLinks.map((link) => (
               <li key={link.to}>
