@@ -22,6 +22,8 @@ import Privacy from "./pages/Privacy.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Events from "./pages/Events.tsx";
 import InvestorDemo from "./pages/InvestorDemo.tsx";
+import EarlyAccess from "./pages/EarlyAccess.tsx";
+import AdminSignups from "./pages/AdminSignups.tsx";
 
 
 const queryClient = new QueryClient();
@@ -51,6 +53,8 @@ const App = () => (
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/events" element={<Events />} />
             <Route path="/investor-demo" element={<InvestorDemo />} />
+            <Route path="/early-access" element={<EarlyAccess />} />
+            <Route path="/admin/signups" element={<AdminSignups />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
