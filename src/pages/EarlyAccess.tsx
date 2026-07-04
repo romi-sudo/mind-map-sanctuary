@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -11,6 +12,7 @@ const ROLE_MAP: Record<string, string> = {
 
 const EarlyAccess = () => {
   const [submitted, setSubmitted] = useState(false);
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     full_name: "",
@@ -45,6 +47,12 @@ const EarlyAccess = () => {
 
   return (
     <div dir="rtl" className="min-h-screen flex items-center justify-center bg-background px-4 py-12">
+      <button
+        onClick={() => (window.history.length > 1 ? navigate(-1) : navigate("/"))}
+        className="fixed top-6 right-6 z-50 inline-flex items-center gap-1.5 rounded-full border border-border/60 bg-background/80 px-4 py-2 font-body text-sm text-foreground hover:text-primary transition-colors backdrop-blur"
+      >
+        → חזרה
+      </button>
       <div className="spa-card w-full max-w-md !p-8">
         <div className="text-center mb-6">
           <div className="font-display text-2xl text-foreground mb-4">MapSoul</div>
