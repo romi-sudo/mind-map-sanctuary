@@ -27,14 +27,14 @@ const EarlyAccess = () => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.full_name || !form.email || !form.phone || !form.role) return;
+    if (!form.full_name || !form.email || !form.phone || !form.role || !form.social_link) return;
     setLoading(true);
     const { error } = await supabase.from("early_access_signups").insert({
       full_name: form.full_name.trim(),
       email: form.email.trim(),
       phone: form.phone.trim(),
       role: ROLE_MAP[form.role] ?? "other",
-      social_link: form.social_link.trim() || null,
+      social_link: form.social_link.trim(),
     });
     setLoading(false);
     if (error) {
@@ -119,10 +119,11 @@ const EarlyAccess = () => {
             </div>
             <div>
               <label className="block text-sm mb-1">
-                קישור לאתר / אינסטגרם / פייסבוק <span className="text-muted-foreground">(אופציונלי)</span>
+                קישור לאתר / אינסטגרם / פייסבוק
               </label>
               <input
-                type="text"
+                required
+                type="url"
                 value={form.social_link}
                 onChange={update("social_link")}
                 placeholder="https://..."
