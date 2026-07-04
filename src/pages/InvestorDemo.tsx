@@ -12,6 +12,22 @@ export default function InvestorDemo() {
 
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
+      {/* Top nav */}
+      <div className="sticky top-0 z-30 bg-background/85 backdrop-blur border-b border-border/40">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm text-primary hover:opacity-80 transition-opacity"
+          >
+            <span className="text-lg leading-none">→</span>
+            חזרה לדף הבית
+          </Link>
+          <Link to="/" className="font-display text-lg font-bold text-primary">
+            MapSoul
+          </Link>
+        </div>
+      </div>
+
       {/* Hero */}
       <header className="relative overflow-hidden border-b border-border/40">
         <div className="absolute inset-0 -z-10 bg-gradient-to-bl from-primary/10 via-background to-background" />
