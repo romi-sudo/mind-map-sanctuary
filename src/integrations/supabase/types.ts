@@ -195,6 +195,7 @@ export type Database = {
       }
       early_access_signups: {
         Row: {
+          bio: string | null
           created_at: string
           email: string
           full_name: string
@@ -202,8 +203,11 @@ export type Database = {
           phone: string
           role: string
           social_link: string | null
+          specialty: string | null
+          years_experience: string | null
         }
         Insert: {
+          bio?: string | null
           created_at?: string
           email: string
           full_name: string
@@ -211,8 +215,11 @@ export type Database = {
           phone: string
           role: string
           social_link?: string | null
+          specialty?: string | null
+          years_experience?: string | null
         }
         Update: {
+          bio?: string | null
           created_at?: string
           email?: string
           full_name?: string
@@ -220,6 +227,8 @@ export type Database = {
           phone?: string
           role?: string
           social_link?: string | null
+          specialty?: string | null
+          years_experience?: string | null
         }
         Relationships: []
       }
