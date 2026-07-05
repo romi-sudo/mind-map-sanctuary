@@ -19,15 +19,18 @@ const EarlyAccess = () => {
     email: "",
     phone: "",
     role: "",
+    specialty: "",
+    years_experience: "",
+    bio: "",
     social_link: "",
   });
 
-  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.full_name || !form.email || !form.phone || !form.role || !form.social_link) return;
+    if (!form.full_name || !form.email || !form.phone || !form.role || !form.social_link || !form.specialty || !form.years_experience) return;
     setLoading(true);
     const { error } = await supabase.from("early_access_signups").insert({
       full_name: form.full_name.trim(),
@@ -35,6 +38,9 @@ const EarlyAccess = () => {
       phone: form.phone.trim(),
       role: ROLE_MAP[form.role] ?? "other",
       social_link: form.social_link.trim(),
+      specialty: form.specialty.trim(),
+      years_experience: form.years_experience,
+      bio: form.bio.trim() || null,
     });
     setLoading(false);
     if (error) {
