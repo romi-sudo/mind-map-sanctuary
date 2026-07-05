@@ -73,9 +73,35 @@ const EarlyAccess = () => {
         </div>
 
         {submitted ? (
-          <div className="text-center py-8">
-            <div className="text-4xl mb-3">🎉</div>
-            <p className="font-display text-xl">תודה! נצור איתך קשר בקרוב</p>
+          <div className="space-y-5 py-2">
+            <div className="text-center">
+              <div className="text-4xl mb-3">🎉</div>
+              <p className="font-display text-xl">תודה! נצור איתך קשר בקרוב</p>
+            </div>
+            <div className="rounded-xl border border-primary/30 bg-primary/5 p-4 text-right">
+              <div className="flex items-center gap-2 mb-3 justify-center">
+                <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-primary text-white text-xs">✓</span>
+                <p className="text-sm font-medium text-foreground">
+                  הפרטים נשמרו בהצלחה במאגר
+                </p>
+              </div>
+              <ul className="space-y-2 text-sm">
+                <li className="flex items-start justify-between gap-3 border-b border-border/40 pb-2">
+                  <span className="text-muted-foreground">תחום התמחות</span>
+                  <span className="text-left text-foreground font-medium break-all">{form.specialty}</span>
+                </li>
+                <li className="flex items-start justify-between gap-3 border-b border-border/40 pb-2">
+                  <span className="text-muted-foreground">שנות ניסיון</span>
+                  <span className="text-left text-foreground font-medium">{form.years_experience}</span>
+                </li>
+                <li className="flex items-start justify-between gap-3">
+                  <span className="text-muted-foreground">כמה מילים עליך</span>
+                  <span className="text-left text-foreground font-medium break-words max-w-[60%]">
+                    {form.bio.trim() ? form.bio : "—"}
+                  </span>
+                </li>
+              </ul>
+            </div>
           </div>
         ) : (
           <form onSubmit={onSubmit} className="space-y-4">
