@@ -23,6 +23,9 @@ type Signup = {
   email: string;
   phone: string;
   role: string;
+  specialty: string | null;
+  years_experience: string | null;
+  bio: string | null;
   social_link: string | null;
   created_at: string;
 };
@@ -62,7 +65,7 @@ const AdminSignups = () => {
   }), [rows]);
 
   const exportCsv = () => {
-    const headers = ["שם מלא", "אימייל", "טלפון", "תפקיד", "קישור", "תאריך"];
+    const headers = ["שם מלא", "אימייל", "טלפון", "תפקיד", "תחום התמחות", "שנות ניסיון", "כמה מילים עליך", "קישור", "תאריך"];
     const escape = (v: string) => `"${(v ?? "").replace(/"/g, '""')}"`;
     const lines = [
       headers.map(escape).join(","),
@@ -71,6 +74,9 @@ const AdminSignups = () => {
         r.email,
         r.phone,
         ROLE_LABEL[r.role] ?? r.role,
+        r.specialty ?? "",
+        r.years_experience ?? "",
+        r.bio ?? "",
         r.social_link ?? "",
         new Date(r.created_at).toLocaleDateString("he-IL"),
       ].map(escape).join(",")),
@@ -96,7 +102,7 @@ const AdminSignups = () => {
   return (
     <div dir="rtl" className="min-h-screen bg-background flex flex-col">
       <Navbar />
-      <main className="flex-1 max-w-4xl mx-auto w-full px-4 pt-28 pb-16">
+      <main className="flex-1 max-w-6xl mx-auto w-full px-4 pt-28 pb-16">
         <h1 className="font-display text-3xl mb-8">נרשמים — Early Access</h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
@@ -138,28 +144,17 @@ const AdminSignups = () => {
                     <th className="text-right px-4 py-3 font-medium">אימייל</th>
                     <th className="text-right px-4 py-3 font-medium">טלפון</th>
                     <th className="text-right px-4 py-3 font-medium">תפקיד</th>
+                    <th className="text-right px-4 py-3 font-medium">תחום התמחות</th>
+                    <th className="text-right px-4 py-3 font-medium">שנות ניסיון</th>
+                    <th className="text-right px-4 py-3 font-medium">כמה מילים עליך</th>
+                    <th className="text-right px-4 py-3 font-medium">קישור</th>
                     <th className="text-right px-4 py-3 font-medium">תאריך</th>
                   </tr>
                 </thead>
                 <tbody>
                   {rows.map((r) => (
                     <tr key={r.id} className="border-t border-border/60">
-                      <td className="px-4 py-3">
-                        <div className="flex items-center gap-2">
-                          <span>{r.full_name}</span>
-                          {r.social_link && (
-                            <a
-                              href={r.social_link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-primary hover:opacity-70"
-                              title={r.social_link}
-                            >
-                              <ExternalLink className="w-4 h-4" />
-                            </a>
-                          )}
-                        </div>
-                      </td>
+                      <td className="px-4 py-3">{r.full_name}</td>
                       <td className="px-4 py-3">
                         <a href={`mailto:${r.email}`} className="hover:text-primary">{r.email}</a>
                       </td>
@@ -167,6 +162,25 @@ const AdminSignups = () => {
                         <a href={`tel:${r.phone}`} className="hover:text-primary">{r.phone}</a>
                       </td>
                       <td className="px-4 py-3">{ROLE_LABEL[r.role] ?? r.role}</td>
+                      <td className="px-4 py-3">{r.specialty || "—"}</td>
+                      <td className="px-4 py-3">{r.years_experience || "—"}</td>
+                      <td className="px-4 py-3 max-w-xs whitespace-pre-wrap">{r.bio || "—"}</td>
+                      <td className="px-4 py-3">
+                        {r.social_link ? (
+                          <a
+                            href={r.social_link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-primary hover:opacity-70 inline-flex items-center gap-1"
+                            title={r.social_link}
+                          >
+                            <ExternalLink className="w-4 h-4" />
+                            <span>פתיחה</span>
+                          </a>
+                        ) : (
+                          "—"
+                        )}
+                      </td>
                       <td className="px-4 py-3 text-muted-foreground">
                         {new Date(r.created_at).toLocaleDateString("he-IL")}
                       </td>
