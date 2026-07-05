@@ -84,12 +84,20 @@ const Footer = () => {
         className="max-w-6xl mx-auto mt-12 pt-6 border-t border-[#C4A882]/30 flex flex-col md:flex-row justify-between items-center gap-3 text-center md:text-start"
       >
         <p className="font-body text-xs text-[#6B4226]/80">{t("footer.rights")}</p>
-        <Link
-          to="/admin/signups"
-          className="font-body text-xs text-[#6B4226]/60 hover:text-[#2C1A0E] transition-colors"
-        >
-          {t("footer.admin")}
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            to="/admin/signups"
+            className="font-body text-xs text-[#6B4226]/60 hover:text-[#2C1A0E] transition-colors"
+          >
+            {t("footer.admin")}
+          </Link>
+          <Link
+            to="/early-access"
+            className="font-body text-xs text-[#6B4226]/60 hover:text-[#2C1A0E] transition-colors"
+          >
+            הרשמה מוקדמת
+          </Link>
+        </div>
       </div>
     </footer>
   );
