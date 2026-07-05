@@ -19,15 +19,18 @@ const EarlyAccess = () => {
     email: "",
     phone: "",
     role: "",
+    specialty: "",
+    years_experience: "",
+    bio: "",
     social_link: "",
   });
 
-  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+  const update = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.full_name || !form.email || !form.phone || !form.role || !form.social_link) return;
+    if (!form.full_name || !form.email || !form.phone || !form.role || !form.social_link || !form.specialty || !form.years_experience) return;
     setLoading(true);
     const { error } = await supabase.from("early_access_signups").insert({
       full_name: form.full_name.trim(),
@@ -35,6 +38,9 @@ const EarlyAccess = () => {
       phone: form.phone.trim(),
       role: ROLE_MAP[form.role] ?? "other",
       social_link: form.social_link.trim(),
+      specialty: form.specialty.trim(),
+      years_experience: form.years_experience,
+      bio: form.bio.trim() || null,
     });
     setLoading(false);
     if (error) {
@@ -116,6 +122,41 @@ const EarlyAccess = () => {
                   <option key={label} value={label}>{label}</option>
                 ))}
               </select>
+            </div>
+            <div>
+              <label className="block text-sm mb-1">תחום התמחות</label>
+              <input
+                required
+                type="text"
+                value={form.specialty}
+                onChange={update("specialty")}
+                placeholder="למשל: טיפול רגשי, אימון קריירה, מיינדפולנס..."
+                className="w-full rounded-xl border border-border bg-background px-4 py-2 outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1">שנות ניסיון</label>
+              <select
+                required
+                value={form.years_experience}
+                onChange={update("years_experience")}
+                className="w-full rounded-xl border border-border bg-background px-4 py-2 outline-none focus:ring-2 focus:ring-primary/40"
+              >
+                <option value="" disabled>בחרו</option>
+                {["פחות משנה", "1-3 שנים", "3-5 שנים", "5-10 שנים", "10+ שנים"].map((o) => (
+                  <option key={o} value={o}>{o}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm mb-1">כמה מילים עליך</label>
+              <textarea
+                value={form.bio}
+                onChange={update("bio")}
+                placeholder="ספר/י בקצרה על הגישה שלך..."
+                rows={3}
+                className="w-full rounded-xl border border-border bg-background px-4 py-2 outline-none focus:ring-2 focus:ring-primary/40"
+              />
             </div>
             <div>
               <label className="block text-sm mb-1">
