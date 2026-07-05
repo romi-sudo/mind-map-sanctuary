@@ -124,6 +124,41 @@ const EarlyAccess = () => {
               </select>
             </div>
             <div>
+              <label className="block text-sm mb-1">תחום התמחות</label>
+              <input
+                required
+                type="text"
+                value={form.specialty}
+                onChange={update("specialty")}
+                placeholder="למשל: טיפול רגשי, אימון קריירה, מיינדפולנס..."
+                className="w-full rounded-xl border border-border bg-background px-4 py-2 outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </div>
+            <div>
+              <label className="block text-sm mb-1">שנות ניסיון</label>
+              <select
+                required
+                value={form.years_experience}
+                onChange={update("years_experience")}
+                className="w-full rounded-xl border border-border bg-background px-4 py-2 outline-none focus:ring-2 focus:ring-primary/40"
+              >
+                <option value="" disabled>בחרו</option>
+                {["פחות משנה", "1-3 שנים", "3-5 שנים", "5-10 שנים", "10+ שנים"].map((o) => (
+                  <option key={o} value={o}>{o}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm mb-1">כמה מילים עליך</label>
+              <textarea
+                value={form.bio}
+                onChange={update("bio")}
+                placeholder="ספר/י בקצרה על הגישה שלך..."
+                rows={3}
+                className="w-full rounded-xl border border-border bg-background px-4 py-2 outline-none focus:ring-2 focus:ring-primary/40"
+              />
+            </div>
+            <div>
               <label className="block text-sm mb-1">
                 קישור לאתר / אינסטגרם / פייסבוק
               </label>
