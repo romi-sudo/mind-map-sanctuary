@@ -8,6 +8,8 @@ import LanguageSwitcher from "@/components/LanguageSwitcher";
 import EventsDropdown from "@/components/events/EventsDropdown";
 
 const Navbar = () => {
+  return null;
+  // NOTE: Navbar disabled temporarily. All original code below is preserved.
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user, signOut } = useAuth();
   const { firstName, role } = useProfile();
